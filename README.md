@@ -1,6 +1,6 @@
 ## React Clean Architecture Boilerplate
 
-Arquitetura client-side escalável, com distribuição de responsabilidades em camadas, baseada na regra de dependência do Clean Architecture, seguindo boas práticas de desenvolvimento (SOLID, DRY, KISS) e alguns Design Patterns.
+Arquitetura client-side escalável, distribuída em camadas, com o objetivo de promover uma arquitetura front-end que favoreça a reusabilidade de código, coesão, independência de tecnologia e testabilidade. .
 
 ## Stacks
 
@@ -10,7 +10,7 @@ Arquitetura client-side escalável, com distribuição de responsabilidades em c
 - [Webpack](https://webpack.js.org/) (5.x)
 - [Typescript](https://www.typescriptlang.org/) (4.x)
 - [Hot Module Replacement (HMR)](https://webpack.js.org/concepts/hot-module-replacement/) ([React Hot Loader](https://github.com/gaearon/react-hot-loader))
-- Build em produção (Webpack)
+- Build p/ produção (Webpack)
 - Otimização de imagens ([Image Webpack Loader](https://github.com/tcoopman/image-webpack-loader))
 - Arquitetura de estilos modular (com autoprefixer p/ cross-browser) [Styled-components](https://styled-components.com/docs/)
 - Estabilização de código com ([ESLint](https://github.com/eslint/eslint)) e formatação com ([Prettier](https://github.com/prettier/prettier))
@@ -21,7 +21,7 @@ Arquitetura client-side escalável, com distribuição de responsabilidades em c
 
 ---
 
-1. Clone/download o repositório
+1. Clone/download do repositório
 2. `npm install`
 
 ## Como usar
@@ -46,7 +46,7 @@ Arquitetura client-side escalável, com distribuição de responsabilidades em c
 
 **Comandos**
 
-| Comandos           | Descrição                                                                       |
+| Comando            | Descrição                                                                       |
 | ------------------ | ------------------------------------------------------------------------------- |
 | `npm run dev`      | Sobe a "app" com hot reload e serve em @ `http://localhost:8080`                |
 | `npm run prod`     | Empacota a "app" para produção em `/dist/` e serve em @ `http://localhost:3000` |

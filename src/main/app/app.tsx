@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { hot } from 'react-hot-loader';
 import { ThemeProvider } from 'styled-components';
 
-import Title from './App.styled';
-import { theme } from '../theme';
+import Title from './app.styled';
+import { theme } from '../../presentation/styles/theme';
 
 class App extends React.Component<Record<string, unknown>, undefined> {
   public render() {
@@ -17,6 +16,4 @@ class App extends React.Component<Record<string, unknown>, undefined> {
   }
 }
 
-declare let module: Record<string, unknown>;
-
-export default hot(module)(App);
+export default App;
