@@ -1,4 +1,4 @@
-## React Clean Architecture Boilerplate
+## React Layered Architecture Boilerplate
 
 Arquitetura client-side escalável, distribuída em camadas, com o objetivo de promover uma arquitetura front-end que favoreça a reusabilidade de código, coesão, independência de tecnologia e testabilidade. .
 

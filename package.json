@@ -1,7 +1,7 @@
 {
-  "name": "react-clean-architecture-boilerplate",
+  "name": "react-layered-boilerplate",
   "version": "0.1.0",
-  "description": "React Clean Architecture Boilerplate",
+  "description": "React Layered Architecture Boilerplate",
   "author": "Tiago Vilas Boas (Montanha) - tiago.vilasboas@dextra-sw.com",
   "license": "GPLv3",
   "scripts": {
