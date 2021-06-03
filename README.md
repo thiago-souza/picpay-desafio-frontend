@@ -40,7 +40,7 @@ Arquitetura client-side escalável, distribuída em camadas, com o objetivo de p
 `npm run start`
 
 - "Build" do app (HMR desabilitado) em `/dist/`
-- @ `http://localhost:3000`
+- @ `http://localhost:8888`
 
 ---
 
@@ -49,7 +49,7 @@ Arquitetura client-side escalável, distribuída em camadas, com o objetivo de p
 | Comando            | Descrição                                                                       |
 | ------------------ | ------------------------------------------------------------------------------- |
 | `npm run dev`      | Sobe a "app" com hot reload e serve em @ `http://localhost:8080`                |
-| `npm run prod`     | Empacota a "app" para produção em `/dist/` e serve em @ `http://localhost:3000` |
+| `npm run prod`     | Empacota a "app" para produção em `/dist/` e serve em @ `http://localhost:8888` |
 | `npm run build`    | Empacota a "app" `/dist/`                                                       |
 | `npm run test`     | Dispara a rotina de testes                                                      |
 | `npm run test:dev` | Dispara a rotina de testes com "watch reload"                                   |
