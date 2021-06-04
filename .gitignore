@@ -1,8 +1,14 @@
-.idea/
 .DS_Store
+
+## Node
+.idea/
 dist/
 coverage/
 node_modules/
 src/**/*.jsx
 tests/__coverage__/
 tests/**/*.jsx
+
+## Terraform 
+.terraform
+*.tfstate.backup
