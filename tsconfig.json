@@ -1,31 +1,3 @@
-// {
-//   "compilerOptions": {
-//     "target": "es5",
-//     "module": "esnext",
-//     "lib": ["DOM", "ESNext"],
-//     "sourceMap": true,
-//     "importHelpers": true,
-//     "rootDir": "src",
-//     "strict": true,
-//     "noUnusedLocals": true,
-//     "noUnusedParameters": true,
-//     "noImplicitReturns": true,
-//     "noFallthroughCasesInSwitch": true,
-//     "allowJs": true,
-//     "jsx": "react",
-//     "moduleResolution": "node",
-//     "baseUrl": "src",
-//     "esModuleInterop": true,
-//     "suppressImplicitAnyIndexErrors": true,
-//     "allowSyntheticDefaultImports": true,
-//     "experimentalDecorators": true,
-//     "declaration": true,
-//     "noEmit": false,
-//     "outDir": "dist"
-//   },
-//   "include": ["src/**/*", "globals.d.ts"],
-//   "exclude": ["node_modules", "dist", "configs"]
-// }
 {
   "compilerOptions": {
     "target": "es5",
