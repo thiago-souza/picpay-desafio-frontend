@@ -17,7 +17,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.3",
+    "@babel/cli": "^7.12.1",
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.4",
     "@babel/preset-react": "^7.13.13",
@@ -40,7 +40,6 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
     "husky": "^6.0.0",
-    "image-webpack-loader": "^7.0.1",
     "jest": "^27.0.1",
     "prettier": "^2.3.0",
     "react": "^17.0.2",
