@@ -1,16 +1,19 @@
 import * as React from 'react';
 import { hot } from 'react-hot-loader';
 import { ThemeProvider } from 'styled-components';
-
-import Title from './app.styled';
-import { theme } from '../../assets/styles';
+import { Content } from '../../components/content';
+import { Header } from '../../components/header';
+import { theme, GlobalStyle } from './styles';
+import { Main } from './styles/app.style';
 
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
-      <div className="app">
-        <Title>Olá mundo!</Title>
-      </div>
+      <GlobalStyle />
+      <Main>
+        <Header />
+        <Content />
+      </Main>
     </ThemeProvider>
   );
 };

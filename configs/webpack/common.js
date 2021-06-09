@@ -7,15 +7,16 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       '@': path.join(__dirname, '../../src'),
-      '!': path.join(__dirname, '.'),
     },
   },
   module: {
     rules: [
       {
-        test: [/\.jsx?$/, /\.tsx?$/],
-        use: ['babel-loader'],
-        exclude: /node_modules/,
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+        },
       },
       {
         test: /\.css$/,
