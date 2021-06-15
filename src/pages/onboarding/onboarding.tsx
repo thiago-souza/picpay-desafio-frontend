@@ -1,16 +1,20 @@
 import * as React from 'react';
-import { CustomButton } from '../../components/button';
-import { CustomLink } from '../../components/link';
-import { DocumentBox } from '../../components/document';
+import { CustomButton } from '@/components/button';
+import { CustomLink } from '@/components/link';
+import { DocumentBox } from '@/components/document';
 import {
   LabelDescription,
   LabelSubtitle,
   LabelTitle,
-} from '../../components/label/label.style';
-import { ContentBox } from '../../components/content/content.style';
-import RgCpfIcon from '../../assets/icons/rg-cpf-icon.png';
-import RgIcon from '../../assets/icons/rg-icon.png';
-import SecurityIcon from '../../assets/icons/security-icon.png';
+} from '@/components/label';
+import { ContentBox } from '@/components/content/content.style';
+import {
+  ContentItems,
+  ContentSideBar,
+} from '@/components/content/content.style';
+import RgCpfIcon from '@/assets/icons/rg-cpf-icon.png';
+import RgIcon from '@/assets/icons/rg-icon.png';
+import SecurityIcon from '@/assets/icons/security-icon.png';
 
 interface IOnboardingPage {
   goToPageCallback: (n: number) => void;
@@ -27,7 +31,7 @@ export const OnboardingPage: React.FC<IOnboardingPage> = (
   };
 
   return (
-    <>
+    <ContentItems>
       <LabelTitle>Verifique sua identidade</LabelTitle>
       <LabelDescription>
         Para continuar, precisamos que você faça a verificação da sua
@@ -43,7 +47,7 @@ export const OnboardingPage: React.FC<IOnboardingPage> = (
           Pode ser foto da sua CNH, RG, CPF ou RNE.
         </DocumentBox>
       </ContentBox>
-      <>
+      <ContentSideBar>
         <DocumentBox icon={SecurityIcon}>
           Relaxa, seus dados estão seguros com a gente.
         </DocumentBox>
@@ -51,7 +55,7 @@ export const OnboardingPage: React.FC<IOnboardingPage> = (
           Verificar identidade agora
         </CustomButton>
         <CustomLink callbackEvent={linkCallback}>Deixar pra depois</CustomLink>
-      </>
-    </>
+      </ContentSideBar>
+    </ContentItems>
   );
 };

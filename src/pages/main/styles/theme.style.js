@@ -4,6 +4,7 @@ const theme = {
     black: '#000000',
     grey: '#666666',
     white: '#FFFFFF',
+    red: '#C22D1E',
   },
   fonts: {
     proximaNova: "'proximanova-regular', sans-serif",

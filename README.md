@@ -11,7 +11,6 @@ Arquitetura client-side escalável, distribuída em camadas, com o objetivo de p
 - [Typescript](https://www.typescriptlang.org/) (4.x)
 - [Hot Module Replacement (HMR)](https://webpack.js.org/concepts/hot-module-replacement/) ([React Hot Loader](https://github.com/gaearon/react-hot-loader))
 - Build p/ produção (Webpack)
-- Otimização de imagens ([Image Webpack Loader](https://github.com/tcoopman/image-webpack-loader))
 - [Styled-components](https://styled-components.com/docs/) (com autoprefixer p/ cross-browser)
 - Estabilização de código com ([ESLint](https://github.com/eslint/eslint)) e formatação com ([Prettier](https://github.com/prettier/prettier))
 - Testes unitários com ([Jest](https://facebook.github.io/jest/)) e testes em componentes com [DOM Test Library](https://testing-library.com/docs/)
@@ -29,7 +28,8 @@ Arquitetura client-side escalável, distribuída em camadas, com o objetivo de p
 ---
 
 1. Clone/download do repositório
-2. `npm install`
+2. `npm install typescript -g` (p/ desenvolvimento)
+3. `npm install`
 
 ## Como usar
 

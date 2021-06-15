@@ -16,6 +16,24 @@ const LabelSubtitle = styled.h3`
   line-height: 1.5rem;
 `;
 
+const LabelSubtitleButton = styled(LabelSubtitle)`
+  display: flex;
+  justify-content: center;
+
+  font-size: ${(props) => props.theme.fontSizes.small};
+  color: #666666;
+  text-transform: none;
+
+  &.tiny {
+    font-family: ${(props) => props.theme.fonts.proximaNova};
+  }
+`;
+
+const LabelCenter = styled(LabelSubtitle)`
+  display: flex;
+  justify-content: center;
+`;
+
 const LabelDescription = styled.p`
   font-family: ${(props) => props.theme.fonts.proximaNova};
   font-size: ${(props) => props.theme.fontSizes.small};
@@ -31,4 +49,21 @@ const LabelDescription = styled.p`
   margin: 12px 0px;
 `;
 
-export { LabelTitle, LabelSubtitle, LabelDescription };
+const LabelDescriptionButton = styled(LabelDescription)`
+  color: #999;
+  text-transform: none;
+
+  &.error {
+    color: ${(props) => props.theme.colors.red};
+    text-align: center;
+  }
+`;
+
+export {
+  LabelTitle,
+  LabelSubtitle,
+  LabelDescription,
+  LabelSubtitleButton,
+  LabelDescriptionButton,
+  LabelCenter,
+};
