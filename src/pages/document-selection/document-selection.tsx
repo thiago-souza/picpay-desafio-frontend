@@ -1,15 +1,12 @@
 import * as React from 'react';
-import { CustomButton } from '../../components/button';
-import { DocumentCardBox } from '../../components/document';
-import {
-  LabelDescription,
-  LabelSubtitle,
-} from '../../components/label/label.style';
-import { ContentBox } from '../../components/content/content.style';
-import RgIcon from '../../assets/icons/rg-only-icon.png';
-import CpfIcon from '../../assets/icons/cpf-only-icon.png';
-import CnhIcon from '../../assets/icons/cnh-only-icon.png';
-import RneIcon from '../../assets/icons/rne-only-icon.png';
+import { CustomButton } from '@/components/button';
+import { DocumentCardBox } from '@/components/document';
+import { LabelDescription, LabelSubtitle } from '@/components/label';
+import { ContentBox, ContentItems } from '@/components/content/content.style';
+import RgIcon from '@/assets/icons/rg-only-icon.png';
+import CpfIcon from '@/assets/icons/cpf-only-icon.png';
+import CnhIcon from '@/assets/icons/cnh-only-icon.png';
+import RneIcon from '@/assets/icons/rne-only-icon.png';
 import { useState } from 'react';
 
 interface IDocumentSelectionPage {
@@ -31,7 +28,7 @@ export const DocumentSelectionPage: React.FC<IDocumentSelectionPage> = (
   };
 
   return (
-    <>
+    <ContentItems>
       <LabelSubtitle>Escolha o documento que você vai enviar:</LabelSubtitle>
       <LabelDescription>
         Olha, lembre-se que a foto deve ser do seu documento original.
@@ -68,6 +65,6 @@ export const DocumentSelectionPage: React.FC<IDocumentSelectionPage> = (
       >
         Continuar
       </CustomButton>
-    </>
+    </ContentItems>
   );
 };

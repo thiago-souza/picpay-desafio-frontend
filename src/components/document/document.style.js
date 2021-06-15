@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from '@/pages/main/styles';
 
 export const DocumentBoxStyle = styled.div`
   display: flex;
@@ -32,9 +33,13 @@ export const DocumentCardBoxStyle = styled.button`
 
 export const DocumentCardImgStyle = styled.div`
   max-width: 64px;
-  padding: 23px 7px 23px 23px;
+  padding: 13px 7px 13px 13px;
 
   width: fit-content;
+
+  @media ${device.tablet} {
+    padding: 23px 7px 23px 23px;
+  }
 `;
 
 export const DocumentImgStyle = styled.div`

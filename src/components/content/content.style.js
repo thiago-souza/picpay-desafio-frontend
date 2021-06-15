@@ -1,22 +1,41 @@
 import styled from 'styled-components';
-import { device } from '../../pages/main/styles';
+import { device } from '@/pages/main/styles';
 
-export const ContentContainer = styled.div`
+export const ContainerBox = styled.div`
   width: 90%;
-  margin: 0 auto 0 5%;
+  margin: 0 auto 5%;
+  max-width: 627px;
+  margin-bottom: 16px;
+
+  @media ${device.tablet} {
+    max-width: 627px;
+    margin: 0 auto 32px auto;
+    width: 100%;
+  }
+`;
+
+export const ContentItems = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  max-width: 627px;
 
   @media ${device.tablet} {
     max-width: 360px;
-    margin: 0 auto;
-  }
-
-  @media ${device.desktop} {
-    width: 100%;
   }
 `;
 
 export const ContentBox = styled.div`
   display: flex;
   flex-flow: column;
-  margin: 32px 0px 40px;
+  margin: 32px auto 40px;
+  width: 100%;
+
+  @media ${device.tablet} {
+    max-width: 360px;
+  }
+`;
+
+export const ContentSideBar = styled.div`
+  width: 100%;
+  text-align: center;
 `;

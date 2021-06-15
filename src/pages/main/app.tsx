@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { hot } from 'react-hot-loader';
 import { ThemeProvider } from 'styled-components';
-import { Content } from '../../components/content';
-import { Header } from '../../components/header';
+import { Content } from '@/components/content';
+import { Header } from '@/components/header';
 import { theme, GlobalStyle } from './styles';
 import { Main } from './styles/app.style';
 
@@ -18,4 +17,4 @@ const App: React.FC = () => {
   );
 };
 
-export default hot(module)(App);
+export default App;

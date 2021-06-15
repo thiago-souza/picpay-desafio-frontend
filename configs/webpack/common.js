@@ -24,7 +24,10 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        use: ['file-loader'],
+        loader: 'file-loader',
+        options: {
+          name: 'imgs/[contenthash].[ext]',
+        },
       },
     ],
   },
