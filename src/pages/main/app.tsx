@@ -6,27 +6,12 @@ import { theme, GlobalStyle } from './styles';
 import { Main } from './styles/app.style';
 import {
   initNewGloboIdClient,
-  isLogged,
+  loginGloboID,
 } from '@/services/globoid/globoid-service';
 
 const App: React.FC = () => {
-  debugger;
-  initNewGloboIdClient('clientid');
-
-  const logado = isLogged('clientid');
-
-  // const client = window.glb.globoIdClientMap.getGloboIdClient('clientid');
-  // client.stageQueueMap.applicationUsageStageQueue =
-  //   client.stageQueueMap.applicationUsageStageQueue || [];
-
-  // client.stageQueueMap.applicationUsageStageQueue.push(async (GloboId: any) => {
-  //   const isLogged = await GloboId.isLogged();
-  //   console.log('isLogged:', isLogged);
-  // });
-
-  //client.stageQueueMap.applicationUsageStageQueue.push(async (GloboId: any) => {
-  //  await GloboId.login();
-  //});
+  initNewGloboIdClient('cartola-qa');
+  loginGloboID('cartola-qa');
 
   return (
     <ThemeProvider theme={theme}>
