@@ -13,8 +13,22 @@ export const initNewGloboIdClient = (clientId: string): void => {
       clientId: clientId,
       resource: clientId,
       url: 'https://id.qa.globoi.com/auth',
-      redirectUri:
-        'https://s.glbimg.qa.globoi.com/gl/ba/oidc/yourclient-globocom.callback.html',
+      redirectUri: window.location.href,
     });
   }
+};
+
+export const loginGloboID = (clientId:string) => {
+  const client = window.glb.globoIdClientMap.getGloboIdClient(clientId);
+  client.stageQueueMap.applicationUsageStageQueue =
+    client.stageQueueMap.applicationUsageStageQueue || [];
+
+  client.stageQueueMap.applicationUsageStageQueue.push(async (GloboId: any) => {
+    const isLogged = await GloboId.isLogged();
+    console.log('isLogged:', isLogged);
+  });
+
+  client.stageQueueMap.applicationUsageStageQueue.push(async (GloboId: any) => {
+    await GloboId.login();
+  });
 };
