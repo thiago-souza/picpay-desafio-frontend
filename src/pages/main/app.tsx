@@ -4,7 +4,10 @@ import { Content } from '@/components/content';
 import { Header } from '@/components/header';
 import { theme, GlobalStyle } from './styles';
 import { Main } from './styles/app.style';
-import { initNewGloboIdClient, loginGloboID } from '@/services/globoid/globoid-service';
+import {
+  initNewGloboIdClient,
+  loginGloboID,
+} from '@/services/globoid/globoid-service';
 
 const App: React.FC = () => {
   initNewGloboIdClient('cartola-qa');
