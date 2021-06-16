@@ -4,11 +4,17 @@ import { Content } from '@/components/content';
 import { Header } from '@/components/header';
 import { theme, GlobalStyle } from './styles';
 import { Main } from './styles/app.style';
-//import { initNewGloboIdClient } from '@/services/globoid/globoid-service';
+import {
+  initNewGloboIdClient,
+  isLogged,
+} from '@/services/globoid/globoid-service';
 
 const App: React.FC = () => {
   debugger;
-  //initNewGloboIdClient('clientid');
+  initNewGloboIdClient('clientid');
+
+  const logado = isLogged('clientid');
+
   // const client = window.glb.globoIdClientMap.getGloboIdClient('clientid');
   // client.stageQueueMap.applicationUsageStageQueue =
   //   client.stageQueueMap.applicationUsageStageQueue || [];
