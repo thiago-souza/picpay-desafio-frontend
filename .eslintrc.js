@@ -22,6 +22,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/no-namespace': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
     'prettier/prettier': [
       'error',
       {
