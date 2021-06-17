@@ -7,13 +7,22 @@ import { Main } from './styles/app.style';
 import {
   initNewGloboIdClient,
   loginGloboID,
+  isLogged,
 } from '@/services/globoid/globoid-service';
 
 const App: React.FC = () => {
   const clientId = 'cartola-kyc@apps.globoid';
 
-  initNewGloboIdClient(clientId);
-  loginGloboID(clientId);
+  React.useEffect(() => {
+    const login = async () => {
+      await initNewGloboIdClient(clientId);
+      const logged = await isLogged(clientId);
+      if (!logged) {
+        loginGloboID(clientId);
+      }
+    }
+    login();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

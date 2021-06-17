@@ -4,19 +4,17 @@ declare global {
   }
 }
 
-export const initNewGloboIdClient = (clientId: string): void => {
-  window.glb.globoIdClientMap.initNewGloboIdClient({
+export const initNewGloboIdClient = async (clientId: string): Promise<any> => {
+  await window.glb.globoIdClientMap.initNewGloboIdClient({
     clientId: clientId,
     resource: clientId,
     url: 'https://id.qa.globoi.com/auth',
-    redirectUri: window.location.href,
+    redirectUri: window.location.href.replace(/#.*$/, ''),
     sessionManagement: 'token',
-    onLoad: 'check-sso',
   });
 };
 
 export const getGloboIdClient = (clientId: string): any => {
-  debugger;
   const client = window.glb.globoIdClientMap.getGloboIdClient(clientId);
   client.stageQueueMap.applicationUsageStageQueue =
     client.stageQueueMap.applicationUsageStageQueue || [];
@@ -24,19 +22,22 @@ export const getGloboIdClient = (clientId: string): any => {
   return client;
 };
 
-export const isLogged = (clientId: string): boolean => {
+export const isLogged = (clientId: string): Promise<boolean> => {
   const client = getGloboIdClient(clientId);
 
-  client.stageQueueMap.applicationUsageStageQueue.push(async (GloboId: any) => {
-    const isLogged = await GloboId.isLogged();
-    return isLogged;
+  const promise = new Promise<boolean>((resolve) => {
+    client.stageQueueMap.applicationUsageStageQueue.push(
+      async (GloboId: any) => {
+        const isLogged = await GloboId.isLogged();
+        resolve(isLogged);
+      },
+    );
   });
 
-  return false;
+  return promise;
 };
 
 export const loginGloboID = (clientId: string) => {
-  debugger;
   const client = getGloboIdClient(clientId);
 
   client.stageQueueMap.applicationUsageStageQueue.push(async (GloboId: any) => {
