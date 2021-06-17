@@ -105,6 +105,24 @@ class GloboIdClient {
 
     return promise;
   }
+
+  getTokens(): Promise<any> {
+    const client = this.getGloboIdClient();
+
+    const promise = new Promise<boolean>((resolve, reject) => {
+      if (!client) {
+        return reject(new Error('GloboID Client Error'));
+      }
+      client.stageQueueMap.applicationUsageStageQueue.push(
+        async (GloboId: any) => {
+          const userData = await GloboId.getTokens();
+          return resolve(userData);
+        },
+      );
+    });
+
+    return promise;
+  }
 }
 
 export default GloboIdClient;

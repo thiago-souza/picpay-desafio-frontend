@@ -16,6 +16,8 @@ const App: React.FC = () => {
       const logged = await client.isLogged();
       if (!logged) {
         await client.loginGloboID();
+      } else {
+        const tokens = await client.getTokens();
       }
     };
     login();
