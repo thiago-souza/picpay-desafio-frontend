@@ -4,18 +4,8 @@ declare global {
   }
 }
 
-export const getGloboIdClient = (clientId: string): any => {
-  const client = window.glb.globoIdClientMap.getGloboIdClient(clientId);
-  client.stageQueueMap.applicationUsageStageQueue =
-    client.stageQueueMap.applicationUsageStageQueue || [];
-
-  return client;
-};
-
 export const initNewGloboIdClient = (clientId: string): void => {
-  const client = getGloboIdClient(clientId);
-
-  client.initNewGloboIdClient({
+  window.glb.globoIdClientMap.initNewGloboIdClient({
     clientId: clientId,
     resource: clientId,
     url: 'https://id.qa.globoi.com/auth',
@@ -23,6 +13,15 @@ export const initNewGloboIdClient = (clientId: string): void => {
     sessionManagement: 'token',
     onLoad: 'check-sso',
   });
+};
+
+export const getGloboIdClient = (clientId: string): any => {
+  debugger;
+  const client = window.glb.globoIdClientMap.getGloboIdClient(clientId);
+  client.stageQueueMap.applicationUsageStageQueue =
+    client.stageQueueMap.applicationUsageStageQueue || [];
+
+  return client;
 };
 
 export const isLogged = (clientId: string): boolean => {
@@ -37,6 +36,7 @@ export const isLogged = (clientId: string): boolean => {
 };
 
 export const loginGloboID = (clientId: string) => {
+  debugger;
   const client = getGloboIdClient(clientId);
 
   client.stageQueueMap.applicationUsageStageQueue.push(async (GloboId: any) => {
