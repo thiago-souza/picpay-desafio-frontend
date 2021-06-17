@@ -9,6 +9,7 @@ import {
 } from '@/components/label';
 import { ContentSideBar } from '@/components/content/content.style';
 import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
+import { AuthContext } from '@/components/auth-context';
 
 interface IUploadBox {
   goToPageCallback: (n: number) => void;
@@ -22,6 +23,8 @@ export const UploadBox = ({ goToPageCallback }: IUploadBox): JSX.Element => {
   const [contentValuesFront, setContentValuesFront] = React.useState({});
   const [contentValuesBack, setContentValuesBack] = React.useState({});
   const [isDisabled, setIsDisabled] = React.useState(true);
+  const token = React.useContext(AuthContext);
+  console.log('UPLOAD - TOKEN: ', token);
 
   const docFrontId = 'docFrontId';
   const docBackId = 'docBackId';

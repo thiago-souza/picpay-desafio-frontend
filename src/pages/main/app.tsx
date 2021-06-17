@@ -4,31 +4,17 @@ import { Content } from '@/components/content';
 import { Header } from '@/components/header';
 import { theme, GlobalStyle } from './styles';
 import { Main } from './styles/app.style';
-import GloboIdClient from '@/services/globoid/globoid-service';
+import { AuthProvider } from '@/components/auth-context';
 
 const App: React.FC = () => {
-  const clientId = 'cartola-kyc@apps.globoid';
-
-  React.useEffect(() => {
-    const login = async () => {
-      const client = new GloboIdClient(clientId);
-      await client.init();
-      const logged = await client.isLogged();
-      if (!logged) {
-        await client.loginGloboID();
-      } else {
-        const tokens = await client.getTokens();
-      }
-    };
-    login();
-  }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Main>
-        <Header />
-        <Content />
+        <AuthProvider>
+          <Header />
+          <Content />
+        </AuthProvider>
       </Main>
     </ThemeProvider>
   );

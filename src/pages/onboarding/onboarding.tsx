@@ -15,6 +15,7 @@ import {
 import RgCpfIcon from '@/assets/icons/rg-cpf-icon.png';
 import RgIcon from '@/assets/icons/rg-icon.png';
 import SecurityIcon from '@/assets/icons/security-icon.png';
+import { AuthContext } from '@/components/auth-context';
 
 interface IOnboardingPage {
   goToPageCallback: (n: number) => void;
@@ -23,6 +24,9 @@ interface IOnboardingPage {
 export const OnboardingPage: React.FC<IOnboardingPage> = (
   props: IOnboardingPage,
 ) => {
+  const token = React.useContext(AuthContext);
+  console.log('ONBOARDING - TOKEN: ', token);
+
   const { goToPageCallback } = props;
 
   //TODO: Modificar a função para o link correto, assim que o mesmo for definido.
