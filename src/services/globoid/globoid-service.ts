@@ -4,62 +4,107 @@ declare global {
   }
 }
 
-export const initNewGloboIdClient = async (clientId: string): Promise<any> => {
-  await window.glb.globoIdClientMap.initNewGloboIdClient({
-    clientId: clientId,
-    resource: clientId,
-    url: 'https://id.qa.globoi.com/auth',
-    redirectUri: window.location.href.replace(/#.*$/, ''),
-    sessionManagement: 'token',
-  });
-};
+class GloboIdClient {
+  clientId: string;
+  clientHasInit: boolean;
 
-export const getGloboIdClient = (clientId: string): any => {
-  const client = window.glb.globoIdClientMap.getGloboIdClient(clientId);
-  client.stageQueueMap.applicationUsageStageQueue =
-    client.stageQueueMap.applicationUsageStageQueue || [];
+  constructor(clientId: string) {
+    this.clientId = clientId;
+    this.clientHasInit = false;
+  }
 
-  return client;
-};
+  async init(): Promise<any> {
+    if (!this.clientHasInit) {
+      await window.glb.globoIdClientMap.initNewGloboIdClient({
+        clientId: this.clientId,
+        resource: this.clientId,
+        url: 'https://id.qa.globoi.com/auth',
+        redirectUri: window.location.href.replace(/#.*$/, ''),
+        sessionManagement: 'token',
+      });
+      this.clientHasInit = true;
+    }
+  }
 
-export const isLogged = (clientId: string): Promise<boolean> => {
-  const client = getGloboIdClient(clientId);
+  getGloboIdClient() {
+    const client = window.glb.globoIdClientMap.getGloboIdClient(this.clientId);
+    client.stageQueueMap.applicationUsageStageQueue =
+      client.stageQueueMap.applicationUsageStageQueue || [];
 
-  const promise = new Promise<boolean>((resolve) => {
-    client.stageQueueMap.applicationUsageStageQueue.push(
-      async (GloboId: any) => {
-        const isLogged = await GloboId.isLogged();
-        resolve(isLogged);
-      },
-    );
-  });
+    return client;
+  }
 
-  return promise;
-};
+  isLogged(): Promise<boolean> {
+    const client = this.getGloboIdClient();
 
-export const loginGloboID = (clientId: string) => {
-  const client = getGloboIdClient(clientId);
+    const promise = new Promise<boolean>((resolve, reject) => {
+      if (!client) {
+        reject(new Error('GloboID Client Error'));
+      }
+      client.stageQueueMap.applicationUsageStageQueue.push(
+        async (GloboId: any) => {
+          const isLogged = await GloboId.isLogged();
+          resolve(isLogged);
+        },
+      );
+    });
 
-  client.stageQueueMap.applicationUsageStageQueue.push(async (GloboId: any) => {
-    await GloboId.login();
-  });
-};
+    return promise;
+  }
 
-export const logoutGloboID = (clientId: string) => {
-  const client = getGloboIdClient(clientId);
+  loginGloboID(): Promise<boolean> {
+    const client = this.getGloboIdClient();
 
-  client.stageQueueMap.applicationUsageStageQueue.push(async (GloboId: any) => {
-    await GloboId.logout();
-  });
-};
+    const promise = new Promise<boolean>((resolve, reject) => {
+      if (!client) {
+        return reject(new Error('GloboID Client Error'));
+      }
+      client.stageQueueMap.applicationUsageStageQueue.push(
+        async (GloboId: any) => {
+          await GloboId.login();
+          return resolve(true);
+        },
+      );
+    });
 
-export const loadUserInfo = (clientId: string): string => {
-  const client = getGloboIdClient(clientId);
+    return promise;
+  }
 
-  client.stageQueueMap.applicationUsageStageQueue.push(async (GloboId: any) => {
-    const userData = await GloboId.loadUserInfo();
-    return userData;
-  });
+  logoutGloboID(): Promise<boolean> {
+    const client = this.getGloboIdClient();
 
-  return '';
-};
+    const promise = new Promise<boolean>((resolve, reject) => {
+      if (!client) {
+        return reject(new Error('GloboID Client Error'));
+      }
+      client.stageQueueMap.applicationUsageStageQueue.push(
+        async (GloboId: any) => {
+          await GloboId.logout();
+          return resolve(true);
+        },
+      );
+    });
+
+    return promise;
+  }
+
+  loadUserInfo(): Promise<any> {
+    const client = this.getGloboIdClient();
+
+    const promise = new Promise<boolean>((resolve, reject) => {
+      if (!client) {
+        return reject(new Error('GloboID Client Error'));
+      }
+      client.stageQueueMap.applicationUsageStageQueue.push(
+        async (GloboId: any) => {
+          const userData = await GloboId.loadUserInfo();
+          return resolve(userData);
+        },
+      );
+    });
+
+    return promise;
+  }
+}
+
+export default GloboIdClient;
