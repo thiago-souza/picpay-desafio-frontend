@@ -10,8 +10,10 @@ import {
 } from '@/services/globoid/globoid-service';
 
 const App: React.FC = () => {
-  initNewGloboIdClient('cartola-qa');
-  loginGloboID('cartola-qa');
+  const clientId = 'cartola-kyc@apps.globoid';
+
+  initNewGloboIdClient(clientId);
+  loginGloboID(clientId);
 
   return (
     <ThemeProvider theme={theme}>
