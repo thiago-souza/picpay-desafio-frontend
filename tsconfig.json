@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5", // Specify ECMAScript target version
-    "lib": ["dom", "dom.iterable", "esnext"], // List of library files to be included in the compilation
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ], // List of library files to be included in the compilation
     "allowJs": true, // Allow JavaScript files to be compiled
     "skipLibCheck": true, // Skip type checking of all declaration files
     "esModuleInterop": true, // Disables namespace imports (import * as fs from "fs") and enables CJS/AMD/UMD style imports (import fs from "fs")
@@ -23,9 +27,20 @@
     "baseUrl": "src", // Base directory to resolve non-absolute module names.
     "outDir": "dist", // Settings moves the files into the specified dist folder:
     "paths": {
-      "@/*": ["*"] // Paths lets you declare how TypeScript should resolve an import in your require/imports.
+      "@/*": [
+        "*"
+      ] // Paths lets you declare how TypeScript should resolve an import in your require/imports.
     }
   },
-  "include": ["src/**/*", "globals.d.ts"], // *** The files TypeScript should type check ***
-  "exclude": ["node_modules", "dist"] // *** The files to not type check ***
+  "include": [
+    "src/**/*",
+    "globals.d.ts"
+  ], // *** The files TypeScript should type check ***
+  "exclude": [
+    "node_modules",
+    "dist",
+    "./node_modules",
+    "./node_modules/*",
+    "./node_modules/@types/node/index.d.ts"
+  ], // *** The files to not type check ***
 }
