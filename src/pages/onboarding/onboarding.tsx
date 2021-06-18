@@ -16,6 +16,7 @@ import RgCpfIcon from '@/assets/icons/rg-cpf-icon.png';
 import RgIcon from '@/assets/icons/rg-icon.png';
 import SecurityIcon from '@/assets/icons/security-icon.png';
 import { AuthContext } from '@/components/auth-context';
+import ApiService from '@/services/api/api-service';
 
 interface IOnboardingPage {
   goToPageCallback: (n: number) => void;
@@ -24,15 +25,26 @@ interface IOnboardingPage {
 export const OnboardingPage: React.FC<IOnboardingPage> = (
   props: IOnboardingPage,
 ) => {
-  const token = React.useContext(AuthContext);
-  console.log('ONBOARDING - TOKEN: ', token);
-
   const { goToPageCallback } = props;
+  const values = React.useContext(AuthContext);
+  console.log('globoId: ', values.globoId);
 
   //TODO: Modificar a função para o link correto, assim que o mesmo for definido.
   const linkCallback = () => {
     alert('To be defined');
   };
+
+  React.useEffect(() => {
+    const status = async () => {
+      if (values.globoId != null && values.globoId != '') {
+        const apiService = new ApiService('', values.globoId);
+
+        const sts = await apiService.getStatus();
+        console.log(sts);
+      }
+    };
+    status();
+  }, [values]);
 
   return (
     <ContentItems>

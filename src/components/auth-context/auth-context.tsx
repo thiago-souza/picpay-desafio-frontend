@@ -1,16 +1,14 @@
-import React, { createContext, useState } from 'react';
+import React from 'react';
 import GloboIdClient from '@/services/globoid/globoid-service';
 
-interface IAuthContext {
-  token: string;
-}
-
-export const AuthContext = createContext<IAuthContext | null>(null);
+export const AuthContext = React.createContext({
+  globoId: '',
+});
 
 // eslint-disable-next-line react/prop-types
 export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
   const clientId = 'cartola-kyc@apps.globoid';
-  const [token, setToken] = useState('');
+  const [glbId, setGlbId] = React.useState('');
 
   React.useEffect(() => {
     const login = async () => {
@@ -20,14 +18,16 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
       if (!logged) {
         await client.loginGloboID();
       } else {
-        const getToken = await client.getTokens();
-        setToken(getToken.access_token);
+        const userInfo = await client.loadUserInfo();
+        setGlbId(userInfo.globo_id);
       }
     };
     login();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ token }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ globoId: glbId }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
