@@ -30,6 +30,17 @@ export const OnboardingPage: React.FC<IOnboardingPage> = (
   console.log('globoId: ', values.globoId);
   console.log('email: ', values.email);
 
+  /*global AMBIENTE*/
+  const amb = AMBIENTE;
+  console.log('ambiente: ', amb);
+
+  /*global API_URL*/
+  const apiUrl = API_URL;
+  console.log('api url: ', apiUrl);
+
+  /*global OIDC_KEY*/
+  console.log(`'oidc_key: ${OIDC_KEY}`);
+
   //TODO: Modificar a função para o link correto, assim que o mesmo for definido.
   const linkCallback = () => {
     alert('To be defined');

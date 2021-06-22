@@ -13,5 +13,11 @@ module.exports = merge(commonConfig, {
     publicPath: '/',
   },
   devtool: 'source-map',
-  plugins: [],
+  plugins: [
+    new webpack.DefinePlugin({
+      AMBIENTE: JSON.stringify('prod'),
+      API_URL: JSON.stringify(''),
+      OIDC_KEY: JSON.stringify(''),
+    }),
+  ],
 });

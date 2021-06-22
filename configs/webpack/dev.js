@@ -3,6 +3,29 @@ const { merge } = require('webpack-merge');
 const webpack = require('webpack');
 const commonConfig = require('./common');
 
+const ENDPOINTS = {
+  API: {
+    local: 'http://sce-integration-online-qa.gcloud.dev.globoi.com',
+    dev: '',
+    prod: '',
+  },
+  OIDC: {
+    local: 'cartola-kyc@apps.globoid',
+    dev: '',
+    prod: '',
+  },
+};
+
+const plugins = [
+  new webpack.EnvironmentPlugin({ AMBIENTE: process.env.AMBIENTE || 'local' }),
+  new webpack.DefinePlugin({
+    API_ENDPOINT: JSON.stringify(
+      ENDPOINTS.API[process.env.AMBIENTE || 'local'],
+    ),
+    CLIENT_ID: JSON.stringify(ENDPOINTS.OIDC[process.env.AMBIENTE || 'local']),
+  }),
+];
+
 module.exports = merge(commonConfig, {
   mode: 'development',
   entry: [
@@ -19,6 +42,13 @@ module.exports = merge(commonConfig, {
   },
   devtool: 'cheap-module-source-map',
   plugins: [
-    new webpack.HotModuleReplacementPlugin(), // enable HMR globally
+    new webpack.HotModuleReplacementPlugin(), // enable HMR globally,
+    new webpack.DefinePlugin({
+      AMBIENTE: JSON.stringify('dev'),
+      API_URL: JSON.stringify(
+        'http://sce-integration-online-qa.gcloud.dev.globoi.com',
+      ),
+      OIDC_KEY: JSON.stringify('cartola-kyc@apps.globoid'),
+    }),
   ],
 });
