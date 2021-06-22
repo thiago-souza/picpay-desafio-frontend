@@ -28,6 +28,7 @@ export const OnboardingPage: React.FC<IOnboardingPage> = (
   const { goToPageCallback } = props;
   const values = React.useContext(AuthContext);
   console.log('globoId: ', values.globoId);
+  console.log('email: ', values.email);
 
   //TODO: Modificar a função para o link correto, assim que o mesmo for definido.
   const linkCallback = () => {
