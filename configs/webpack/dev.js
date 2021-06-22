@@ -3,29 +3,6 @@ const { merge } = require('webpack-merge');
 const webpack = require('webpack');
 const commonConfig = require('./common');
 
-const ENDPOINTS = {
-  API: {
-    local: 'http://sce-integration-online-qa.gcloud.dev.globoi.com',
-    dev: '',
-    prod: '',
-  },
-  OIDC: {
-    local: 'cartola-kyc@apps.globoid',
-    dev: '',
-    prod: '',
-  },
-};
-
-const plugins = [
-  new webpack.EnvironmentPlugin({ AMBIENTE: process.env.AMBIENTE || 'local' }),
-  new webpack.DefinePlugin({
-    API_ENDPOINT: JSON.stringify(
-      ENDPOINTS.API[process.env.AMBIENTE || 'local'],
-    ),
-    CLIENT_ID: JSON.stringify(ENDPOINTS.OIDC[process.env.AMBIENTE || 'local']),
-  }),
-];
-
 module.exports = merge(commonConfig, {
   mode: 'development',
   entry: [
