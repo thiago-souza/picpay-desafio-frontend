@@ -32,6 +32,14 @@ class ApiService {
           });
       });
 
+      /*
+        RESPOSTA:
+        {
+          'type': 'CNH/RG/RNE',
+          'content': '123',
+          'status': 'ACTIVE/INACTIVE/APPROVED/REJECTED'
+        }
+      */
       return promise;
     }
   }
@@ -62,6 +70,13 @@ class ApiService {
           });
       });
 
+      /*
+        {
+          'body': {},
+          'statusCode': 'ACCEPTED',
+          'statusCodeValue': 0,
+        }
+      */
       return promise;
     }
   }
@@ -91,6 +106,12 @@ class ApiService {
           });
       });
 
+      /*
+        RESPOSTA:
+        {
+          'status': 'CREATED/IN PROCESS/APPROVED/REJECTED/SUSPECTED/CANCELED'
+        }
+      */
       return promise;
     }
   }
@@ -120,6 +141,9 @@ class ApiService {
           });
       });
 
+      /*
+        201 - Created
+      */
       return promise;
     }
   }
