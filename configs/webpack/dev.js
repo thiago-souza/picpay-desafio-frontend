@@ -21,9 +21,11 @@ module.exports = merge(commonConfig, {
   plugins: [
     new webpack.HotModuleReplacementPlugin(), // enable HMR globally,
     new webpack.DefinePlugin({
-      AMBIENTE: JSON.stringify('dev'),
-      API_URL: JSON.stringify('https://sce-accounts.mybackstage.qa.globoi.com'),
-      OIDC_KEY: JSON.stringify('cartola-kyc@apps.globoid'),
+      'process.env.AMBIENTE': JSON.stringify('dev'),
+      'process.env.API_URL': JSON.stringify(
+        'https://sce-accounts.mybackstage.qa.globoi.com',
+      ),
+      'process.env.OIDC_KEY': JSON.stringify('cartola-kyc@apps.globoid'),
     }),
   ],
 });

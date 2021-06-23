@@ -9,15 +9,13 @@ export const AuthContext = React.createContext({
 
 // eslint-disable-next-line react/prop-types
 export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
-  /*global OIDC_KEY*/
-  const clientId = OIDC_KEY;
   const [glbId, setGlbId] = React.useState('');
   const [token, setToken] = React.useState('');
   const [email, setEmail] = React.useState('');
 
   React.useEffect(() => {
     const login = async () => {
-      const client = new GloboIdClient(clientId);
+      const client = new GloboIdClient(process.env.OIDC_KEY || '');
       await client.init();
       const logged = await client.isLogged();
       if (!logged) {

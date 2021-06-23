@@ -3,8 +3,8 @@ class ApiService {
   token: string;
   globoId: string;
 
-  constructor(apiURL: string, token: string, globoId: string) {
-    this.apiURL = apiURL;
+  constructor(token: string, globoId: string) {
+    this.apiURL = process.env.API_URL || '';
     this.token = token;
     this.globoId = globoId;
   }
@@ -159,4 +159,12 @@ class ApiService {
   }
 }
 
-export default ApiService;
+let instance: ApiService;
+
+export function getApi(token: string, globoId: string): ApiService {
+  if (!instance) {
+    instance = new ApiService(token, globoId);
+  }
+  return instance;
+}
+export default getApi;

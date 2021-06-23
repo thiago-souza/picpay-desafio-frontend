@@ -15,9 +15,9 @@ module.exports = merge(commonConfig, {
   devtool: 'source-map',
   plugins: [
     new webpack.DefinePlugin({
-      AMBIENTE: JSON.stringify('prod'),
-      API_URL: JSON.stringify(''),
-      OIDC_KEY: JSON.stringify(''),
+      'process.env.AMBIENTE': JSON.stringify('prod'),
+      'process.env.API_URL': JSON.stringify(''),
+      'process.env.OIDC_KEY': JSON.stringify(''),
     }),
   ],
 });
