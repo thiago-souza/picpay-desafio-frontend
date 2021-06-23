@@ -1,3 +1,6 @@
+/*global AMBIENTE*/
+/*global API_URL*/
+/*global OIDC_KEY*/
 import * as React from 'react';
 import { CustomButton } from '@/components/button';
 import { CustomLink } from '@/components/link';
@@ -28,18 +31,11 @@ export const OnboardingPage: React.FC<IOnboardingPage> = (
   const { goToPageCallback } = props;
   const values = React.useContext(AuthContext);
   console.log('globoId: ', values.globoId);
+  console.log('token: ', values.token);
   console.log('email: ', values.email);
 
-  /*global AMBIENTE*/
-  const amb = AMBIENTE;
-  console.log('ambiente: ', amb);
-
-  /*global API_URL*/
-  const apiUrl = API_URL;
-  console.log('api url: ', apiUrl);
-
-  /*global OIDC_KEY*/
-  console.log(`'oidc_key: ${OIDC_KEY}`);
+  console.log(`ambiente: ${AMBIENTE}`);
+  console.log(`oidc_key: ${OIDC_KEY}`);
 
   //TODO: Modificar a função para o link correto, assim que o mesmo for definido.
   const linkCallback = () => {
@@ -49,8 +45,11 @@ export const OnboardingPage: React.FC<IOnboardingPage> = (
   React.useEffect(() => {
     const status = async () => {
       if (values.globoId != null && values.globoId != '') {
-        const apiService = new ApiService('', values.globoId);
-
+        const apiService = new ApiService(
+          API_URL,
+          values.token,
+          values.globoId,
+        );
         const sts = await apiService.getStatus();
         console.log(sts);
       }

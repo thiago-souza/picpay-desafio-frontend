@@ -1,9 +1,11 @@
 class ApiService {
   apiURL: string;
+  token: string;
   globoId: string;
 
-  constructor(apiURL: string, globoId: string) {
+  constructor(apiURL: string, token: string, globoId: string) {
     this.apiURL = apiURL;
+    this.token = token;
     this.globoId = globoId;
   }
 
@@ -22,7 +24,10 @@ class ApiService {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            GloboId: this.globoId,
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers':
+              'Origin, X-Requested-With, Content-Type, Accept',
+            'X-Globo-Id': this.globoId,
           },
         })
           .then((response) => response.json())
@@ -55,11 +60,19 @@ class ApiService {
           return reject(new Error('globoId is empty'));
         }
 
-        fetch(`${this.apiURL}/accounts/attachments`, {
+        const url =
+          'https://cors-anywhere.herokuapp.com/' +
+          this.apiURL +
+          '/accounts/attachments';
+
+        fetch(url, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            GloboId: this.globoId,
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers':
+              'Origin, X-Requested-With, Content-Type, Accept',
+            'X-Globo-Id': this.globoId,
           },
           body: JSON.stringify({ attach }),
         })
@@ -92,15 +105,23 @@ class ApiService {
           return reject(new Error('globoId is empty'));
         }
 
-        fetch(`${this.apiURL}/accounts/status`, {
+        console.log('token: ', this.token);
+        const url = this.apiURL + '/accounts/status';
+
+        fetch(url, {
           method: 'GET',
           headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers':
+              'Origin, X-Requested-With, Content-Type, Accept',
             'Content-Type': 'application/json',
-            GloboId: this.globoId,
+            Authorization: 'Bearer ' + this.token,
+            'X-Globo-Id': this.globoId,
           },
         })
           .then((response) => response.json())
           .then((data) => {
+            debugger;
             console.log('data: ', data);
             return resolve(data);
           });
@@ -131,7 +152,10 @@ class ApiService {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            GloboId: this.globoId,
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers':
+              'Origin, X-Requested-With, Content-Type, Accept',
+            'X-Globo-Id': this.globoId,
           },
         })
           .then((response) => response.json())
