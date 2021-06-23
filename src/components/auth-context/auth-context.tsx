@@ -23,10 +23,8 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
       if (!logged) {
         await client.loginGloboID();
       } else {
-        debugger;
         const tokenResponse = await client.getTokens();
         setToken(tokenResponse.access_token);
-        console.log('tokens: ', tokenResponse.access_token);
 
         const userInfo = await client.loadUserInfo();
         setGlbId(userInfo.globo_id);

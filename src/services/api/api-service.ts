@@ -16,6 +16,7 @@ class ApiService {
     if (this.apiURL != null && this.apiURL != '') {
       const promise = new Promise<boolean>((resolve, reject) => {
         console.log('globoId: ', this.globoId);
+        console.log('token: ', this.token);
         if (!this.globoId) {
           return reject(new Error('globoId is empty'));
         }
@@ -24,9 +25,7 @@ class ApiService {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers':
-              'Origin, X-Requested-With, Content-Type, Accept',
+            Authorization: 'Bearer ' + this.token,
             'X-Globo-Id': this.globoId,
           },
         })
@@ -56,22 +55,16 @@ class ApiService {
     if (this.apiURL != null && this.apiURL != '') {
       const promise = new Promise<boolean>((resolve, reject) => {
         console.log('globoId: ', this.globoId);
+        console.log('token: ', this.token);
         if (!this.globoId) {
           return reject(new Error('globoId is empty'));
         }
 
-        const url =
-          'https://cors-anywhere.herokuapp.com/' +
-          this.apiURL +
-          '/accounts/attachments';
-
-        fetch(url, {
+        fetch(`${this.apiURL}/accounts/attachments`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers':
-              'Origin, X-Requested-With, Content-Type, Accept',
+            Authorization: 'Bearer ' + this.token,
             'X-Globo-Id': this.globoId,
           },
           body: JSON.stringify({ attach }),
@@ -101,19 +94,14 @@ class ApiService {
     if (this.apiURL != null && this.apiURL != '') {
       const promise = new Promise<boolean>((resolve, reject) => {
         console.log('globoId: ', this.globoId);
+        console.log('token: ', this.token);
         if (!this.globoId) {
           return reject(new Error('globoId is empty'));
         }
 
-        console.log('token: ', this.token);
-        const url = this.apiURL + '/accounts/status';
-
-        fetch(url, {
+        fetch(`${this.apiURL}/accounts/status`, {
           method: 'GET',
           headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers':
-              'Origin, X-Requested-With, Content-Type, Accept',
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.token,
             'X-Globo-Id': this.globoId,
@@ -121,7 +109,6 @@ class ApiService {
         })
           .then((response) => response.json())
           .then((data) => {
-            debugger;
             console.log('data: ', data);
             return resolve(data);
           });
@@ -144,6 +131,7 @@ class ApiService {
     if (this.apiURL != null && this.apiURL != '') {
       const promise = new Promise<boolean>((resolve, reject) => {
         console.log('globoId: ', this.globoId);
+        console.log('token: ', this.token);
         if (!this.globoId) {
           return reject(new Error('globoId is empty'));
         }
@@ -152,9 +140,7 @@ class ApiService {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers':
-              'Origin, X-Requested-With, Content-Type, Accept',
+            Authorization: 'Bearer ' + this.token,
             'X-Globo-Id': this.globoId,
           },
         })
