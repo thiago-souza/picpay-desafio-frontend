@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useHistory } from 'react-router-dom';
 import { UploadBoxStyle } from './upload.style';
 import { CustomButton, UploadButton } from '@/components/button';
 import {
@@ -7,15 +8,17 @@ import {
   LabelSubtitleButton,
   LabelSubtitle,
 } from '@/components/label';
-import { ContentSideBar } from '@/components/content/content.style';
+import { ContentSideBar } from '@/pages/main/styles/content.style';
 import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
 import { AuthContext } from '@/components/auth-context';
 
 interface IUploadBox {
-  goToPageCallback: (n: number) => void;
+  selectedDoc: string;
 }
 
-export const UploadBox = ({ goToPageCallback }: IUploadBox): JSX.Element => {
+export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
+  console.log('🚀 selectedDoc', selectedDoc);
+  const history = useHistory();
   const [base64Front, setBase64Front] = React.useState('');
   const [base64Back, setBase64Back] = React.useState('');
   const [frontInfo, setFrontInfo] = React.useState([]);
@@ -151,7 +154,7 @@ export const UploadBox = ({ goToPageCallback }: IUploadBox): JSX.Element => {
         </UploadBoxStyle>
         <CustomButton
           disabled={isDisabled}
-          callbackEvent={() => goToPageCallback(3)}
+          callbackEvent={() => history.push('status')}
         >
           Enviar documento
         </CustomButton>

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DocumentBox } from '@/components/document';
 import { LabelDescription, LabelSubtitle } from '@/components/label';
-import { ContentBox, ContentItems } from '@/components/content/content.style';
+import { ContentBox, ContentItems } from '@/pages/main/styles/content.style';
 import RgPlasticIcon from '@/assets/icons/rg-plastic-icon.png';
 import LightIcon from '@/assets/icons/light-icon.png';
 import RgInstructionsIcon from '@/assets/icons/rg-instructions-icon.png';

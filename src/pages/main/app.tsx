@@ -1,19 +1,26 @@
 import * as React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { Content } from '@/components/content';
+import Router from './router';
 import { Header } from '@/components/header';
-import { theme, GlobalStyle } from './styles';
+import { theme, GlobalStyle, ContainerBox } from './styles';
 import { Main } from './styles/app.style';
 import { AuthProvider } from '@/components/auth-context';
 
 const App: React.FC = () => {
+  const [selectedDoc, setSelectedDoc] = React.useState('');
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Main>
         <AuthProvider>
           <Header />
-          <Content />
+          <ContainerBox>
+            <Router
+              selectedDoc={selectedDoc}
+              selectedDocCallback={setSelectedDoc}
+            />
+          </ContainerBox>
         </AuthProvider>
       </Main>
     </ThemeProvider>

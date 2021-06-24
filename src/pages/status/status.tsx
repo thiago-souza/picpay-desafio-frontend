@@ -5,20 +5,15 @@ import {
   ContentBox,
   ContentItems,
   ContentSideBar,
-} from '@/components/content/content.style';
+} from '@/pages/main/styles/content.style';
 import ApprovedIcon from '@/assets/icons/approved-icon.png';
 
 interface IStatusPage {
-  goToPageCallback: (n: number) => void;
   type?: string;
 }
 
 export const StatusPage: React.FC<IStatusPage> = (props: IStatusPage) => {
-  const { goToPageCallback, type = 'approved' } = props;
-  console.log(
-    '🚀 ~ file: status.tsx ~ line 18 ~ goToPageCallback',
-    goToPageCallback,
-  );
+  const { type = 'approved' } = props;
 
   const handleCallBack = () => {
     alert('Em construção');
