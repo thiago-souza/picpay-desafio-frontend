@@ -17,6 +17,7 @@ interface IUploadBox {
 }
 
 export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
+  console.log('🚀 selectedDoc', selectedDoc);
   const history = useHistory();
   const [base64Front, setBase64Front] = React.useState('');
   const [base64Back, setBase64Back] = React.useState('');
