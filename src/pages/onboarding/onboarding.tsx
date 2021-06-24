@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useHistory } from 'react-router-dom';
 import { CustomButton } from '@/components/button';
 import { CustomLink } from '@/components/link';
 import { DocumentBox } from '@/components/document';
@@ -18,14 +19,8 @@ import SecurityIcon from '@/assets/icons/security-icon.png';
 import { AuthContext } from '@/components/auth-context';
 import getApi from '@/services/api/api-service';
 
-interface IOnboardingPage {
-  goToPageCallback: (n: number) => void;
-}
-
-export const OnboardingPage: React.FC<IOnboardingPage> = (
-  props: IOnboardingPage,
-) => {
-  const { goToPageCallback } = props;
+export const OnboardingPage: React.FC = () => {
+  const history = useHistory();
   const values = React.useContext(AuthContext);
 
   //TODO: Modificar a função para o link correto, assim que o mesmo for definido.
@@ -65,7 +60,7 @@ export const OnboardingPage: React.FC<IOnboardingPage> = (
         <DocumentBox icon={SecurityIcon}>
           Relaxa, seus dados estão seguros com a gente.
         </DocumentBox>
-        <CustomButton callbackEvent={() => goToPageCallback(1)}>
+        <CustomButton callbackEvent={() => history.push('select')}>
           Verificar identidade agora
         </CustomButton>
         <CustomLink callbackEvent={linkCallback}>Deixar pra depois</CustomLink>

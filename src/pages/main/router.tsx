@@ -11,17 +11,22 @@ interface IDocumentSelectionPage {
   selectedDocCallback: (doc: string) => void;
 }
 
-const Router: React.FC<IDocumentSelectionPage> = (props:IDocumentSelectionPage) => {
+const Router: React.FC<IDocumentSelectionPage> = (
+  props: IDocumentSelectionPage,
+) => {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/select">
-          <DocumentSelectionPage selectedCallback={props.selectedDocCallback} />
+          <DocumentSelectionPage
+            selectedDoc={props.selectedDoc}
+            selectedCallback={props.selectedDocCallback}
+          />
         </Route>
         <Route path="/upload">
           <>
             <UploadInstructionsPage />
-            <UploadBox />
+            <UploadBox selectedDoc={props.selectedDoc} />
           </>
         </Route>
         <Route path="/status">
