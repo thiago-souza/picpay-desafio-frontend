@@ -1,9 +1,11 @@
 class ApiService {
   apiURL: string;
+  token: string;
   globoId: string;
 
-  constructor(apiURL: string, globoId: string) {
-    this.apiURL = apiURL;
+  constructor(token: string, globoId: string) {
+    this.apiURL = process.env.API_URL || '';
+    this.token = token;
     this.globoId = globoId;
   }
 
@@ -14,6 +16,7 @@ class ApiService {
     if (this.apiURL != null && this.apiURL != '') {
       const promise = new Promise<boolean>((resolve, reject) => {
         console.log('globoId: ', this.globoId);
+        console.log('token: ', this.token);
         if (!this.globoId) {
           return reject(new Error('globoId is empty'));
         }
@@ -22,7 +25,8 @@ class ApiService {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            GloboId: this.globoId,
+            Authorization: 'Bearer ' + this.token,
+            'X-Globo-Id': this.globoId,
           },
         })
           .then((response) => response.json())
@@ -51,6 +55,7 @@ class ApiService {
     if (this.apiURL != null && this.apiURL != '') {
       const promise = new Promise<boolean>((resolve, reject) => {
         console.log('globoId: ', this.globoId);
+        console.log('token: ', this.token);
         if (!this.globoId) {
           return reject(new Error('globoId is empty'));
         }
@@ -59,7 +64,8 @@ class ApiService {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            GloboId: this.globoId,
+            Authorization: 'Bearer ' + this.token,
+            'X-Globo-Id': this.globoId,
           },
           body: JSON.stringify({ attach }),
         })
@@ -88,6 +94,7 @@ class ApiService {
     if (this.apiURL != null && this.apiURL != '') {
       const promise = new Promise<boolean>((resolve, reject) => {
         console.log('globoId: ', this.globoId);
+        console.log('token: ', this.token);
         if (!this.globoId) {
           return reject(new Error('globoId is empty'));
         }
@@ -96,7 +103,8 @@ class ApiService {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            GloboId: this.globoId,
+            Authorization: 'Bearer ' + this.token,
+            'X-Globo-Id': this.globoId,
           },
         })
           .then((response) => response.json())
@@ -123,6 +131,7 @@ class ApiService {
     if (this.apiURL != null && this.apiURL != '') {
       const promise = new Promise<boolean>((resolve, reject) => {
         console.log('globoId: ', this.globoId);
+        console.log('token: ', this.token);
         if (!this.globoId) {
           return reject(new Error('globoId is empty'));
         }
@@ -131,7 +140,8 @@ class ApiService {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            GloboId: this.globoId,
+            Authorization: 'Bearer ' + this.token,
+            'X-Globo-Id': this.globoId,
           },
         })
           .then((response) => response.json())
@@ -149,4 +159,12 @@ class ApiService {
   }
 }
 
-export default ApiService;
+let instance: ApiService;
+
+export function getApi(token: string, globoId: string): ApiService {
+  if (!instance) {
+    instance = new ApiService(token, globoId);
+  }
+  return instance;
+}
+export default getApi;
