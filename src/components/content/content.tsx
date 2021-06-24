@@ -1,9 +1,5 @@
 import * as React from 'react';
-import { ContainerBox } from './content.style';
-import { OnboardingPage } from '@/pages/onboarding';
-import { DocumentSelectionPage } from '@/pages/document-selection';
-import { UploadInstructionsPage } from '@/pages/upload-instructions';
-import { StatusPage } from '@/pages/status';
+
 import { UploadBox } from '@/pages/upload';
 
 export const Content: React.FC = () => {
