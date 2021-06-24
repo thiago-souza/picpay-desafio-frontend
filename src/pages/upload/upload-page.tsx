@@ -8,7 +8,7 @@ import {
   LabelSubtitleButton,
   LabelSubtitle,
 } from '@/components/label';
-import { ContentSideBar } from '@/components/content/content.style';
+import { ContentSideBar } from '@/pages/main/styles/content.style';
 import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
 import { AuthContext } from '@/components/auth-context';
 

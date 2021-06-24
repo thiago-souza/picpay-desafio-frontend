@@ -5,7 +5,7 @@ import {
   ContentBox,
   ContentItems,
   ContentSideBar,
-} from '@/components/content/content.style';
+} from '@/pages/main/styles/content.style';
 import ApprovedIcon from '@/assets/icons/approved-icon.png';
 
 interface IStatusPage {

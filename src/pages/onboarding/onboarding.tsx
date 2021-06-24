@@ -8,11 +8,11 @@ import {
   LabelSubtitle,
   LabelTitle,
 } from '@/components/label';
-import { ContentBox } from '@/components/content/content.style';
+import { ContentBox } from '@/pages/main/styles/content.style';
 import {
   ContentItems,
   ContentSideBar,
-} from '@/components/content/content.style';
+} from '@/pages/main/styles/content.style';
 import RgCpfIcon from '@/assets/icons/rg-cpf-icon.png';
 import RgIcon from '@/assets/icons/rg-icon.png';
 import SecurityIcon from '@/assets/icons/security-icon.png';
