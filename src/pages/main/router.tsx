@@ -29,7 +29,7 @@ const Router: React.FC<IDocumentSelectionPage> = (
             <UploadBox selectedDoc={props.selectedDoc} />
           </>
         </Route>
-        <Route path="/status">
+        <Route path="/status/:type">
           <StatusPage />
         </Route>
         <Route path="/">

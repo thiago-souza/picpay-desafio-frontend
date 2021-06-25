@@ -30,10 +30,21 @@ export const OnboardingPage: React.FC = () => {
 
   React.useEffect(() => {
     const status = async () => {
-      if (values.globoId != null && values.globoId != '') {
-        const apiService = getApi(values.token, values.globoId);
-        const sts = await apiService.getStatus();
-        console.log(sts);
+      if (values.token == null || values.token == '') {
+        console.log('token is empty');
+        return;
+      }
+
+      if (values.globoId == null || values.globoId == '') {
+        console.log('globoId is empty');
+        return;
+      }
+
+      const apiService = getApi(values.token, values.globoId);
+      const statusResponse = await apiService.getStatus();
+      console.log('status response: ', statusResponse);
+      if (statusResponse.statusCode != 200) {
+        history.push(`/status/${statusResponse.data.status}`);
       }
     };
     status();

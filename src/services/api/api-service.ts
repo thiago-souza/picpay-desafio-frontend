@@ -14,36 +14,27 @@ class ApiService {
   */
   async getAttachments(): Promise<any> {
     if (this.apiURL != null && this.apiURL != '') {
-      const promise = new Promise<boolean>((resolve, reject) => {
-        console.log('globoId: ', this.globoId);
-        console.log('token: ', this.token);
+      const promise = new Promise<any>((resolve, reject) => {
         if (!this.globoId) {
           return reject(new Error('globoId is empty'));
+        }
+        if (!this.token) {
+          return reject(new Error('token is empty'));
         }
 
         fetch(`${this.apiURL}/accounts/attachments`, {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.token,
             'X-Globo-Id': this.globoId,
           },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log('data: ', data);
-            return resolve(data);
+        }).then((response) => {
+          response.json().then((json) => {
+            return resolve({ statusCode: response.status, data: json });
           });
+        });
       });
 
-      /*
-        RESPOSTA:
-        {
-          'type': 'CNH/RG/RNE',
-          'content': '123',
-          'status': 'ACTIVE/INACTIVE/APPROVED/REJECTED'
-        }
-      */
       return promise;
     }
   }
@@ -51,14 +42,21 @@ class ApiService {
   /*
     Upload attachment document
   */
-  async upload(attach: any): Promise<any> {
+  async upload(attach: string, type: string): Promise<any> {
     if (this.apiURL != null && this.apiURL != '') {
-      const promise = new Promise<boolean>((resolve, reject) => {
-        console.log('globoId: ', this.globoId);
-        console.log('token: ', this.token);
+      const promise = new Promise<any>((resolve, reject) => {
         if (!this.globoId) {
           return reject(new Error('globoId is empty'));
         }
+        if (!this.token) {
+          return reject(new Error('token is empty'));
+        }
+
+        const req = {
+          content: attach,
+          type: type,
+        };
+        console.log('req: ', JSON.stringify);
 
         fetch(`${this.apiURL}/accounts/attachments`, {
           method: 'POST',
@@ -67,22 +65,16 @@ class ApiService {
             Authorization: 'Bearer ' + this.token,
             'X-Globo-Id': this.globoId,
           },
-          body: JSON.stringify({ attach }),
+          body: JSON.stringify(req),
         })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log('data: ', data);
-            return resolve(data);
-          });
+          .then((response) => {
+            response.json();
+            return resolve(response.status);
+          })
+          .then((data) => console.log('data: ', data))
+          .catch((error) => console.log('error: ', error));
       });
 
-      /*
-        {
-          'body': {},
-          'statusCode': 'ACCEPTED',
-          'statusCodeValue': 0,
-        }
-      */
       return promise;
     }
   }
@@ -92,34 +84,27 @@ class ApiService {
   */
   async getStatus(): Promise<any> {
     if (this.apiURL != null && this.apiURL != '') {
-      const promise = new Promise<boolean>((resolve, reject) => {
-        console.log('globoId: ', this.globoId);
-        console.log('token: ', this.token);
+      const promise = new Promise<any>((resolve, reject) => {
         if (!this.globoId) {
           return reject(new Error('globoId is empty'));
+        }
+        if (!this.token) {
+          return reject(new Error('token is empty'));
         }
 
         fetch(`${this.apiURL}/accounts/status`, {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json',
             Authorization: 'Bearer ' + this.token,
             'X-Globo-Id': this.globoId,
           },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log('data: ', data);
-            return resolve(data);
+        }).then((response) => {
+          response.json().then((json) => {
+            return resolve({ statusCode: response.status, data: json });
           });
+        });
       });
 
-      /*
-        RESPOSTA:
-        {
-          'status': 'CREATED/IN PROCESS/APPROVED/REJECTED/SUSPECTED/CANCELED'
-        }
-      */
       return promise;
     }
   }
@@ -129,11 +114,12 @@ class ApiService {
   */
   async verify(): Promise<any> {
     if (this.apiURL != null && this.apiURL != '') {
-      const promise = new Promise<boolean>((resolve, reject) => {
-        console.log('globoId: ', this.globoId);
-        console.log('token: ', this.token);
+      const promise = new Promise<any>((resolve, reject) => {
         if (!this.globoId) {
           return reject(new Error('globoId is empty'));
+        }
+        if (!this.token) {
+          return reject(new Error('token is empty'));
         }
 
         fetch(`${this.apiURL}/accounts/verify`, {
@@ -144,16 +130,14 @@ class ApiService {
             'X-Globo-Id': this.globoId,
           },
         })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log('data: ', data);
-            return resolve(data);
-          });
+          .then((response) => {
+            response.json();
+            return resolve(response.status);
+          })
+          .then((data) => console.log('data: ', data))
+          .catch((error) => console.log('error: ', error));
       });
 
-      /*
-        201 - Created
-      */
       return promise;
     }
   }
