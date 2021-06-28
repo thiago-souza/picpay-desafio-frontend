@@ -18,6 +18,7 @@ import RgIcon from '@/assets/icons/rg-icon.png';
 import SecurityIcon from '@/assets/icons/security-icon.png';
 import { AuthContext } from '@/components/auth-context';
 import getApi from '@/services/api/api-service';
+import getRedirectUrl from '@/services/navigation';
 
 export const OnboardingPage: React.FC = () => {
   const history = useHistory();
@@ -43,8 +44,10 @@ export const OnboardingPage: React.FC = () => {
       const apiService = getApi(values.token, values.globoId);
       const statusResponse = await apiService.getStatus();
       console.log('status response: ', statusResponse);
-      if (statusResponse.statusCode == 200) {
-        // history.push(`/status/${statusResponse.data.status}`);
+      let url = getRedirectUrl('accounts/status', statusResponse.statusCode);
+      if (url === 'status/') {
+        url = `${url}${statusResponse.data.status}`;
+        history.push(url);
       }
     };
     status();

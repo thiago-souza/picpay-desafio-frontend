@@ -49,7 +49,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
           const target = event.currentTarget as HTMLInputElement;
           target.value = '';
         }}
-        // accept="image/png, image/jpeg, image/bmp"
+        accept="image/png, image/jpeg, image/bmp"
       />
       <label htmlFor={id}>{children}</label>
 
