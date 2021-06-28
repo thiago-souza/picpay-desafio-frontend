@@ -20,9 +20,12 @@ const mapRedirects = {
     417: 'upload',
   },
 };
+
 export default function getRedirectUrl(
   endpoint: string,
   status: number,
 ): string {
-  return mapRedirects[endpoint][status];
+  const url = mapRedirects[endpoint][status];
+
+  return url ? url : 'error';
 }
