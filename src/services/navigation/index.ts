@@ -4,7 +4,7 @@ const mapRedirects = {
     200: 'status/', // statusCode -> rota navegacao FE
     204: 'upload',
   },
-  '/accounts/attachments': {
+  'accounts/attachments': {
     201: 'verify',
     202: 'status/IN_PROCESS',
     412: 'status/SUSPECTED',

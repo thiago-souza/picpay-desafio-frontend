@@ -22,9 +22,7 @@ interface IUploadBox {
 export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   console.log('🚀 selectedDoc', selectedDoc);
   const history = useHistory();
-  const [frontFileData, setFrontFileData] = React.useState<FileData | null>(
-    null,
-  );
+  const [frontFileData, setFrontFileData] = React.useState<FileData | null>(null);
   const [backFileData, setBackFileData] = React.useState<FileData | null>(null);
   const authData = React.useContext(AuthContext);
 
