@@ -99,9 +99,12 @@ class ApiService {
             'X-Globo-Id': this.globoId,
           },
         }).then((response) => {
-          response.json().then((json) => {
-            return resolve({ statusCode: response.status, data: json });
-          });
+          if (response.status == 200) {
+            response.json().then((json) => {
+              return resolve({ statusCode: response.status, data: json });
+            });
+          }
+          return resolve({ statusCode: response.status });
         });
       });
 
