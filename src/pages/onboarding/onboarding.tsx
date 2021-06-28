@@ -44,7 +44,7 @@ export const OnboardingPage: React.FC = () => {
       const statusResponse = await apiService.getStatus();
       console.log('status response: ', statusResponse);
       if (statusResponse.statusCode == 200) {
-        history.push(`/status/${statusResponse.data.status}`);
+        // history.push(`/status/${statusResponse.data.status}`);
       }
     };
     status();
