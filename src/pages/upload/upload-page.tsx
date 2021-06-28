@@ -12,6 +12,7 @@ import { ContentSideBar } from '@/pages/main/styles/content.style';
 import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
 import { AuthContext } from '@/components/auth-context';
 import getApi from '@/services/api/api-service';
+import { FileData, getFileDataFromEvent } from '@/services/files';
 
 interface IUploadBox {
   selectedDoc: string;
@@ -20,6 +21,8 @@ interface IUploadBox {
 export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   console.log('🚀 selectedDoc', selectedDoc);
   const history = useHistory();
+  const [frontFileData, setFrontFileData] = React.useState<FileData>(null);
+  const [backFileData, setBackFileData] = React.useState<FileData>(null);
   const [base64Front, setBase64Front] = React.useState('');
   const [base64Back, setBase64Back] = React.useState('');
   const [frontInfo, setFrontInfo] = React.useState([]);
