@@ -2,7 +2,6 @@ module.exports = {
   extends: [
     'plugin:react/recommended', // Uses the recommended rules from @eslint-plugin-react
     'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
-    'plugin:prettier/recommended', // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors.
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -23,12 +22,6 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
-    'prettier/prettier': [
-      'error',
-      {
-        endOfLine: 'auto',
-      },
-    ],
     indent: ['error', 2, { SwitchCase: 1 }],
   },
 };

@@ -13,6 +13,7 @@ import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
 import { AuthContext } from '@/components/auth-context';
 import getApi from '@/services/api/api-service';
 import { FileData } from '@/services/files';
+import getRedirectUrl from '@/services/navigation';
 
 interface IUploadBox {
   selectedDoc: string;
@@ -21,7 +22,9 @@ interface IUploadBox {
 export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   console.log('🚀 selectedDoc', selectedDoc);
   const history = useHistory();
-  const [frontFileData, setFrontFileData] = React.useState<FileData | null>(null);
+  const [frontFileData, setFrontFileData] = React.useState<FileData | null>(
+    null,
+  );
   const [backFileData, setBackFileData] = React.useState<FileData | null>(null);
   const authData = React.useContext(AuthContext);
 
@@ -58,77 +61,37 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   };
 
   const uploadFiles = async () => {
-    //   if (values.token == null || values.globoId == null) {
-    //     console.log('token ou globoid não informados');
-    //     return;
-    //   }
-    //   const apiService = getApi(values.token, values.globoId);
-    //   //console.log('base64 front: ', base64Front);
-    //   //console.log('base64 back: ', base64Back);
-    //   // ENVIAR FRONT E BACK
-    //   const uploadRes = await apiService.upload(base64Front, selectedDoc);
-    //   handleUploadResponse(uploadRes);
+    if (authData.token == null || authData.globoId == null) {
+      console.log('token ou globoid não informados');
+      return;
+    }
+    const apiService = getApi(authData.token, authData.globoId);
+    console.log('base64 front: ', frontFileData?.base64);
+    // ENVIAR FRONT E BACK
+    if (frontFileData) {
+      const uploadRes = await apiService.upload(frontFileData.base64, selectedDoc);
+      handleUploadResponse(uploadRes);
+    }
   };
 
-  // const handleUploadResponse = async (status: number) => {
-  //   const apiService = getApi(values.token, values.globoId);
+  const handleUploadResponse = async (status: number) => {
+    const apiService = getApi(authData.token, authData.globoId);
 
-  //   switch (status) {
-  //     case 201:
-  //       console.log('201 - CREATED - Upload realizado com sucesso');
-  //       const verifyRes1 = await apiService.verify();
-  //       handleVerifyResponse(verifyRes1);
-  //       break;
-  //     case 202:
-  //       console.log(
-  //         '202 - ACCEPTED - Upload realizado com sucesso mas ja existia upload antigo ou rejeitado',
-  //       );
-  //       const verifyRes2 = await apiService.verify();
-  //       handleVerifyResponse(verifyRes2);
-  //       break;
-  //     case 412:
-  //       console.log('412 - PRECONDITION FAILED - Processo já reprovado');
-  //       history.push(`/status/SUSPECTED`); //passar status junto
-  //       break;
-  //     case 417:
-  //       console.log('417 - EXPECTATION FAILED - Processo já aprovado');
-  //       history.push(`/status/APPROVED`); //passar status junto
-  //       break;
-  //     case 423:
-  //       console.log('423 - LOCKED - Processo em andamento');
-  //       history.push(`/status/IN_PROCESS`); //passar status junto
-  //       break;
-  //     default:
-  //       console.log('UNKNOW ERROR');
-  //   }
-  // };
+    const url = getRedirectUrl('accounts/attachments', status);
 
-  // const handleVerifyResponse = (status: number) => {
-  //   switch (status) {
-  //     case 200:
-  //       console.log('200 - APPROVED - Processo já aprovado');
-  //       break;
-  //     case 201:
-  //       console.log('201 - CREATED - Processo já em andamento');
-  //       break;
-  //     case 202:
-  //       console.log(
-  //         '202 - ACCEPTED - Status IN_PROCESS e processo IdWall iniciado',
-  //       );
-  //       break;
-  //     case 409:
-  //       console.log('409 - CONFLICTED - Usuário não existe no mysql');
-  //       break;
-  //     case 412:
-  //       console.log('412 - PRECONDITION FAILED - Processo já reprovado');
-  //       break;
-  //     case 417:
-  //       console.log('417 - EXPECTATION FAILED - Anexos ainda não enviados');
-  //       break;
-  //     default:
-  //       console.log('UNKNOW ERROR');
-  //   }
-  // };
+    if (url === 'verify') {
+      const verifyRes1 = await apiService.verify();
+      handleVerifyResponse(verifyRes1);
+    } else {
+      history.push(url);
+    }
+  };
+
+  const handleVerifyResponse = (status: number) => {
+    const url = getRedirectUrl('accounts/verify', status);
+
+    history.push(url);
+  };
 
   const isDisabled = frontFileData === null && backFileData === null;
 
