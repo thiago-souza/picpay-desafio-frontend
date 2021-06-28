@@ -1,7 +1,13 @@
 import React from 'react';
 import GloboIdClient from '@/services/globoid/globoid-service';
 
-export const AuthContext = React.createContext({
+interface IAuth {
+  globoId: string;
+  token: string;
+  email: string;
+}
+
+export const AuthContext = React.createContext<IAuth>({
   globoId: '',
   token: '',
   email: '',
@@ -9,9 +15,7 @@ export const AuthContext = React.createContext({
 
 // eslint-disable-next-line react/prop-types
 export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
-  const [glbId, setGlbId] = React.useState('');
-  const [token, setToken] = React.useState('');
-  const [email, setEmail] = React.useState('');
+  const [authData, setAuthData] = React.useState<IAuth>({});
 
   React.useEffect(() => {
     const login = async () => {
@@ -22,11 +26,13 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
         await client.loginGloboID();
       } else {
         const tokenResponse = await client.getTokens();
-        setToken(tokenResponse.access_token);
 
         const userInfo = await client.loadUserInfo();
-        setGlbId(userInfo.globo_id);
-        setEmail(userInfo.email);
+        setAuthData({
+          globoId: userInfo.globo_id,
+          token: tokenResponse.access_token,
+          email: userInfo.email,
+        });
       }
     };
     login();
@@ -34,7 +40,11 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ globoId: glbId, token: token, email: email }}
+      value={{
+        globoId: authData.globoId,
+        token: authData.token,
+        email: authData.email,
+      }}
     >
       {children}
     </AuthContext.Provider>

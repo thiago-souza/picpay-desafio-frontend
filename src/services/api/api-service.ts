@@ -103,8 +103,9 @@ class ApiService {
             response.json().then((json) => {
               return resolve({ statusCode: response.status, data: json });
             });
+          } else {
+            return resolve({ statusCode: response.status });
           }
-          return resolve({ statusCode: response.status });
         });
       });
 
