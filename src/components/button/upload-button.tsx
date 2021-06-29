@@ -54,7 +54,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
       <label htmlFor={id}>{children}</label>
 
       <DeleteButtonStyle
-        onClick={() => callbackDeleteFile(id)}
+        onClick={() => callbackDeleteFile()}
         className={` ${props.fileData?.base64 ? 'active' : ''}`}
       >
         <img src={DeleteIcon} />

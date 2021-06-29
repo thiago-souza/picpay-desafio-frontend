@@ -1,7 +1,10 @@
-const mapRedirects = {
-  //rota da api
+interface rotes {
+  [endpoint: string]: any;
+}
+
+const mapRedirects: rotes = {
   'accounts/status': {
-    200: 'status/', // statusCode -> rota navegacao FE
+    200: 'status/',
     204: 'upload',
   },
   'accounts/attachments': {
@@ -26,6 +29,5 @@ export default function getRedirectUrl(
   status: number,
 ): string {
   const url = mapRedirects[endpoint][status];
-
   return url ? url : 'error';
 }

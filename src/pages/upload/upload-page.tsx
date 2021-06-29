@@ -22,14 +22,14 @@ interface IUploadBox {
 export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   console.log('🚀 selectedDoc', selectedDoc);
   const history = useHistory();
-  const [frontFileData, setFrontFileData] = React.useState<FileData | null>(null);
-  const [backFileData, setBackFileData] = React.useState<FileData | null>(null);
+  const [frontFileData, setFrontFileData] = React.useState<FileData | undefined>(undefined);
+  const [backFileData, setBackFileData] = React.useState<FileData | undefined>(undefined);
   const authData = React.useContext(AuthContext);
 
-  const handleDeleteFront = () => setFrontFileData(null);
-  const handleDeleteBack = () => setBackFileData(null);
+  const handleDeleteFront = () => setFrontFileData(undefined);
+  const handleDeleteBack = () => setBackFileData(undefined);
 
-  const handleFileExtensionError = (fileData: FileData | null) => {
+  const handleFileExtensionError = (fileData: FileData | undefined) => {
     if (fileData?.validExtension) return fileData.name;
 
     return 'Ops! A foto enviada é diferente do formato ou tamanho aceito. Envie uma nova foto.';

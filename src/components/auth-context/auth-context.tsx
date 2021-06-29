@@ -15,7 +15,7 @@ export const AuthContext = React.createContext<IAuth>({
 
 // eslint-disable-next-line react/prop-types
 export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
-  const [authData, setAuthData] = React.useState<IAuth>({});
+  const [authData, setAuthData] = React.useState<IAuth | null>(null);
 
   React.useEffect(() => {
     const login = async () => {
@@ -41,9 +41,9 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        globoId: authData.globoId,
-        token: authData.token,
-        email: authData.email,
+        globoId: authData != null ? authData.globoId : '',
+        token: authData != null ? authData.token : '',
+        email: authData != null ? authData.email : '',
       }}
     >
       {children}
