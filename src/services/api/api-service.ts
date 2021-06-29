@@ -2,11 +2,16 @@ class ApiService {
   apiURL: string;
   token: string;
   globoId: string;
+  header: any;
 
   constructor(token: string, globoId: string) {
     this.apiURL = process.env.API_URL || '';
     this.token = token;
     this.globoId = globoId;
+    this.header = {
+      Authorization: 'Bearer ' + this.token,
+      'X-Globo-Id': this.globoId,
+    };
   }
 
   /*
@@ -24,10 +29,7 @@ class ApiService {
 
         fetch(`${this.apiURL}/accounts/attachments`, {
           method: 'GET',
-          headers: {
-            Authorization: 'Bearer ' + this.token,
-            'X-Globo-Id': this.globoId,
-          },
+          headers: this.header,
         }).then((response) => {
           response.json().then((json) => {
             return resolve({ statusCode: response.status, data: json });
@@ -60,11 +62,7 @@ class ApiService {
 
         fetch(`${this.apiURL}/accounts/attachments`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.token,
-            'X-Globo-Id': this.globoId,
-          },
+          headers: this.header + { 'Content-Type': 'application/json' },
           body: JSON.stringify(req),
         })
           .then((response) => {
@@ -94,10 +92,7 @@ class ApiService {
 
         fetch(`${this.apiURL}/accounts/status`, {
           method: 'GET',
-          headers: {
-            Authorization: 'Bearer ' + this.token,
-            'X-Globo-Id': this.globoId,
-          },
+          headers: this.header,
         }).then((response) => {
           if (response.status == 200) {
             response.json().then((json) => {
@@ -128,11 +123,7 @@ class ApiService {
 
         fetch(`${this.apiURL}/accounts/verify`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + this.token,
-            'X-Globo-Id': this.globoId,
-          },
+          headers: this.header + { 'Content-Type': 'application/json' },
         })
           .then((response) => {
             response.json();
