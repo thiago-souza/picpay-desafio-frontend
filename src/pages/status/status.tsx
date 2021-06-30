@@ -113,28 +113,28 @@ export const StatusPage: React.FC = () => {
   );
 
   const renderTypeStatus = () => {
-    switch (type.toD UpperCase()) {
+    switch (type.toUpperCase()) {
       case 'IN_PROCESS':
-return renderInProcess;
+        return renderInProcess;
       case 'APPROVED':
-return renderApproved;
+        return renderApproved;
       case 'SUSPECTED':
-return renderSuspected;
+        return renderSuspected;
       case 'REJECTED':
-return renderRejected;
+        return renderRejected;
       case 'ERROR':
-return renderError;
+        return renderError;
       default:
-return renderError;
+        return renderError;
     }
   };
 
-return (
-  <ContentItems>
-    {renderTypeStatus()}
-    <ContentSideBar>
-      <CustomButton callbackEvent={handleCallBack}>Continuar</CustomButton>
-    </ContentSideBar>
-  </ContentItems>
-);
+  return (
+    <ContentItems>
+      {renderTypeStatus()}
+      <ContentSideBar>
+        <CustomButton callbackEvent={handleCallBack}>Continuar</CustomButton>
+      </ContentSideBar>
+    </ContentItems>
+  );
 };
