@@ -5,20 +5,12 @@ import {
   ContentBox,
   ContentItems,
   ContentSideBar,
-} from '@/components/content/content.style';
+} from '@/pages/main/styles/content.style';
 import ApprovedIcon from '@/assets/icons/approved-icon.png';
+import { useParams } from 'react-router-dom';
 
-interface IStatusPage {
-  goToPageCallback: (n: number) => void;
-  type?: string;
-}
-
-export const StatusPage: React.FC<IStatusPage> = (props: IStatusPage) => {
-  const { goToPageCallback, type = 'approved' } = props;
-  console.log(
-    '🚀 ~ file: status.tsx ~ line 18 ~ goToPageCallback',
-    goToPageCallback,
-  );
+export const StatusPage: React.FC = () => {
+  const { type } = useParams<{ type: string }>();
 
   const handleCallBack = () => {
     alert('Em construção');
@@ -41,7 +33,7 @@ export const StatusPage: React.FC<IStatusPage> = (props: IStatusPage) => {
     </>
   );
 
-  const renderWaiting = (
+  const renderInProcess = (
     <>
       <LabelTitle>
         Enviado! Aguarde a verificação das suas informações.
@@ -57,14 +49,32 @@ export const StatusPage: React.FC<IStatusPage> = (props: IStatusPage) => {
     </>
   );
 
+  const renderSuspected = (
+    <>
+      <LabelTitle>Ops! Você não pode jogar Cartola Express.</LabelTitle>
+      <LabelDescription>
+        Os seus dados não foram aprovados pois existem pendências em seu nome.
+      </LabelDescription>
+    </>
+  );
+
+  const renderNotFound = (
+    <>
+      <LabelTitle>NOT FOUND!</LabelTitle>
+      <LabelDescription>NOT FOUND!</LabelDescription>
+    </>
+  );
+
   const renderTypeStatus = () => {
-    switch (type) {
-      case 'approved':
+    switch (type.toUpperCase()) {
+      case 'IN_PROCESS':
+        return renderInProcess;
+      case 'APPROVED':
         return renderApproved;
-      case 'waiting':
-        return renderWaiting;
+      case 'SUSPECTED':
+        return renderSuspected;
       default:
-        return renderApproved;
+        return renderNotFound;
     }
   };
 

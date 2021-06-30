@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useHistory } from 'react-router-dom';
 import { CustomButton } from '@/components/button';
 import { CustomLink } from '@/components/link';
 import { DocumentBox } from '@/components/document';
@@ -7,32 +8,50 @@ import {
   LabelSubtitle,
   LabelTitle,
 } from '@/components/label';
-import { ContentBox } from '@/components/content/content.style';
+import { ContentBox } from '@/pages/main/styles/content.style';
 import {
   ContentItems,
   ContentSideBar,
-} from '@/components/content/content.style';
+} from '@/pages/main/styles/content.style';
 import RgCpfIcon from '@/assets/icons/rg-cpf-icon.png';
 import RgIcon from '@/assets/icons/rg-icon.png';
 import SecurityIcon from '@/assets/icons/security-icon.png';
 import { AuthContext } from '@/components/auth-context';
+import getApi from '@/services/api/api-service';
+import getRedirectUrl from '@/services/navigation';
 
-interface IOnboardingPage {
-  goToPageCallback: (n: number) => void;
-}
-
-export const OnboardingPage: React.FC<IOnboardingPage> = (
-  props: IOnboardingPage,
-) => {
-  const token = React.useContext(AuthContext);
-  console.log('ONBOARDING - TOKEN: ', token);
-
-  const { goToPageCallback } = props;
+export const OnboardingPage: React.FC = () => {
+  const history = useHistory();
+  const values = React.useContext(AuthContext);
 
   //TODO: Modificar a função para o link correto, assim que o mesmo for definido.
   const linkCallback = () => {
     alert('To be defined');
   };
+
+  React.useEffect(() => {
+    const status = async () => {
+      if (values.token == null || values.token == '') {
+        console.log('token is empty');
+        return;
+      }
+
+      if (values.globoId == null || values.globoId == '') {
+        console.log('globoId is empty');
+        return;
+      }
+
+      const apiService = getApi(values.token, values.globoId);
+      const statusResponse = await apiService.getStatus();
+      console.log('status response: ', statusResponse);
+      let url = getRedirectUrl('accounts/status', statusResponse.statusCode);
+      if (url === 'status/') {
+        url = `${url}${statusResponse.data.status}`;
+        history.push(url);
+      }
+    };
+    status();
+  }, [values]);
 
   return (
     <ContentItems>
@@ -55,7 +74,7 @@ export const OnboardingPage: React.FC<IOnboardingPage> = (
         <DocumentBox icon={SecurityIcon}>
           Relaxa, seus dados estão seguros com a gente.
         </DocumentBox>
-        <CustomButton callbackEvent={() => goToPageCallback(1)}>
+        <CustomButton callbackEvent={() => history.push('select')}>
           Verificar identidade agora
         </CustomButton>
         <CustomLink callbackEvent={linkCallback}>Deixar pra depois</CustomLink>
