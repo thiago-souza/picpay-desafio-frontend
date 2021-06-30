@@ -96,13 +96,14 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
 
     if (url === 'verify') {
       //const verifyRes = await apiService.verify();
+      //handleVerifyResponse(verifyRes);
       //'201 - CREATED - REDIRECIONAR PARA AGUARDE - ok'
       //'200 - APPROVED - REDIRECIONAR PARA APROVADO - ok'
       //'202 - ACCEPTED - REDIRECIONAR PARA AGUARDE - ok'
       //'409 - CONFLICTED - REDIRECIONAR PAR UPLOAD - ok'
       //'412 - PRECONDITION FAILED - REDIRECIONAR PARA REPROVADO - ok'
       //'417 - EXPECTATION FAILED - REDIRECIONAR PARA UPLOAD - ok'
-      handleVerifyResponse(201);
+      handleVerifyResponse(201); //MOCKED - RETIRAR
     } else {
       history.push(url);
     }
