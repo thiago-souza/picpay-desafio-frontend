@@ -8,6 +8,11 @@ import {
 } from '@/pages/main/styles/content.style';
 import ApprovedIcon from '@/assets/icons/approved-icon.png';
 import { useParams } from 'react-router-dom';
+import {
+  LabelTitleCentered,
+  LabelDescriptionCentered,
+  LabelDescBoxCentered,
+} from './status.style';
 
 export const StatusPage: React.FC = () => {
   const { type } = useParams<{ type: string }>();
@@ -22,68 +27,114 @@ export const StatusPage: React.FC = () => {
         <img src={ApprovedIcon} />
       </LabelCenter>
       <ContentBox>
-        <LabelTitle>
-          Tudo certo! Agora você pode usar o Cartola Express completo.
-        </LabelTitle>
-        <LabelDescription>
+        <LabelTitleCentered>
+          Pronto! Tudo certo com suas informações
+        </LabelTitleCentered>
+        <LabelDescriptionCentered>
           Você jé pode fazer transações para participar dos desafios do game.
           Divirta-se!
-        </LabelDescription>
+        </LabelDescriptionCentered>
       </ContentBox>
     </>
   );
 
   const renderInProcess = (
     <>
-      <LabelTitle>
+      <LabelCenter>
+        <img src={ApprovedIcon} />
+      </LabelCenter>
+      <LabelTitleCentered>
         Enviado! Aguarde a verificação das suas informações.
+      </LabelTitleCentered>
+      <LabelDescBoxCentered>
+        Agora que você enviou as fotas, Vamos verificar suas informações.
+        Fique de olho no seu e-mail, em algumas horas te enviaremos um retorno
+      </LabelDescBoxCentered>
+      <LabelDescriptionCentered>
+        Vamos enviar um e-mail para <b>email@email.com</b>
+        assim que tivermos novas informações.
+      </LabelDescriptionCentered>
+    </>
+  );
+
+  const renderRejected = (
+    <>
+      <LabelCenter>
+        <img src={ApprovedIcon} />
+      </LabelCenter>
+      <LabelTitle>
+        Opa, precisamos que você envie
+        fotos do seu documento
+        novamente.
       </LabelTitle>
       <LabelDescription>
-        Em breve, você vai poder realizar transações e participar das disputas
-        do Cartola Express.
-      </LabelDescription>
-      <LabelDescription>
-        Vamos enviar um e-mail para (email@email.com) assim que tivermos novas
-        informações.
+        A foto do documento enviado está ilegível.
+        Precisamos que você faça o envio novamente.
       </LabelDescription>
     </>
   );
 
   const renderSuspected = (
     <>
-      <LabelTitle>Ops! Você não pode jogar Cartola Express.</LabelTitle>
-      <LabelDescription>
-        Os seus dados não foram aprovados pois existem pendências em seu nome.
-      </LabelDescription>
+      <LabelCenter>
+        <img src={ApprovedIcon} />
+      </LabelCenter>
+      <ContentBox>
+        <LabelTitle>
+          Poxa, você não pode entrar em
+          campo...
+        </LabelTitle>
+        <LabelDescription>
+          Identificamos pendências em seu nome, e para
+          jogar Cartola Express é preciso regularizar
+          sua situação.
+        </LabelDescription>
+      </ContentBox>
     </>
   );
 
-  const renderNotFound = (
+  const renderError = (
     <>
-      <LabelTitle>NOT FOUND!</LabelTitle>
-      <LabelDescription>NOT FOUND!</LabelDescription>
+      <LabelCenter>
+        <img src={ApprovedIcon} />
+      </LabelCenter>
+      <ContentBox>
+        <LabelTitle>
+          Ops! Isso não deveria ter
+          acontecido.
+        </LabelTitle>
+        <LabelDescription>
+          Por favor, tente novamente. Se o problema
+          persistir, entre em contato com o nosso
+          antendimento.
+        </LabelDescription>
+      </ContentBox>
     </>
   );
 
   const renderTypeStatus = () => {
-    switch (type.toUpperCase()) {
+    switch (type.toD UpperCase()) {
       case 'IN_PROCESS':
-        return renderInProcess;
+return renderInProcess;
       case 'APPROVED':
-        return renderApproved;
+return renderApproved;
       case 'SUSPECTED':
-        return renderSuspected;
+return renderSuspected;
+      case 'REJECTED':
+return renderRejected;
+      case 'ERROR':
+return renderError;
       default:
-        return renderNotFound;
+return renderError;
     }
   };
 
-  return (
-    <ContentItems>
-      {renderTypeStatus()}
-      <ContentSideBar>
-        <CustomButton callbackEvent={handleCallBack}>Continuar</CustomButton>
-      </ContentSideBar>
-    </ContentItems>
-  );
+return (
+  <ContentItems>
+    {renderTypeStatus()}
+    <ContentSideBar>
+      <CustomButton callbackEvent={handleCallBack}>Continuar</CustomButton>
+    </ContentSideBar>
+  </ContentItems>
+);
 };
