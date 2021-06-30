@@ -35,22 +35,25 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     return 'Ops! A foto enviada é diferente do formato ou tamanho aceito. Envie uma nova foto.';
   };
 
-  const handleFileExtensionClass = (extensionValid?: boolean) => {
-    return extensionValid ? '' : 'error';
+  const handleFileExtensionClass = (fileData?: FileData) => {
+    if (fileData === undefined)
+      return '';
+
+    return fileData?.validExtension ? '' : 'error';
   };
 
   const uploadLabels = (tipoArquivo: string) => {
     const fileData = tipoArquivo === 'Frente' ? frontFileData : backFileData;
     return (
       <>
-        <LabelSubtitleButton className={` ${fileData !== null ? 'tiny' : ''}`}>
-          {fileData === null && <img src={UploadIcon} />}
-          {fileData?.validExtension && `${tipoArquivo} do documento`}
+        <LabelSubtitleButton className={` ${fileData !== undefined ? 'tiny' : ''}`}>
+          {fileData === undefined && <img src={UploadIcon} />}
+          {`${tipoArquivo} do documento`}
         </LabelSubtitleButton>
         <LabelDescriptionButton
-          className={`${handleFileExtensionClass(fileData?.validExtension)}`}
+          className={`${handleFileExtensionClass(fileData)}`}
         >
-          {fileData === null
+          {fileData === undefined
             ? 'Clique para enviar ou arraste a foto aqui.'
             : handleFileExtensionError(fileData)}
         </LabelDescriptionButton>
@@ -65,33 +68,55 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     }
     const apiService = getApi(authData.token, authData.globoId);
     console.log('base64 front: ', frontFileData?.base64);
-    // ENVIAR FRONT E BACK
+    console.log('base64 back: ', backFileData?.base64);
+
     if (frontFileData) {
-      const uploadRes = await apiService.upload(frontFileData.base64, selectedDoc);
-      handleUploadResponse(uploadRes);
+      //const uploadFrontRes = await apiService.upload(frontFileData.base64, selectedDoc);
+
+      //if (uploadFrontRes == 201 && backFileData) {
+      //  const uploadBackRes = await apiService.upload(backFileData.base64, selectedDoc);
+      //  handleUploadResponse(uploadBackRes);
+      //  return;
+      //}
+
+      //handleUploadResponse(uploadFrontRes);
+      // '201 - CREATED - VERIFY - ok'
+      // '202 - ACCEPTED - AGUARDE - ok'
+      // '412 - PRECONDITION FAILED - REJEITADO - ok'
+      // '417 - EXPECTATION FAILED - APROVADO - ok'
+      // '423 - LOCKED - AGUARDE - ok'
+      handleUploadResponse(201); //MOCKED - RETIRAR
     }
   };
 
   const handleUploadResponse = async (status: number) => {
+    console.log("RESPONSE UPLOAD: ", status);
     const apiService = getApi(authData.token, authData.globoId);
-
     const url = getRedirectUrl('accounts/attachments', status);
 
     if (url === 'verify') {
-      const verifyRes1 = await apiService.verify();
-      handleVerifyResponse(verifyRes1);
+      //const verifyRes = await apiService.verify();
+      //'201 - CREATED - REDIRECIONAR PARA AGUARDE - ok'
+      //'200 - APPROVED - REDIRECIONAR PARA APROVADO - ok'
+      //'202 - ACCEPTED - REDIRECIONAR PARA AGUARDE - ok'
+      //'409 - CONFLICTED - REDIRECIONAR PAR UPLOAD - ok'
+      //'412 - PRECONDITION FAILED - REDIRECIONAR PARA REPROVADO - ok'
+      //'417 - EXPECTATION FAILED - REDIRECIONAR PARA UPLOAD - ok'
+      handleVerifyResponse(201);
     } else {
       history.push(url);
     }
   };
 
   const handleVerifyResponse = (status: number) => {
+    console.log("RESPONSE VERIFY: ", status);
+
     const url = getRedirectUrl('accounts/verify', status);
 
     history.push(url);
   };
 
-  const isDisabled = frontFileData === null && backFileData === null;
+  const isDisabled = frontFileData === undefined && backFileData === undefined;
 
   return (
     <>

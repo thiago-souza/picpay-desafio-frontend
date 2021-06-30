@@ -58,15 +58,16 @@ class ApiService {
           content: attach,
           type: type,
         };
-        console.log('req: ', JSON.stringify);
 
         fetch(`${this.apiURL}/accounts/attachments`, {
           method: 'POST',
-          headers: this.header + { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            ...this.header,
+          },
           body: JSON.stringify(req),
         })
           .then((response) => {
-            response.json();
             return resolve(response.status);
           })
           .then((data) => console.log('data: ', data))
@@ -123,10 +124,12 @@ class ApiService {
 
         fetch(`${this.apiURL}/accounts/verify`, {
           method: 'POST',
-          headers: this.header + { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            ...this.header,
+          },
         })
           .then((response) => {
-            response.json();
             return resolve(response.status);
           })
           .then((data) => console.log('data: ', data))
