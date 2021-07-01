@@ -3,6 +3,7 @@ const theme = {
     orange: '#FF7400',
     black: '#000000',
     grey: '#666666',
+    greyLight: '#999999',
     white: '#FFFFFF',
     red: '#C22D1E',
   },

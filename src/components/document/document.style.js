@@ -51,4 +51,8 @@ export const DocumentTextStyle = styled.div`
   margin-left: 18px;
   color: ${(props) => props.theme.colors.grey};
   font-size: ${(props) => props.theme.fontSizes.small};
+
+  &.light {
+    color: ${(props) => props.theme.colors.greyLight};
+  }
 `;
