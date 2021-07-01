@@ -56,3 +56,25 @@ export const DocumentTextStyle = styled.div`
     color: ${(props) => props.theme.colors.greyLight};
   }
 `;
+
+export const DocumentLabelStyle = styled.div`
+  color: ${(props) => props.theme.colors.green};
+  font-size: 0.75rem;
+  margin: 3px 0;
+`;
+
+export const DocumentCardTextStyle = styled.div`
+  text-align: left;
+`;
+
+export const DocumentTextIconStyle = styled.div`
+  display: flex;
+  margin-left: 18px;
+  align-items: center;
+
+  img {
+    margin-right: 4px;
+    width: 16px;
+    height: 16px;
+  }
+`;

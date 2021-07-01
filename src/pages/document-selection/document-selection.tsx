@@ -32,6 +32,7 @@ export const DocumentSelectionPage: React.FC<IDocumentSelectionPage> = (
         <DocumentCardBox
           callbackEvent={() => handleSelectCallback('CNH')}
           icon={CnhIcon}
+          label={'Análise mais rápida (até 1 min)'}
         >
           CNH
         </DocumentCardBox>
