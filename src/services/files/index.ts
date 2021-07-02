@@ -8,6 +8,13 @@ export const isFileExtensionValid = (fileName: string): boolean => {
   return allowedExtensions.includes(fileEx);
 };
 
+export const isFileSizeValid = (fileSize: number): boolean => {
+  const sizeInMB = (fileSize / (1024 * 1024)).toFixed(2);
+  console.log(`${sizeInMB} MB`);
+
+  return fileSize < 3145728; //3mb
+};
+
 export const fileContentsToBase64 = (binaryString: string) => {
   return btoa(binaryString);
 };
@@ -33,18 +40,13 @@ export const getFileDataFromEvent = (
         reader.onload = (readerEvt: any) => {
           const binaryString = readerEvt.target.result;
           const base64 = fileContentsToBase64(binaryString);
-          const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
-          console.log(`${sizeInMB} MB`);
-
-          const validSize = file.size < 3145728; //3mb
-          console.log('Valid Size: ', validSize);
 
           const fileData: FileData = {
             name: file.name,
             size: file.size,
-            validExtension: isFileExtensionValid(file.name),
             base64,
-            validSize: validSize,
+            validExtension: isFileExtensionValid(file.name),
+            validSize: isFileSizeValid(file.size),
           };
 
           resolve(fileData);
