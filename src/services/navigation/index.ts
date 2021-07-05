@@ -29,5 +29,5 @@ export default function getRedirectUrl(
   status: number,
 ): string {
   const url = mapRedirects[endpoint][status];
-  return url ? url : 'error';
+  return url ? url : 'status/error';
 }

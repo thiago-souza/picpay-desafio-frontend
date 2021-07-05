@@ -32,9 +32,6 @@ const Router: React.FC<IDocumentSelectionPage> = (
         <Route path="/status/:type">
           <StatusPage />
         </Route>
-        <Route path="/error">
-          <h1>Deu erro!</h1>
-        </Route>
         <Route path="/">
           <OnboardingPage />
         </Route>

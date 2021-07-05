@@ -23,7 +23,7 @@ import getRedirectUrl from '@/services/navigation';
 
 export const OnboardingPage: React.FC = () => {
   const history = useHistory();
-  const values = React.useContext(AuthContext);
+  const authData = React.useContext(AuthContext);
   const [isLoading, setIsLoading] = React.useState(false);
 
   //TODO: Modificar a função para o link correto, assim que o mesmo for definido.
@@ -34,33 +34,39 @@ export const OnboardingPage: React.FC = () => {
   React.useEffect(() => {
     const status = async () => {
       setIsLoading(false);
-      if (values.token == null || values.token == '') {
+      if (authData.token == null || authData.token == '') {
         console.log('token is empty');
         return;
       }
 
-      if (values.globoId == null || values.globoId == '') {
+      if (authData.globoId == null || authData.globoId == '') {
         console.log('globoId is empty');
         return;
       }
 
-      const apiService = getApi(values.token, values.globoId);
+      const apiService = getApi(authData.token, authData.globoId);
       setIsLoading(true);
       const statusResponse = await apiService.getStatus();
       console.log('status response: ', statusResponse);
       let url = getRedirectUrl('accounts/status', statusResponse.statusCode);
       if (url === 'status/') {
-        url = `${url}${statusResponse.data.status}`;
+        url = `${url}${statusResponse.data.status.toLowerCase()}`;
         setIsLoading(false);
         history.push(url);
       }
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 950);
     };
     status();
-  }, [values]);
+  }, [authData]);
 
   return (
     <>
-      <LoadingComponent isShow={isLoading} />
+      <LoadingComponent isShow={isLoading}>
+        Obtendo informações...
+      </LoadingComponent>
       <ContentItems>
         <LabelTitle>Verifique sua identidade</LabelTitle>
         <LabelDescription>
