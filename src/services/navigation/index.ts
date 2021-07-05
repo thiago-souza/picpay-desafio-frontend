@@ -10,16 +10,16 @@ const mapRedirects: rotes = {
   'accounts/attachments': {
     201: 'verify',
     202: 'verify',
-    412: 'status/SUSPECTED',
-    417: 'status/APPROVED',
-    423: 'status/IN_PROCESS',
+    412: 'status/suspected',
+    417: 'status/approved',
+    423: 'status/in_process',
   },
   'accounts/verify': {
-    200: 'status/APPROVED',
-    201: 'status/IN_PROCESS',
-    202: 'status/IN_PROCESS',
+    200: 'status/approved',
+    201: 'status/in_process',
+    202: 'status/in_process',
     409: 'upload',
-    412: 'status/SUSPECTED',
+    412: 'status/suspected',
     417: 'upload',
   },
 };
