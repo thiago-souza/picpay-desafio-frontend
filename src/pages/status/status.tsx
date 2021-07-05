@@ -28,6 +28,14 @@ export const StatusPage: React.FC = () => {
     alert('Em construção');
   };
 
+  const renderActive = (
+    <>
+      <LabelCenter>
+        ACTIVE
+      </LabelCenter>
+    </>
+  );
+
   const renderApproved = (
     <>
       <LabelCenter>
@@ -122,6 +130,8 @@ export const StatusPage: React.FC = () => {
     switch (type.toLowerCase()) {
       case 'in_process':
         return renderInProcess;
+      case 'active':
+        return renderActive;
       case 'approved':
         return renderApproved;
       case 'suspected':
