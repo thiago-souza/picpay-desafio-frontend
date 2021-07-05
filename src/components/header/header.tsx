@@ -5,6 +5,7 @@ import backIcon from '@/assets/icons/back-icon.png';
 
 export const Header: React.FC = () => {
   const [currentLocation, setCurrentLocation] = React.useState('/');
+  console.log('current location: ', currentLocation);
 
   React.useEffect(() => {
     setCurrentLocation(window.location.pathname);
