@@ -16,7 +16,7 @@ interface IUploadButton {
 }
 
 export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
-  const { id = 'file', children, callbackDeleteFile } = props;
+  const { id = 'file', children, callbackDeleteFile, fileData } = props;
 
   const isValid = props.fileData?.validExtension;
   const contentValues = {
@@ -51,7 +51,9 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
         }}
         accept="image/png, image/jpeg, image/bmp"
       />
-      <label htmlFor={id}>{children}</label>
+      <label className={`${fileData ? 'trim' : ''}`} htmlFor={id}>
+        {children}
+      </label>
 
       <DeleteButtonStyle
         onClick={() => callbackDeleteFile()}

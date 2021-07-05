@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from '@/pages/main/styles';
 
 const LabelTitle = styled.h2`
   font-family: ${(props) => props.theme.fonts.proximaNovaBold};
@@ -26,6 +27,7 @@ const LabelSubtitleButton = styled(LabelSubtitle)`
 
   &.tiny {
     font-family: ${(props) => props.theme.fonts.proximaNova};
+    font-weight: normal;
   }
 `;
 
@@ -56,6 +58,17 @@ const LabelDescriptionButton = styled(LabelDescription)`
   &.error {
     color: ${(props) => props.theme.colors.red};
     text-align: center;
+  }
+
+  &.bold {
+    color: #000000;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @media ${device.tablet} {
+      max-width: 250px;
+    }
   }
 `;
 

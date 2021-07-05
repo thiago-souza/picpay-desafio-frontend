@@ -47,18 +47,20 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     return fileData?.validExtension ? '' : 'error';
   };
 
-  const uploadLabels = (tipoArquivo: string) => {
-    const fileData = tipoArquivo === 'Frente' ? frontFileData : backFileData;
+  const uploadLabels = (fileType: string) => {
+    const fileData = fileType === 'Frente' ? frontFileData : backFileData;
     return (
       <>
         <LabelSubtitleButton
           className={` ${fileData !== undefined ? 'tiny' : ''}`}
         >
           {fileData === undefined && <img src={UploadIcon} />}
-          {`${tipoArquivo} do documento`}
+          {`${fileType} do documento`}
         </LabelSubtitleButton>
         <LabelDescriptionButton
-          className={`${handleFileExtensionClass(fileData)}`}
+          className={`${handleFileExtensionClass(fileData)} ${
+            fileData ? 'bold' : ''
+          }`}
         >
           {fileData === undefined
             ? 'Clique para enviar ou arraste a foto aqui.'
@@ -139,7 +141,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
 
   return (
     <>
-      <LoadingComponent isShow={isLoading} >
+      <LoadingComponent isShow={isLoading}>
         Enviando informações...
       </LoadingComponent>
       <ContentSideBar>

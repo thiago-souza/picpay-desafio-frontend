@@ -27,9 +27,8 @@ export const PrimaryButtonStyle = styled.div`
 
 export const UploadButtonStyle = styled.div`
   display: flex;
-  justify-content: space-around;
   align-items: center;
-
+  justify-content: center;
   max-width: 579px;
   width: 100%;
   height: 76px;
@@ -47,6 +46,7 @@ export const UploadButtonStyle = styled.div`
 
   @media ${device.tablet} {
     height: 96px;
+    justify-content: space-around;
   }
 
   input {
@@ -55,5 +55,11 @@ export const UploadButtonStyle = styled.div`
 
   label {
     cursor: pointer;
+    &.trim {
+      h3,
+      p {
+        margin-bottom: 0;
+      }
+    }
   }
 `;

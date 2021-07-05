@@ -71,7 +71,7 @@ export const ImgPreviewStyle = styled.div`
 
 export const DeleteButtonStyle = styled.button`
   display: none;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 
   min-height: 40px;
@@ -85,5 +85,9 @@ export const DeleteButtonStyle = styled.button`
 
   &.active {
     display: flex;
+  }
+
+  @media ${device.tablet} {
+    justify-content: flex-end;
   }
 `;
