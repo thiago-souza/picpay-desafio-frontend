@@ -16,9 +16,12 @@ import {
   LabelTitleCentered,
   LabelDescriptionCentered,
   LabelDescBoxCentered,
+  LabelBold
 } from './status.style';
+import { AuthContext } from '@/components/auth-context';
 
 export const StatusPage: React.FC = () => {
+  const authData = React.useContext(AuthContext);
   const { type } = useParams<{ type: string }>();
 
   const handleCallBack = () => {
@@ -56,7 +59,7 @@ export const StatusPage: React.FC = () => {
           Fique de olho no seu e-mail, em algumas horas te enviaremos um retorno
         </LabelDescBoxCentered>
         <LabelDescriptionCentered>
-          Vamos enviar um e-mail para <strong>email@email.com</strong> assim
+          Vamos enviar um e-mail para <LabelBold>{authData.email}</LabelBold> assim
           que tivermos novas informações.
         </LabelDescriptionCentered>
       </ContentBox>
@@ -116,16 +119,16 @@ export const StatusPage: React.FC = () => {
   );
 
   const renderTypeStatus = () => {
-    switch (type.toUpperCase()) {
-      case 'IN_PROCESS':
+    switch (type.toLowerCase()) {
+      case 'in_process':
         return renderInProcess;
-      case 'APPROVED':
+      case 'approved':
         return renderApproved;
-      case 'SUSPECTED':
+      case 'suspected':
         return renderSuspected;
-      case 'REJECTED':
+      case 'rejected':
         return renderRejected;
-      case 'ERROR':
+      case 'error':
         return renderError;
       default:
         return renderError;
