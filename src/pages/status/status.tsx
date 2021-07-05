@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CustomButton } from '@/components/button';
+import { ButtonLink } from '@/components/button';
 import { LabelCenter } from '@/components/label';
 import {
   ContentBox,
@@ -16,7 +16,7 @@ import {
   LabelTitleCentered,
   LabelDescriptionCentered,
   LabelDescBoxCentered,
-  LabelBold
+  LabelBold,
 } from './status.style';
 import { AuthContext } from '@/components/auth-context';
 
@@ -25,7 +25,7 @@ export const StatusPage: React.FC = () => {
   const { type } = useParams<{ type: string }>();
 
   const handleCallBack = () => {
-    alert('Em construção');
+    location.assign('https://cartolaexpress.df.globo.com/contests');
   };
 
   const renderApproved = (
@@ -38,8 +38,8 @@ export const StatusPage: React.FC = () => {
           Pronto! Tudo certo com suas informações
         </LabelTitleCentered>
         <LabelDescriptionCentered>
-          Você já pode realizar transações e participar dos desafios do
-          Cartola Express!
+          Você já pode realizar transações e participar dos desafios do Cartola
+          Express!
         </LabelDescriptionCentered>
       </ContentBox>
     </>
@@ -59,8 +59,8 @@ export const StatusPage: React.FC = () => {
           Fique de olho no seu e-mail, em algumas horas te enviaremos um retorno
         </LabelDescBoxCentered>
         <LabelDescriptionCentered>
-          Vamos enviar um e-mail para <LabelBold>{authData.email}</LabelBold> assim
-          que tivermos novas informações.
+          Vamos enviar um e-mail para <LabelBold>{authData.email}</LabelBold>{' '}
+          assim que tivermos novas informações.
         </LabelDescriptionCentered>
       </ContentBox>
     </>
@@ -76,8 +76,8 @@ export const StatusPage: React.FC = () => {
           Opa, precisamos que você envie fotos do seu documento novamente.
         </LabelTitleCentered>
         <LabelDescriptionCentered>
-          A foto do documento enviado está ilegível.
-          Precisamos que você faça o envio novamente.
+          A foto do documento enviado está ilegível. Precisamos que você faça o
+          envio novamente.
         </LabelDescriptionCentered>
       </ContentBox>
     </>
@@ -93,9 +93,8 @@ export const StatusPage: React.FC = () => {
           Poxa, você não pode entrar em campo...
         </LabelTitleCentered>
         <LabelDescriptionCentered>
-          Identificamos pendências em seu nome, e para
-          jogar Cartola Express é preciso regularizar
-          sua situação.
+          Identificamos pendências em seu nome, e para jogar Cartola Express é
+          preciso regularizar sua situação.
         </LabelDescriptionCentered>
       </ContentBox>
     </>
@@ -111,8 +110,8 @@ export const StatusPage: React.FC = () => {
           Ops! Isso não deveria ter acontecido.
         </LabelTitleCentered>
         <LabelDescriptionCentered>
-          Por favor, tente novamente. Se o problema persistir,
-          entre em contato com o nosso antendimento.
+          Por favor, tente novamente. Se o problema persistir, entre em contato
+          com o nosso antendimento.
         </LabelDescriptionCentered>
       </ContentBox>
     </>
@@ -139,7 +138,9 @@ export const StatusPage: React.FC = () => {
     <ContentItems>
       {renderTypeStatus()}
       <ContentSideBar>
-        <CustomButton callbackEvent={handleCallBack}>Continuar</CustomButton>
+        <ButtonLink goToUrl="https://cartolaexpress.df.globo.com/contests">
+          VOLTAR AO LOBBY
+        </ButtonLink>
       </ContentSideBar>
     </ContentItems>
   );
