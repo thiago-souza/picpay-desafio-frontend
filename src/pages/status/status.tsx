@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { CustomButton } from '@/components/button';
 import { LabelCenter } from '@/components/label';
+import { DocumentCardBox } from '@/components/document';
 import {
   ContentBox,
   ContentItems,
@@ -20,6 +21,7 @@ import {
 } from './status.style';
 import { AuthContext } from '@/components/auth-context';
 
+
 export const StatusPage: React.FC = () => {
   const authData = React.useContext(AuthContext);
   const { type } = useParams<{ type: string }>();
@@ -30,9 +32,16 @@ export const StatusPage: React.FC = () => {
 
   const renderActive = (
     <>
-      <LabelCenter>
-        ACTIVE
-      </LabelCenter>
+      <ContentBox>
+        <LabelTitleCentered>
+          Opa! Precisamos de novas fotos
+        </LabelTitleCentered>
+        <LabelDescriptionCentered>
+          A foto do documento enviado está ilegível. Precisamos
+          que você faça o envio novamente.
+        </LabelDescriptionCentered>
+        <DocumentCardBox icon={ApprovedIcon}>CPF: Problema nas fotos</DocumentCardBox>
+      </ContentBox>
     </>
   );
 
@@ -65,6 +74,26 @@ export const StatusPage: React.FC = () => {
         <LabelDescBoxCentered>
           Agora que você enviou as fotos, Vamos verificar suas informações.
           Fique de olho no seu e-mail, em algumas horas te enviaremos um retorno
+        </LabelDescBoxCentered>
+        <LabelDescriptionCentered>
+          Vamos enviar um e-mail para <LabelBold>{authData.email}</LabelBold> assim
+          que tivermos novas informações.
+        </LabelDescriptionCentered>
+      </ContentBox>
+    </>
+  );
+
+  const renderStillInProcess = (
+    <>
+      <LabelCenter>
+        <img src={InProcessIcon} />
+      </LabelCenter>
+      <ContentBox>
+        <LabelTitleCentered>
+          Opa, ainda estamos verificando suas informações.
+        </LabelTitleCentered>
+        <LabelDescBoxCentered>
+          Aguarde um pouco mais! Em breve você poderá conferir se deu tudo certo.
         </LabelDescBoxCentered>
         <LabelDescriptionCentered>
           Vamos enviar um e-mail para <LabelBold>{authData.email}</LabelBold> assim
@@ -130,6 +159,8 @@ export const StatusPage: React.FC = () => {
     switch (type.toLowerCase()) {
       case 'in_process':
         return renderInProcess;
+      case 'still_in_process':
+        return renderStillInProcess;
       case 'active':
         return renderActive;
       case 'approved':

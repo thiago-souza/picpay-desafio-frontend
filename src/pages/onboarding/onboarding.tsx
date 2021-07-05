@@ -50,7 +50,11 @@ export const OnboardingPage: React.FC = () => {
       console.log('status response: ', statusResponse);
       let url = getRedirectUrl('accounts/status', statusResponse.statusCode);
       if (url === 'status/') {
-        url = `${url}${statusResponse.data.status.toLowerCase()}`;
+        if (statusResponse.data.status.toLowerCase() == 'in_process')
+          url = `${url}still_${statusResponse.data.status.toLowerCase()}`;
+        else
+          url = `${url}${statusResponse.data.status.toLowerCase()}`;
+        //url = `${url}active`;
         setIsLoading(false);
         history.push(url);
       }

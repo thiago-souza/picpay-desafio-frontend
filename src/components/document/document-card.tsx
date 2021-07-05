@@ -14,7 +14,7 @@ interface IDocumentBox {
   icon: string;
   children: React.ReactNode;
   label?: string;
-  callbackEvent: () => void;
+  callbackEvent?: () => void;
 }
 
 export const DocumentCardBox = ({
