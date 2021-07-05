@@ -60,7 +60,7 @@ export const ImgPreviewStyle = styled.div`
 
     width: 24px;
     height: 24px;
-    font-size: ${(props) => props.theme.fontSizes.small};
+    font-size: ${(props) => props.theme.fontSizes.large};
 
     background: #ffffff;
     border: 1px solid rgba(213, 213, 213, 0.2);

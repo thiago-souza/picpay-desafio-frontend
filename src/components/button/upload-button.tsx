@@ -20,7 +20,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
 
   const isValid = props.fileData?.validExtension;
   const contentValues = {
-    content: isValid ? '✓' : 'x',
+    content: isValid ? '✓' : '!',
     color: isValid ? '#26ca5e' : '#c22d1e',
   };
 
@@ -49,7 +49,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
           const target = event.currentTarget as HTMLInputElement;
           target.value = '';
         }}
-        accept="image/png, image/jpeg, image/bmp"
+        // accept="image/png, image/jpeg, image/bmp"
       />
       <label className={`${fileData ? 'trim' : ''}`} htmlFor={id}>
         {children}

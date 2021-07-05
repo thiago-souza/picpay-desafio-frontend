@@ -3,7 +3,7 @@ import { device } from '@/pages/main/styles';
 
 export const HeaderStyle = styled.header`
   display: flex;
-  width: 100vw;
+  width: 100%;
   height: 90px;
   padding-top: 16px;
 
