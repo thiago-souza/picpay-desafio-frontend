@@ -1,8 +1,8 @@
 // production config
 const { merge } = require('webpack-merge');
 const { resolve } = require('path');
-const webpack = require('webpack');
 const commonConfig = require('./common');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = merge(commonConfig, {
   mode: 'production',
@@ -14,10 +14,8 @@ module.exports = merge(commonConfig, {
   },
   devtool: 'source-map',
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.AMBIENTE': JSON.stringify('prod'),
-      'process.env.API_URL': JSON.stringify(' '),
-      'process.env.OIDC_KEY': JSON.stringify(' '),
+    new Dotenv({
+      path: './.env', // load this now instead of the ones in '.env'),
     }),
   ],
 });

@@ -2,6 +2,7 @@
 const { merge } = require('webpack-merge');
 const webpack = require('webpack');
 const commonConfig = require('./common');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = merge(commonConfig, {
   mode: 'development',
@@ -20,12 +21,8 @@ module.exports = merge(commonConfig, {
   devtool: 'cheap-module-source-map',
   plugins: [
     new webpack.HotModuleReplacementPlugin(), // enable HMR globally,
-    new webpack.DefinePlugin({
-      'process.env.AMBIENTE': JSON.stringify('dev'),
-      'process.env.API_URL': JSON.stringify(
-        'https://sce-accounts.mybackstage.qa.globoi.com',
-      ),
-      'process.env.OIDC_KEY': JSON.stringify('cartola-kyc@apps.globoid'),
+    new Dotenv({
+      path: './.env.development', // load this now instead of the ones in '.env'),
     }),
   ],
 });

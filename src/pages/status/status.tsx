@@ -24,10 +24,6 @@ export const StatusPage: React.FC = () => {
   const authData = React.useContext(AuthContext);
   const { type } = useParams<{ type: string }>();
 
-  const handleCallBack = () => {
-    location.assign('https://cartolaexpress.df.globo.com/contests');
-  };
-
   const renderApproved = (
     <>
       <LabelCenter>
@@ -134,13 +130,13 @@ export const StatusPage: React.FC = () => {
     }
   };
 
+  const urlExpressDF = process.env.EXPRESS_DF;
+
   return (
     <ContentItems>
       {renderTypeStatus()}
       <ContentSideBar>
-        <ButtonLink goToUrl="https://cartolaexpress.df.globo.com/contests">
-          VOLTAR AO LOBBY
-        </ButtonLink>
+        <ButtonLink goToUrl={urlExpressDF}>VOLTAR AO LOBBY</ButtonLink>
       </ContentSideBar>
     </ContentItems>
   );
