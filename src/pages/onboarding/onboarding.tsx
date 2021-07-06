@@ -54,7 +54,6 @@ export const OnboardingPage: React.FC = () => {
           url = `${url}still_${statusResponse.data.status.toLowerCase()}`;
         else
           url = `${url}${statusResponse.data.status.toLowerCase()}`;
-        //url = `${url}active`;
         setIsLoading(false);
         history.push(url);
       }
