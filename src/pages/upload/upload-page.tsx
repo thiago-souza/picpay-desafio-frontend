@@ -8,13 +8,16 @@ import {
   LabelSubtitleButton,
   LabelSubtitle,
 } from '@/components/label';
+import { NavigationBack } from '@/components/navigation/navigation-back';
 import { ContentSideBar } from '@/pages/main/styles/content.style';
-import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
+import { LoadingComponent } from '@/components/loading';
 import { AuthContext } from '@/components/auth-context';
-import getApi from '@/services/api/api-service';
+
 import { FileData } from '@/services/files';
 import getRedirectUrl from '@/services/navigation';
-import { LoadingComponent } from '../../components/loading';
+import getApi from '@/services/api/api-service';
+
+import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
 
 interface IUploadBox {
   selectedDoc: string;
@@ -145,6 +148,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
         Enviando informações...
       </LoadingComponent>
       <ContentSideBar>
+        <NavigationBack />
         <UploadBoxStyle>
           <LabelSubtitle>Upload do documento</LabelSubtitle>
           <LabelDescription>
