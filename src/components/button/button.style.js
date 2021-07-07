@@ -25,11 +25,32 @@ export const PrimaryButtonStyle = styled.div`
   }
 `;
 
-export const UploadButtonStyle = styled.div`
+export const LinkButtonStyle = styled.a`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 
+  max-width: 360px;
+  width: 100%;
+  height: 40px;
+
+  background: ${(props) => props.theme.colors.orange};
+  border: 0;
+  border-radius: 4px;
+  box-shadow: inset 0px -1.5px 0px rgba(0, 0, 0, 0.15);
+
+  text-decoration: none;
+  font-family: ${(props) => props.theme.fonts.proximaNovaBold};
+  text-transform: uppercase;
+  color: ${(props) => props.theme.colors.white};
+  font-size: ${(props) => props.theme.fontSizes.tiny};
+  cursor: pointer;
+`;
+
+export const UploadButtonStyle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   max-width: 579px;
   width: 100%;
   height: 76px;
@@ -47,6 +68,7 @@ export const UploadButtonStyle = styled.div`
 
   @media ${device.tablet} {
     height: 96px;
+    justify-content: space-around;
   }
 
   input {
@@ -55,5 +77,11 @@ export const UploadButtonStyle = styled.div`
 
   label {
     cursor: pointer;
+    &.trim {
+      h3,
+      p {
+        margin-bottom: 0;
+      }
+    }
   }
 `;

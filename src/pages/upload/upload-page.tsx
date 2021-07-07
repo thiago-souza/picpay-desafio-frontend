@@ -8,13 +8,16 @@ import {
   LabelSubtitleButton,
   LabelSubtitle,
 } from '@/components/label';
+import { NavigationBack } from '@/components/navigation/navigation-back';
 import { ContentSideBar } from '@/pages/main/styles/content.style';
-import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
+import { LoadingComponent } from '@/components/loading';
 import { AuthContext } from '@/components/auth-context';
-import getApi from '@/services/api/api-service';
+
 import { FileData } from '@/services/files';
 import getRedirectUrl from '@/services/navigation';
-import { LoadingComponent } from '../../components/loading';
+import getApi from '@/services/api/api-service';
+
+import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
 
 interface IUploadBox {
   selectedDoc: string;
@@ -47,18 +50,20 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     return fileData?.validExtension ? '' : 'error';
   };
 
-  const uploadLabels = (tipoArquivo: string) => {
-    const fileData = tipoArquivo === 'Frente' ? frontFileData : backFileData;
+  const uploadLabels = (fileType: string) => {
+    const fileData = fileType === 'Frente' ? frontFileData : backFileData;
     return (
       <>
         <LabelSubtitleButton
           className={` ${fileData !== undefined ? 'tiny' : ''}`}
         >
           {fileData === undefined && <img src={UploadIcon} />}
-          {`${tipoArquivo} do documento`}
+          {`${fileType} do documento`}
         </LabelSubtitleButton>
         <LabelDescriptionButton
-          className={`${handleFileExtensionClass(fileData)}`}
+          className={`${handleFileExtensionClass(fileData)} ${
+            fileData ? 'bold' : ''
+          }`}
         >
           {fileData === undefined
             ? 'Clique para enviar ou arraste a foto aqui.'
@@ -139,10 +144,11 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
 
   return (
     <>
-      <LoadingComponent isShow={isLoading} >
+      <LoadingComponent isShow={isLoading}>
         Enviando informações...
       </LoadingComponent>
       <ContentSideBar>
+        <NavigationBack />
         <UploadBoxStyle>
           <LabelSubtitle>Upload do documento</LabelSubtitle>
           <LabelDescription>

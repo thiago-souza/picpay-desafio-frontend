@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CustomButton } from '@/components/button';
+import { ButtonLink } from '@/components/button';
 import { LabelCenter } from '@/components/label';
 import { DocumentCardBox } from '@/components/document';
 import {
@@ -29,6 +29,7 @@ export const StatusPage: React.FC = () => {
   const [docType, setDocType] = React.useState('');
   const { type } = useParams<{ type: string }>();
 
+<<<<<<< HEAD
   const handleCallBack = () => {
     alert('Em construção');
   };
@@ -48,6 +49,8 @@ export const StatusPage: React.FC = () => {
     </>
   );
 
+=======
+>>>>>>> ajustes-de-layout
   const renderApproved = (
     <>
       <LabelCenter>
@@ -81,6 +84,7 @@ export const StatusPage: React.FC = () => {
         <LabelDescriptionCentered>
           Vamos enviar um e-mail para <LabelBold>{authData.email}</LabelBold>{' '}
           assim que tivermos novas informações.
+<<<<<<< HEAD
         </LabelDescriptionCentered>
       </ContentBox>
     </>
@@ -102,6 +106,8 @@ export const StatusPage: React.FC = () => {
         <LabelDescriptionCentered>
           Vamos enviar um e-mail para <LabelBold>{authData.email}</LabelBold>{' '}
           assim que tivermos novas informações.
+=======
+>>>>>>> ajustes-de-layout
         </LabelDescriptionCentered>
       </ContentBox>
     </>
@@ -187,11 +193,13 @@ export const StatusPage: React.FC = () => {
     }
   };
 
+  const urlExpressDF = process.env.EXPRESS_DF;
+
   return (
     <ContentItems>
       {renderTypeStatus()}
       <ContentSideBar>
-        <CustomButton callbackEvent={handleCallBack}>Continuar</CustomButton>
+        <ButtonLink goToUrl={urlExpressDF}>VOLTAR AO LOBBY</ButtonLink>
       </ContentSideBar>
     </ContentItems>
   );

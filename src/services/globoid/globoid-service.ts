@@ -18,7 +18,7 @@ class GloboIdClient {
       await window.glb.globoIdClientMap.initNewGloboIdClient({
         clientId: this.clientId,
         resource: this.clientId,
-        url: 'https://id.qa.globoi.com/auth',
+        url: process.env.GLOBO_ID_AUTH,
         redirectUri: window.location.href.replace(/#.*$/, ''),
         sessionManagement: 'token',
       });
