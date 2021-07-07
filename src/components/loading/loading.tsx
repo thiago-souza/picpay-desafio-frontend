@@ -10,7 +10,7 @@ import { LabelCenter } from '@/components/label';
 
 export const LoadingComponent: React.FC<Props> = ({
   isShow = false,
-  children
+  children,
 }: Props) => {
   return isShow ? (
     <ContainerLoading>
