@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const portNumber = 8888;
+const portNumber = process.env.PORT;
 const sourceDir = 'dist';
 
 app.use(express.static(sourceDir));
