@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Wrapper, Header, StyledModal, CloseButton, Content, Backdrop } from './modal.style';
+import { Wrapper, CloseButton, Content, Backdrop } from './modal.style';
 
 export interface ModalProps {
   isShown?: boolean;
@@ -15,17 +15,13 @@ export const Modal: React.FC<ModalProps> = ({
 }: ModalProps) => {
 
   const modal = (
-    <React.Fragment>
+    <>
       <Backdrop />
       <Wrapper>
-        <StyledModal>
-          <Header>
-            <CloseButton onClick={hide}>X</CloseButton>
-          </Header>
-          <Content>{children}</Content>
-        </StyledModal>
+        <CloseButton onClick={hide}>X</CloseButton>
+        <Content>{children}</Content>
       </Wrapper>
-    </React.Fragment>
+    </>
   );
 
   return isShown ? ReactDOM.createPortal(modal, document.body) : null;

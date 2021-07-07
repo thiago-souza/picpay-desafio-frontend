@@ -27,8 +27,13 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   const [frontFileData, setFrontFileData] = React.useState<FileData | undefined>(undefined);
   const [backFileData, setBackFileData] = React.useState<FileData | undefined>(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [isShownModal, setIsShownModal] = React.useState(false);
   const authData = React.useContext(AuthContext);
+
+  const modalState = {
+    front: false,
+    back: false,
+  }
+  const [mState, setMState] = React.useState(modalState);
 
   const handleDeleteFront = () => setFrontFileData(undefined);
   const handleDeleteBack = () => setBackFileData(undefined);
@@ -133,8 +138,12 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     history.push(url);
   };
 
-  const handleModal = () => {
-    setIsShownModal(!isShownModal);
+  const handleModal = (type: string) => {
+    if (type == 'front') {
+      setMState({ ...mState, front: !mState.front });
+      return;
+    }
+    setMState({ ...mState, back: !mState.back });
   }
 
   const isDisabled = frontFileData === undefined && backFileData === undefined;
@@ -158,7 +167,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             onFileSelected={setFrontFileData}
             callbackDeleteFile={handleDeleteFront}
             callbackImgPreview={() => handleModal('front')}
-            isShownModal={isShownModal}
+            isShownModal={mState.front}
           >
             {uploadLabels('Frente')}
           </UploadButton>
@@ -168,8 +177,8 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             fileData={backFileData}
             onFileSelected={setBackFileData}
             callbackDeleteFile={handleDeleteBack}
-            callbackImgPreview={() => handleModal()}
-            isShownModal={isShownModal}
+            callbackImgPreview={() => handleModal('back')}
+            isShownModal={mState.back}
           >
             {uploadLabels('Verso')}
           </UploadButton>

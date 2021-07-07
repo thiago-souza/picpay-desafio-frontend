@@ -7,6 +7,7 @@ export const UploadBoxStyle = styled.div`
   max-height: 316px;
   padding: 24px;
   margin-bottom: 32px;
+  cursor: pointer;
 
   border: 1px solid rgba(213, 213, 213, 0.3);
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
