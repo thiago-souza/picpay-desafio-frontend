@@ -10,7 +10,7 @@
     "lint:fix": "eslint './src/**/*.{js,ts,tsx}' --fix",
     "start": "npm run dev",
     "dev": "webpack serve --config=configs/webpack/dev.js",
-    "prod": "npm run build && node ./express.js",
+    "server": "node ./express.js",
     "test:dev": "jest --coverage --watchAll",
     "test": "jest --coverage",
     "prepare": "husky install"

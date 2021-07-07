@@ -19,6 +19,7 @@ class GloboIdClient {
         clientId: this.clientId,
         resource: this.clientId,
         url: process.env.GLOBO_ID_AUTH,
+        realm: process.env.REALM,
         redirectUri: window.location.href.replace(/#.*$/, ''),
         sessionManagement: 'token',
       });
