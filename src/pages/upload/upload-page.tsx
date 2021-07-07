@@ -12,11 +12,9 @@ import { NavigationBack } from '@/components/navigation/navigation-back';
 import { ContentSideBar } from '@/pages/main/styles/content.style';
 import { LoadingComponent } from '@/components/loading';
 import { AuthContext } from '@/components/auth-context';
-
 import { FileData } from '@/services/files';
 import getRedirectUrl from '@/services/navigation';
 import getApi from '@/services/api/api-service';
-
 import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
 
 interface IUploadBox {
@@ -26,13 +24,10 @@ interface IUploadBox {
 export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   console.log('🚀 selectedDoc', selectedDoc);
   const history = useHistory();
-  const [frontFileData, setFrontFileData] = React.useState<
-    FileData | undefined
-  >(undefined);
-  const [backFileData, setBackFileData] = React.useState<FileData | undefined>(
-    undefined,
-  );
+  const [frontFileData, setFrontFileData] = React.useState<FileData | undefined>(undefined);
+  const [backFileData, setBackFileData] = React.useState<FileData | undefined>(undefined);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isShownModal, setIsShownModal] = React.useState(false);
   const authData = React.useContext(AuthContext);
 
   const handleDeleteFront = () => setFrontFileData(undefined);
@@ -61,9 +56,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
           {`${fileType} do documento`}
         </LabelSubtitleButton>
         <LabelDescriptionButton
-          className={`${handleFileExtensionClass(fileData)} ${
-            fileData ? 'bold' : ''
-          }`}
+          className={`${handleFileExtensionClass(fileData)} ${fileData ? 'bold' : ''}`}
         >
           {fileData === undefined
             ? 'Clique para enviar ou arraste a foto aqui.'
@@ -140,6 +133,10 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     history.push(url);
   };
 
+  const handleModal = () => {
+    setIsShownModal(!isShownModal);
+  }
+
   const isDisabled = frontFileData === undefined && backFileData === undefined;
 
   return (
@@ -160,6 +157,8 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             fileData={frontFileData}
             onFileSelected={setFrontFileData}
             callbackDeleteFile={handleDeleteFront}
+            callbackImgPreview={() => handleModal('front')}
+            isShownModal={isShownModal}
           >
             {uploadLabels('Frente')}
           </UploadButton>
@@ -169,6 +168,8 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             fileData={backFileData}
             onFileSelected={setBackFileData}
             callbackDeleteFile={handleDeleteBack}
+            callbackImgPreview={() => handleModal()}
+            isShownModal={isShownModal}
           >
             {uploadLabels('Verso')}
           </UploadButton>

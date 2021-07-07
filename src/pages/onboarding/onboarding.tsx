@@ -26,6 +26,7 @@ export const OnboardingPage: React.FC = () => {
   const authData = React.useContext(AuthContext);
   const [isLoading, setIsLoading] = React.useState(false);
 
+
   //TODO: Modificar a função para o link correto, assim que o mesmo for definido.
   const linkCallback = () => {
     alert('To be defined');
