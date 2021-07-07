@@ -4,6 +4,7 @@
   "description": "Cartola KYC",
   "scripts": {
     "build": "npm run clean-dist && webpack --config=configs/webpack/prod.js",
+    "build:qa": "npm run clean-dist && webpack --config=configs/webpack/qa.js",
     "clean-dist": "rimraf dist/*",
     "lint": "eslint './src/**/*.{js,ts,tsx}' --quiet && tsc --project tsconfig.json",
     "lint:fix": "eslint './src/**/*.{js,ts,tsx}' --fix",

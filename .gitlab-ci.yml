@@ -66,16 +66,13 @@ deploy_dev:
     APP_NAME: cartola-kyc-dev
   when: manual
 
-deploy_qa:
+deploy_staging:
   stage: deploy
   extends: .deploy_tsuru
   variables:
-    APP_NAME: cartola-kyc-qa
+    APP_NAME: cartola-kyc-staging
   only:
-    refs:
-      - merge_requests
-    variables:
-      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
+    - release
 
 deploy_prod:
   stage: deploy
