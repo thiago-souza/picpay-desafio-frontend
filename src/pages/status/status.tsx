@@ -98,7 +98,6 @@ export const StatusPage: React.FC = () => {
         <LabelDescriptionCentered>
           Vamos enviar um e-mail para <LabelBold>{authData.email}</LabelBold>{' '}
           assim que tivermos novas informações.
-
         </LabelDescriptionCentered>
       </ContentBox>
     </>
