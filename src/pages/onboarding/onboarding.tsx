@@ -53,6 +53,8 @@ export const OnboardingPage: React.FC = () => {
       if (url === 'status/') {
         if (statusResponse.data.status.toLowerCase() == 'in_process')
           url = `${url}still_${statusResponse.data.status.toLowerCase()}`;
+        else if (statusResponse.data.status.toLowerCase() == 'created')
+          url = 'select';
         else
           url = `${url}${statusResponse.data.status.toLowerCase()}`;
         setIsLoading(false);

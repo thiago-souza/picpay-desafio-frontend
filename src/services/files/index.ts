@@ -8,6 +8,13 @@ export const isFileExtensionValid = (fileName: string): boolean => {
   return allowedExtensions.includes(fileEx);
 };
 
+export const isFileSizeValid = (fileSize: number): boolean => {
+  const sizeInMB = (fileSize / (1024 * 1024)).toFixed(2);
+  console.log(`${sizeInMB} MB`);
+
+  return fileSize < 3145728; //3mb
+};
+
 export const fileContentsToBase64 = (binaryString: string) => {
   return btoa(binaryString);
 };
@@ -17,6 +24,7 @@ export interface FileData {
   size: number;
   base64: string;
   validExtension: boolean;
+  validSize: boolean;
 }
 
 export const getFileDataFromEvent = (
@@ -36,8 +44,9 @@ export const getFileDataFromEvent = (
           const fileData: FileData = {
             name: file.name,
             size: file.size,
-            validExtension: isFileExtensionValid(file.name),
             base64,
+            validExtension: isFileExtensionValid(file.name),
+            validSize: isFileSizeValid(file.size),
           };
 
           resolve(fileData);
