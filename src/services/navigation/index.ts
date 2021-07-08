@@ -5,8 +5,8 @@ interface rotes {
 const mapRedirects: rotes = {
   'accounts/status': {
     200: 'status/',
-    201: 'upload',
-    204: 'upload',
+    201: 'select',
+    204: 'select',
   },
   'accounts/attachments': {
     201: 'verify',
@@ -19,9 +19,9 @@ const mapRedirects: rotes = {
     200: 'status/approved',
     201: 'status/in_process',
     202: 'status/in_process',
-    409: 'upload',
+    409: 'select',
     412: 'status/suspected',
-    417: 'upload',
+    417: 'select',
   },
 };
 
