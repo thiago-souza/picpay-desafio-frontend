@@ -26,28 +26,26 @@ interface IUploadBox {
 export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   console.log('🚀 selectedDoc', selectedDoc);
   const history = useHistory();
-  const [frontFileData, setFrontFileData] = React.useState<
-    FileData | undefined
-  >(undefined);
-  const [backFileData, setBackFileData] = React.useState<FileData | undefined>(
-    undefined,
-  );
+  const [frontFileData, setFrontFileData] = React.useState<FileData>();
+  const [backFileData, setBackFileData] = React.useState<FileData>();
   const [isLoading, setIsLoading] = React.useState(false);
   const authData = React.useContext(AuthContext);
 
   const handleDeleteFront = () => setFrontFileData(undefined);
   const handleDeleteBack = () => setBackFileData(undefined);
 
-  const handleFileExtensionError = (fileData: FileData | undefined) => {
-    if (fileData?.validExtension) return fileData.name;
+  const handleFileExtensionAndSizeError = (fileData: FileData | undefined) => {
+    if (fileData?.validExtension && fileData?.validSize) return fileData.name;
 
     return 'Ops! A foto enviada é diferente do formato ou tamanho aceito. Envie uma nova foto.';
   };
 
-  const handleFileExtensionClass = (fileData?: FileData) => {
+  const handleFileExtensionAndSizeClass = (fileData?: FileData) => {
     if (fileData === undefined) return '';
 
-    return fileData?.validExtension ? '' : 'error';
+    const valid = fileData?.validExtension && fileData?.validSize;
+
+    return valid ? '' : 'error';
   };
 
   const uploadLabels = (fileType: string) => {
@@ -61,13 +59,11 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
           {`${fileType} do documento`}
         </LabelSubtitleButton>
         <LabelDescriptionButton
-          className={`${handleFileExtensionClass(fileData)} ${
-            fileData ? 'bold' : ''
-          }`}
+          className={`${handleFileExtensionAndSizeClass(fileData)}`}
         >
           {fileData === undefined
             ? 'Clique para enviar ou arraste a foto aqui.'
-            : handleFileExtensionError(fileData)}
+            : handleFileExtensionAndSizeError(fileData)}
         </LabelDescriptionButton>
       </>
     );
@@ -140,7 +136,20 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     history.push(url);
   };
 
-  const isDisabled = frontFileData === undefined && backFileData === undefined;
+  const checkIsFileValid = ({ validExtension, validSize }: FileData) => {
+    return validExtension && validSize;
+  }
+
+  const isValidFiles = () => {
+    if (frontFileData == undefined)
+      return false;
+
+    if (frontFileData && backFileData == undefined)
+      return checkIsFileValid(frontFileData);
+
+    if (frontFileData && backFileData)
+      return checkIsFileValid(frontFileData) && checkIsFileValid(backFileData);
+  }
 
   return (
     <>
@@ -173,7 +182,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             {uploadLabels('Verso')}
           </UploadButton>
         </UploadBoxStyle>
-        <CustomButton disabled={isDisabled} callbackEvent={uploadFiles}>
+        <CustomButton disabled={!isValidFiles()} callbackEvent={uploadFiles}>
           Enviar documento
         </CustomButton>
       </ContentSideBar>
