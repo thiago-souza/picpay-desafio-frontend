@@ -24,13 +24,8 @@ interface IUploadBox {
 export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   console.log('🚀 selectedDoc', selectedDoc);
   const history = useHistory();
-<<<<<<< HEAD
-  const [frontFileData, setFrontFileData] = React.useState<FileData | undefined>(undefined);
-  const [backFileData, setBackFileData] = React.useState<FileData | undefined>(undefined);
-=======
   const [frontFileData, setFrontFileData] = React.useState<FileData>();
   const [backFileData, setBackFileData] = React.useState<FileData>();
->>>>>>> release
   const [isLoading, setIsLoading] = React.useState(false);
   const authData = React.useContext(AuthContext);
 
@@ -68,11 +63,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
           {`${fileType} do documento`}
         </LabelSubtitleButton>
         <LabelDescriptionButton
-<<<<<<< HEAD
-          className={`${handleFileExtensionClass(fileData)} ${fileData ? 'bold' : ''}`}
-=======
           className={`${handleFileExtensionAndSizeClass(fileData)}`}
->>>>>>> release
         >
           {fileData === undefined
             ? 'Clique para enviar ou arraste a foto aqui.'
@@ -149,7 +140,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     history.push(url);
   };
 
-<<<<<<< HEAD
   const handleModal = (type: string) => {
     if (type == 'front') {
       setMState({ ...mState, front: !mState.front });
@@ -159,7 +149,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   }
 
   const isDisabled = frontFileData === undefined && backFileData === undefined;
-=======
+
   const checkIsFileValid = ({ validExtension, validSize }: FileData) => {
     return validExtension && validSize;
   }
@@ -174,7 +164,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     if (frontFileData && backFileData)
       return checkIsFileValid(frontFileData) && checkIsFileValid(backFileData);
   }
->>>>>>> release
 
   return (
     <>
