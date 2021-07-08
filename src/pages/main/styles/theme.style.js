@@ -2,7 +2,9 @@ const theme = {
   colors: {
     orange: '#FF7400',
     black: '#000000',
+    green: '#21991D',
     grey: '#666666',
+    greyLight: '#999999',
     white: '#FFFFFF',
     red: '#C22D1E',
   },

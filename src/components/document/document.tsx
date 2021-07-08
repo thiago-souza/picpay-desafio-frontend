@@ -7,17 +7,24 @@ import {
 
 interface IDocumentBox {
   icon: string;
+  light?: boolean;
   children: React.ReactNode;
 }
 
-export const DocumentBox = ({ icon, children }: IDocumentBox): JSX.Element => {
+export const DocumentBox = ({
+  icon,
+  children,
+  light = false,
+}: IDocumentBox): JSX.Element => {
   const textLabel = children ? children : '';
   return (
     <DocumentBoxStyle>
       <DocumentImgStyle>
         <img src={icon} />
       </DocumentImgStyle>
-      <DocumentTextStyle>{textLabel}</DocumentTextStyle>
+      <DocumentTextStyle className={`${light ? 'light' : ''}`}>
+        {textLabel}
+      </DocumentTextStyle>
     </DocumentBoxStyle>
   );
 };

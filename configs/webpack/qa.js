@@ -15,7 +15,7 @@ module.exports = merge(commonConfig, {
   devtool: 'source-map',
   plugins: [
     new Dotenv({
-      path: './.env', // load this now instead of the ones in '.env'),
+      path: './.env-qa', // load this now instead of the ones in '.env'),
     }),
   ],
 });
