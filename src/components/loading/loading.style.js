@@ -25,13 +25,13 @@ const BoxShadow = styled.div`
 
   h3 {
     margin-top: 32px;
-    color: ${(props) => props.theme.colors.orange};
+    color: ${(props) => props.theme.colors.white};
   }
 `;
 
 const LoadingIcon = styled.div`
   border: 5px solid rgba(0, 0, 0, 0.2);
-  border-top: 5px solid ${(props) => props.theme.colors.orange};
+  border-top: 5px solid ${(props) => props.theme.colors.white};
   border-radius: 50%;
   width: 80px;
   height: 80px;

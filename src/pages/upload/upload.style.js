@@ -60,7 +60,7 @@ export const ImgPreviewStyle = styled.div`
 
     width: 24px;
     height: 24px;
-    font-size: ${(props) => props.theme.fontSizes.small};
+    font-size: ${(props) => props.theme.fontSizes.large};
 
     background: #ffffff;
     border: 1px solid rgba(213, 213, 213, 0.2);
@@ -71,7 +71,7 @@ export const ImgPreviewStyle = styled.div`
 
 export const DeleteButtonStyle = styled.button`
   display: none;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 
   min-height: 40px;
@@ -85,5 +85,9 @@ export const DeleteButtonStyle = styled.button`
 
   &.active {
     display: flex;
+  }
+
+  @media ${device.tablet} {
+    justify-content: flex-end;
   }
 `;
