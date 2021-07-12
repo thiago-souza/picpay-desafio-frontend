@@ -20,17 +20,13 @@ import SecurityIcon from '@/assets/icons/security-icon.png';
 import { AuthContext } from '@/components/auth-context';
 import getApi from '@/services/api/api-service';
 import getRedirectUrl from '@/services/navigation';
+import { ModalConfirm } from '../../components/modal-confirm';
 
 export const OnboardingPage: React.FC = () => {
   const history = useHistory();
   const authData = React.useContext(AuthContext);
   const [isLoading, setIsLoading] = React.useState(false);
-
-
-  //TODO: Modificar a função para o link correto, assim que o mesmo for definido.
-  const linkCallback = () => {
-    alert('To be defined');
-  };
+  const [isModalShown, setIsModalShown] = React.useState(false);
 
   React.useEffect(() => {
     const status = async () => {
@@ -68,11 +64,16 @@ export const OnboardingPage: React.FC = () => {
     status();
   }, [authData]);
 
+  const handleClickDeixarDepois = () => {
+    setIsModalShown(!isModalShown);
+  }
+
   return (
     <>
       <LoadingComponent isShow={isLoading}>
         Obtendo informações...
       </LoadingComponent>
+      <ModalConfirm isShown={isModalShown} callbackHide={handleClickDeixarDepois} />
       <ContentItems>
         <LabelTitle>Verifique sua identidade</LabelTitle>
         <LabelDescription>
@@ -97,7 +98,7 @@ export const OnboardingPage: React.FC = () => {
           <CustomButton callbackEvent={() => history.push('select')}>
             Verificar identidade agora
           </CustomButton>
-          <CustomLink callbackEvent={linkCallback}>
+          <CustomLink callbackEvent={handleClickDeixarDepois}>
             Deixar pra depois
           </CustomLink>
         </ContentSideBar>

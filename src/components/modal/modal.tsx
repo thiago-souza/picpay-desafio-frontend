@@ -4,12 +4,14 @@ import { Wrapper, CloseButton, Content, Backdrop } from './modal.style';
 
 export interface ModalProps {
   isShown?: boolean;
+  showCloseButton?: boolean;
   hide?: () => void;
   children: JSX.Element;
 }
 
 export const Modal: React.FC<ModalProps> = ({
   isShown = false,
+  showCloseButton = true,
   hide,
   children,
 }: ModalProps) => {
@@ -18,7 +20,7 @@ export const Modal: React.FC<ModalProps> = ({
     <>
       <Backdrop />
       <Wrapper>
-        <CloseButton onClick={hide}>X</CloseButton>
+        {showCloseButton && <CloseButton onClick={hide}>X</CloseButton>}
         <Content>{children}</Content>
       </Wrapper>
     </>

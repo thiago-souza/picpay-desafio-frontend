@@ -148,8 +148,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     setMState({ ...mState, back: !mState.back });
   }
 
-  const isDisabled = frontFileData === undefined && backFileData === undefined;
-
   const checkIsFileValid = ({ validExtension, validSize }: FileData) => {
     return validExtension && validSize;
   }
@@ -185,6 +183,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             callbackDeleteFile={handleDeleteFront}
             callbackImgPreview={() => handleModal('front')}
             isShownModal={mState.front}
+            typeFile='Frente do documento'
           >
             {uploadLabels('Frente')}
           </UploadButton>
@@ -196,6 +195,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             callbackDeleteFile={handleDeleteBack}
             callbackImgPreview={() => handleModal('back')}
             isShownModal={mState.back}
+            typeFile='Verso do documento'
           >
             {uploadLabels('Verso')}
           </UploadButton>

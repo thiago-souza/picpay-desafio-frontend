@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -15,7 +16,13 @@ export const Wrapper = styled.div`
   outline: 0;
 
   img {
-    width: 100%;
+    width: 80%;
+    padding: 20px;
+  }
+
+  p {
+    color: #ffffff;
+    text-align: center;
   }
 `;
 
@@ -30,16 +37,21 @@ export const Backdrop = styled.div`
 `;
 
 export const CloseButton = styled.button`
-  font-size: 1rem;
+  font-size: 1.5rem;
   border: none;
   border-radius: 3px;
   margin-left: 0.5rem;
-  background: none;
   margin-left: auto;
+  background: none;
   position: absolute;
-  top: -30px;
-  right: 0;
   color: #ffffff;
+  top: -30px;
+  right: 3px;
+
+  @media ${device.tablet} {
+    font-size: 1rem;
+    right: 0px;
+  }
 
   :hover {
     cursor: pointer;
@@ -48,16 +60,28 @@ export const CloseButton = styled.button`
 
 export const Content = styled.div`
   padding: 10px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  width: 80%;
   height: 60%;
-  background: #c4c4c4;
-  border-radius: 4px;
+  min-width: 85vw;
 
   @media ${device.tablet} {
+    width: 80%;
     min-width: 480px;
     min-height: 380px;
     margin: 0 auto;
   }
+`;
+
+export const ModalStylePreview = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #c4c4c4;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-radius: 4px;
+`;
+
+export const ModalContent = styled.div`
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 4px;
 `;
