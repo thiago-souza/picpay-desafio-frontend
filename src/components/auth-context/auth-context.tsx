@@ -30,7 +30,7 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
 
         const userInfo = await client.loadUserInfo();
         setAuthData({
-          globoId: '97b715b6-9fde-484c-abd1-3ebc34f3316a', //userInfo.globo_id,
+          globoId: userInfo.globo_id,
           token: tokenResponse.access_token,
           email: userInfo.email,
         });
