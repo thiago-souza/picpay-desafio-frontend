@@ -40,6 +40,10 @@ export const ContentButtons = styled.div`
     margin-top: 0px;
     padding: 0px 25px;
     height: 40px;
+
+    @media ${device.tablet} {
+      height: initial;
+    }
   }
 
   a {
