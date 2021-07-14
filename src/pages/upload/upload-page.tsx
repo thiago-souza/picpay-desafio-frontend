@@ -86,14 +86,14 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       setIsLoading(true);
       const uploadFrontRes = await apiService.upload(
         frontFileData.base64,
-        selectedDoc,
+        `${selectedDoc}_FRONT`,
       );
 
       if (uploadFrontRes == 201 && backFileData) {
         console.log('RESPONSE UPLOAD FRONT: ', uploadFrontRes);
         const uploadBackRes = await apiService.upload(
           backFileData.base64,
-          selectedDoc,
+          `${selectedDoc}_BACK`,
         );
         handleUploadResponse(uploadBackRes);
         return;
