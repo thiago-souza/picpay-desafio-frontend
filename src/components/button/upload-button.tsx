@@ -6,17 +6,22 @@ import {
 } from '@/pages/upload/upload.style';
 import { FileData, getFileDataFromEvent } from '@/services/files';
 import DeleteIcon from '@/assets/icons/delete-icon.png';
+import { Modal } from '@/components/modal';
+import { ModalStylePreview } from '../modal/modal.style';
 
 interface IUploadButton {
   id?: string;
   fileData?: FileData;
   onFileSelected: (fileData: FileData) => void;
   callbackDeleteFile: () => void;
+  callbackImgPreview: () => void;
+  isShownModal?: boolean;
+  typeFile: string;
   children: React.ReactNode;
 }
 
 export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
-  const { id = 'file', children, callbackDeleteFile, fileData } = props;
+  const { id = 'file', children, callbackDeleteFile, callbackImgPreview, isShownModal, typeFile, fileData } = props;
 
   const isValid = props.fileData?.validExtension;
   const contentValues = {
@@ -34,9 +39,18 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
 
   return (
     <UploadButtonStyle>
+      <Modal isShown={isShownModal} hide={callbackImgPreview}>
+        <>
+          <ModalStylePreview>
+            <img src={imgPreviewRender(props.fileData?.base64)} />
+          </ModalStylePreview>
+          <p>{typeFile}: {props.fileData?.name}</p>
+        </>
+      </Modal>
       <ImgPreviewStyle
         className={`${props.fileData?.base64 ? 'active' : ''}`}
         {...contentValues}
+        onClick={callbackImgPreview}
       >
         <img src={imgPreviewRender(props.fileData?.base64)} />
       </ImgPreviewStyle>

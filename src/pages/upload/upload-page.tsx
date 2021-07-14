@@ -12,11 +12,9 @@ import { NavigationBack } from '@/components/navigation/navigation-back';
 import { ContentSideBar } from '@/pages/main/styles/content.style';
 import { LoadingComponent } from '@/components/loading';
 import { AuthContext } from '@/components/auth-context';
-
 import { FileData } from '@/services/files';
 import getRedirectUrl from '@/services/navigation';
 import getApi from '@/services/api/api-service';
-
 import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
 
 interface IUploadBox {
@@ -30,6 +28,12 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   const [backFileData, setBackFileData] = React.useState<FileData>();
   const [isLoading, setIsLoading] = React.useState(false);
   const authData = React.useContext(AuthContext);
+
+  const modalState = {
+    front: false,
+    back: false,
+  }
+  const [mState, setMState] = React.useState(modalState);
 
   const handleDeleteFront = () => setFrontFileData(undefined);
   const handleDeleteBack = () => setBackFileData(undefined);
@@ -136,6 +140,14 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     history.push(url);
   };
 
+  const handleModal = (type: string) => {
+    if (type == 'front') {
+      setMState({ ...mState, front: !mState.front });
+      return;
+    }
+    setMState({ ...mState, back: !mState.back });
+  }
+
   const checkIsFileValid = ({ validExtension, validSize }: FileData) => {
     return validExtension && validSize;
   }
@@ -169,6 +181,9 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             fileData={frontFileData}
             onFileSelected={setFrontFileData}
             callbackDeleteFile={handleDeleteFront}
+            callbackImgPreview={() => handleModal('front')}
+            isShownModal={mState.front}
+            typeFile='Frente do documento'
           >
             {uploadLabels('Frente')}
           </UploadButton>
@@ -178,6 +193,9 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             fileData={backFileData}
             onFileSelected={setBackFileData}
             callbackDeleteFile={handleDeleteBack}
+            callbackImgPreview={() => handleModal('back')}
+            isShownModal={mState.back}
+            typeFile='Verso do documento'
           >
             {uploadLabels('Verso')}
           </UploadButton>
