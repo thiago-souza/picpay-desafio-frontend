@@ -79,5 +79,4 @@ deploy_prod:
   extends: .deploy_tsuru
   variables:
     APP_NAME: cartola-kyc-prod
-  only:
-    - master
+  when: manual
