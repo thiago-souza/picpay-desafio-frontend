@@ -7,7 +7,10 @@ export const ModalWrapper = styled.div`
   border-radius: 4px;
   font-family: ${(props) => props.theme.fonts.proximaNova};
   text-align: initial;
-  
+
+  @media ${device.mobileL} {
+    max-width: 426px;
+  }
 `;
 
 export const ModalContent = styled.div`
@@ -56,4 +59,3 @@ export const ContentButtons = styled.div`
     justify-content: space-around;
   }
 `;
-
