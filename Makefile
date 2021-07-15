@@ -33,4 +33,5 @@ rpaas-check-%: ## Faz a verificação do rpaas (qa|dev|prod)
 
 deploy-%:	## Faz o deploy da app
 	@$(eval ENV := $*)
+	@npm run build:${ENV}
 	@tsuru app-deploy -a cartola-kyc-${ENV} .
