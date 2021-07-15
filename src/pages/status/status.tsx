@@ -150,8 +150,7 @@ export const StatusPage: React.FC = () => {
           Ops! Isso não deveria ter acontecido.
         </LabelTitleCentered>
         <LabelDescriptionCentered>
-          Por favor, tente novamente. Se o problema persistir, entre em contato
-          com o nosso antendimento.
+          Por favor, entre em contato com o nosso antendimento.
         </LabelDescriptionCentered>
       </ContentBox>
     </>
