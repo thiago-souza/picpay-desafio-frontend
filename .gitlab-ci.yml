@@ -52,7 +52,7 @@ build:
     - nvm use $NODE_VERSION
     - npm install
   script:
-    - npm run build
+    - npm run build:qa
   artifacts:
     expire_in: 1 days
     paths:
