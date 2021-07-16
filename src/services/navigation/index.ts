@@ -22,6 +22,7 @@ const mapRedirects: rotes = {
     409: 'select',
     412: 'status/suspected',
     417: 'select',
+    424: 'status/is_pending',
   },
 };
 

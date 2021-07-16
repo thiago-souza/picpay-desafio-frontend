@@ -137,6 +137,25 @@ export const StatusPage: React.FC = () => {
     </>
   );
 
+  const renderIsPending = (
+    <>
+      <LabelCenter>
+        <img src={ErrorIcon} />
+      </LabelCenter>
+      <LabelCenter>
+        CÓD. 203
+      </LabelCenter>
+      <ContentBox>
+        <LabelTitleCentered>
+          Ops! Isso não deveria ter acontecido.
+        </LabelTitleCentered>
+        <LabelDescriptionCentered>
+          Por favor, entre em contato com o nosso antendimento.
+        </LabelDescriptionCentered>
+      </ContentBox>
+    </>
+  );
+
   const renderError = (
     <>
       <LabelCenter>
@@ -176,6 +195,8 @@ export const StatusPage: React.FC = () => {
         return renderSuspected;
       case 'rejected':
         return renderRejected;
+      case 'is_pending':
+        return renderIsPending;
       case 'error':
         return renderError;
       default:
