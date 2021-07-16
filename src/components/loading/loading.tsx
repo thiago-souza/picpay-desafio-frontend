@@ -15,7 +15,11 @@ export const LoadingComponent: React.FC<Props> = ({
   return isShow ? (
     <ContainerLoading>
       <BoxShadow>
-        <LoadingIcon />
+        <LoadingIcon>
+          <span></span>
+          <span></span>
+          <span></span>
+        </LoadingIcon>
         <LabelCenter>{children}</LabelCenter>
       </BoxShadow>
     </ContainerLoading>
