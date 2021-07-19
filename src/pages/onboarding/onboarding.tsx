@@ -51,8 +51,7 @@ export const OnboardingPage: React.FC = () => {
           url = `${url}still_${statusResponse.data.status.toLowerCase()}`;
         else if (statusResponse.data.status.toLowerCase() == 'created')
           url = 'select';
-        else
-          url = `${url}${statusResponse.data.status.toLowerCase()}`;
+        else url = `${url}${statusResponse.data.status.toLowerCase()}`;
         setIsLoading(false);
         history.push(url);
       }
@@ -66,14 +65,15 @@ export const OnboardingPage: React.FC = () => {
 
   const handleClickDeixarDepois = () => {
     setIsModalShown(!isModalShown);
-  }
+  };
 
   return (
     <>
-      <LoadingComponent isShow={isLoading}>
-        Obtendo informações...
-      </LoadingComponent>
-      <ModalConfirm isShown={isModalShown} callbackHide={handleClickDeixarDepois} />
+      <LoadingComponent isShow={isLoading} />
+      <ModalConfirm
+        isShown={isModalShown}
+        callbackHide={handleClickDeixarDepois}
+      />
       <ContentItems>
         <LabelTitle>Verifique sua identidade</LabelTitle>
         <LabelDescription>

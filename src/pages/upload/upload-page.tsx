@@ -161,9 +161,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
 
   return (
     <>
-      <LoadingComponent isShow={isLoading}>
-        Enviando informações...
-      </LoadingComponent>
+      <LoadingComponent isShow={isLoading} />
       <ContentSideBar>
         <NavigationBack />
         <UploadBoxStyle>
