@@ -84,15 +84,17 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
 
     if (frontFileData) {
       setIsLoading(true);
+      const fileEx = frontFileData.name.split('.').pop();
       const uploadFrontRes = await apiService.upload(
-        frontFileData.base64,
+        `data:image/${fileEx};base64, ${frontFileData.base64}`,
         `${selectedDoc}_FRONT`,
       );
 
       if (uploadFrontRes == 201 && backFileData) {
         console.log('RESPONSE UPLOAD FRONT: ', uploadFrontRes);
+        const fileEx = backFileData.name.split('.').pop();
         const uploadBackRes = await apiService.upload(
-          backFileData.base64,
+          `data:image/${fileEx};base64, ${backFileData.base64}`,
           `${selectedDoc}_BACK`,
         );
         handleUploadResponse(uploadBackRes);
@@ -100,12 +102,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       }
 
       handleUploadResponse(uploadFrontRes);
-      // '201 - CREATED - VERIFY - ok'
-      // '202 - ACCEPTED - AGUARDE - ok'
-      // '412 - PRECONDITION FAILED - REJEITADO - ok'
-      // '417 - EXPECTATION FAILED - APROVADO - ok'
-      // '423 - LOCKED - AGUARDE - ok'
-      // handleUploadResponse(412); //MOCKED - RETIRAR
     }
   };
 
@@ -118,13 +114,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     if (url === 'verify') {
       const verifyRes = await apiService.verify();
       handleVerifyResponse(verifyRes);
-      //'201 - CREATED - REDIRECIONAR PARA AGUARDE - ok'
-      //'200 - APPROVED - REDIRECIONAR PARA APROVADO - ok'
-      //'202 - ACCEPTED - REDIRECIONAR PARA AGUARDE - ok'
-      //'409 - CONFLICTED - REDIRECIONAR PAR UPLOAD - ok'
-      //'412 - PRECONDITION FAILED - REDIRECIONAR PARA REPROVADO - ok'
-      //'417 - EXPECTATION FAILED - REDIRECIONAR PARA UPLOAD - ok'
-      //handleVerifyResponse(201); //MOCKED - RETIRAR
     } else {
       setIsLoading(false);
       history.push(url);
