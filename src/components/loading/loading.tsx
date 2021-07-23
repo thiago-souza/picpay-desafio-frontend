@@ -2,7 +2,7 @@ import React from 'react';
 
 interface Props {
   isShow: boolean;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 import { ContainerLoading, BoxShadow, LoadingIcon } from './loading.style';
@@ -20,7 +20,7 @@ export const LoadingComponent: React.FC<Props> = ({
           <span></span>
           <span></span>
         </LoadingIcon>
-        <LabelCenter>{children}</LabelCenter>
+        {children && <LabelCenter>{children}</LabelCenter>}
       </BoxShadow>
     </ContainerLoading>
   ) : null;

@@ -22,7 +22,7 @@ const BoxShadow = styled.div`
   justify-content: center;
   align-items: center;
 
-  background: rgba(0, 0, 0, 0.8);
+  background: ${(props) => props.theme.colors.white};
 
   h3 {
     margin-top: 32px;
