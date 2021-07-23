@@ -86,7 +86,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       setIsLoading(true);
       const fileEx = frontFileData.name.split('.').pop();
       const uploadFrontRes = await apiService.upload(
-        `data:image/${fileEx};base64, ${frontFileData.base64}`,
+        `data:image/${fileEx};base64,${frontFileData.base64}`,
         `${selectedDoc}_FRONT`,
       );
 
@@ -94,7 +94,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
         console.log('RESPONSE UPLOAD FRONT: ', uploadFrontRes);
         const fileEx = backFileData.name.split('.').pop();
         const uploadBackRes = await apiService.upload(
-          `data:image/${fileEx};base64, ${backFileData.base64}`,
+          `data:image/${fileEx};base64,${backFileData.base64}`,
           `${selectedDoc}_BACK`,
         );
         handleUploadResponse(uploadBackRes);
