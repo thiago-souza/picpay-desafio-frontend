@@ -32,7 +32,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   const modalState = {
     front: false,
     back: false,
-  }
+  };
   const [mState, setMState] = React.useState(modalState);
 
   const handleDeleteFront = () => setFrontFileData(undefined);
@@ -135,28 +135,22 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       return;
     }
     setMState({ ...mState, back: !mState.back });
-  }
+  };
 
   const checkIsFileValid = ({ validExtension, validSize }: FileData) => {
     return validExtension && validSize;
-  }
+  };
 
   const isValidFiles = () => {
-    if (frontFileData == undefined)
-      return false;
-
-    if (frontFileData && backFileData == undefined)
-      return checkIsFileValid(frontFileData);
+    if (frontFileData == undefined && backFileData == undefined) return false;
 
     if (frontFileData && backFileData)
       return checkIsFileValid(frontFileData) && checkIsFileValid(backFileData);
-  }
+  };
 
   return (
     <>
-      <LoadingComponent isShow={isLoading}>
-        Enviando informações...
-      </LoadingComponent>
+      <LoadingComponent isShow={isLoading} />
       <ContentSideBar>
         <NavigationBack />
         <UploadBoxStyle>
@@ -172,7 +166,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             callbackDeleteFile={handleDeleteFront}
             callbackImgPreview={() => handleModal('front')}
             isShownModal={mState.front}
-            typeFile='Frente do documento'
+            typeFile="Frente do documento"
           >
             {uploadLabels('Frente')}
           </UploadButton>
@@ -184,7 +178,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             callbackDeleteFile={handleDeleteBack}
             callbackImgPreview={() => handleModal('back')}
             isShownModal={mState.back}
-            typeFile='Verso do documento'
+            typeFile="Verso do documento"
           >
             {uploadLabels('Verso')}
           </UploadButton>
