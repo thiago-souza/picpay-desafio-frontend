@@ -90,7 +90,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
         `${selectedDoc}_FRONT`,
       );
 
-      if (uploadFrontRes == 201 && backFileData) {
+      if ((uploadFrontRes == 201 || uploadFrontRes == 202) && backFileData) {
         console.log('RESPONSE UPLOAD FRONT: ', uploadFrontRes);
         const fileEx = backFileData.name.split('.').pop();
         const uploadBackRes = await apiService.upload(
