@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import { device } from '@/pages/main/styles';
 
 export const LogoStyle = styled.div`
-  width: 160px;
+  width: 180px;
 
-  @media ${device.desktop} {
-    width: 110px;
+  @media ${device.mobileL} {
+    width: 150px;
   }
 `;

@@ -38,7 +38,7 @@ const LabelCenter = styled(LabelSubtitle)`
 
 const LabelDescription = styled.p`
   font-family: ${(props) => props.theme.fonts.proximaNova};
-  font-size: ${(props) => props.theme.fontSizes.small};
+  font-size: ${(props) => props.theme.fontSizes.medium};
   color: ${(props) => props.theme.colors.black};
   line-height: ${(props) => props.theme.fontSizes.small};
   flex: none;
