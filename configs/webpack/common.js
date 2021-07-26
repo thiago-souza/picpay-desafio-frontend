@@ -31,7 +31,12 @@ module.exports = {
       },
     ],
   },
-  plugins: [new HtmlWebpackPlugin({ template: './template.html.ejs' })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './template.html.ejs',
+      favicon: './favicon-cartola.png',
+    }),
+  ],
   externals: {
     react: 'React',
   },

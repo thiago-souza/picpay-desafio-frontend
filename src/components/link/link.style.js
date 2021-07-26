@@ -14,4 +14,10 @@ export const LinkDescription = styled.div`
   &:hover {
     text-decoration: underline;
   }
+
+  &.tiny {
+    text-transform: initial;
+    font-family: ${(props) => props.theme.fonts.proximaNova};
+    font-size: ${(props) => props.theme.fontSizes.medium};
+  }
 `;

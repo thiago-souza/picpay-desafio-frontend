@@ -25,8 +25,6 @@ export const ContentItems = styled.div`
 `;
 
 export const ContentBox = styled.div`
-  display: flex;
-  flex-flow: column;
   margin: 32px auto 40px;
   width: 100%;
 
