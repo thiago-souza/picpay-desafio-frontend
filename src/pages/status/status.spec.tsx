@@ -29,15 +29,6 @@ describe('Test status page render', () => {
     ).toBeInTheDocument();
   });
 
-  test('Should render in ACTIVE status page', () => {
-    render(renderStatusPage);
-    history.push('/status/active');
-
-    expect(
-      screen.getByText(/Opa! Precisamos de novas fotos/),
-    ).toBeInTheDocument();
-  });
-
   test('Should render in APPROVED status page', () => {
     render(renderStatusPage);
     history.push('/status/approved');
@@ -69,7 +60,7 @@ describe('Test status page render', () => {
     history.push('/status/rejected');
     expect(
       screen.getByText(
-        /A foto do documento enviado está ilegível. Precisamos que você faça o envio novamente/,
+        /Não foi possível validar a foto do documento. Precisamos que você faça o envio novamente/,
       ),
     ).toBeInTheDocument();
   });
