@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 
 import { AuthContext } from '@/components/auth-context';
 import {
-  renderActive,
   renderApproved,
   renderError,
   renderInProcess,
@@ -14,8 +13,6 @@ import {
   renderSuspected,
 } from './components';
 import { ContentItems } from '@/pages/main/styles/content.style';
-
-import getApi from '@/services/api/api-service';
 import { ModalConfirm } from '@/components/modal-confirm';
 
 export const StatusPage: React.FC = () => {
@@ -23,7 +20,6 @@ export const StatusPage: React.FC = () => {
   const { email: userEmail } = authData;
 
   const [statusState, setStatusState] = React.useState({
-    docType: '',
     isModalShow: false,
   });
 
@@ -31,15 +27,6 @@ export const StatusPage: React.FC = () => {
 
   const handleClickSeeLater = () => {
     setStatusState({ ...statusState, isModalShow: !statusState.isModalShow });
-  };
-
-  const getAttachments = async () => {
-    const apiService = getApi(authData.token, authData.globoId);
-    const attachmentsResponse = await apiService.getAttachments();
-    if (attachmentsResponse && attachmentsResponse.data) {
-      const _docType = attachmentsResponse.data[0].type.toUpperCase();
-      setStatusState({ ...statusState, docType: _docType });
-    }
   };
 
   const getStatusType = type ? type.toLowerCase() : '';
@@ -50,10 +37,8 @@ export const StatusPage: React.FC = () => {
         return renderInProcess(userEmail);
       case 'still_in_process':
         return renderStillInProcess(userEmail);
-      case 'active': {
-        getAttachments();
-        return renderActive(statusState.docType, handleClickSeeLater);
-      }
+      case 'active':
+        return renderRejected(handleClickSeeLater);
       case 'approved':
         return renderApproved;
       case 'suspected':

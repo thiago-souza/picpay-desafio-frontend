@@ -19,8 +19,6 @@ import ApprovedIcon from '@/assets/icons/approved-icon.png';
 import SuspectedIcon from '@/assets/icons/suspected-icon.png';
 import RejectedIcon from '@/assets/icons/rejected-icon.png';
 import ErrorIcon from '@/assets/icons/error-icon.png';
-import CNHRejectedIcon from '@/assets/icons/cnh-rejected.png';
-import RGRejectedIcon from '@/assets/icons/rg-rejected.png';
 
 const urlExpressDF = process.env.EXPRESS_DF;
 const urlCallCenter = process.env.EXPRESS_CALL_CENTER;
@@ -48,34 +46,6 @@ const buttonTryAgain = (
     </CustomButton>
   </ContentSideBar>
 );
-
-export const renderActive = (
-  docType: string,
-  callBackSeeLater: () => void,
-): JSX.Element => {
-  return (
-    <>
-      <ContentBox>
-        <LabelTitleCentered>Opa! Precisamos de novas fotos</LabelTitleCentered>
-        <LabelDescriptionCentered>
-          A foto do documento enviado está ilegível. Precisamos que você faça o
-          envio novamente.
-        </LabelDescriptionCentered>
-        <DocumentCardBox
-          icon={docType == 'CNH' ? CNHRejectedIcon : RGRejectedIcon}
-        >
-          {docType}: Problema nas fotos
-        </DocumentCardBox>
-      </ContentBox>
-      <CustomButton callbackEvent={() => goToSelectDocument()}>
-        Enviar outra foto
-      </CustomButton>
-      <CustomLink callbackEvent={callBackSeeLater}>
-        Deixar pra depois
-      </CustomLink>
-    </>
-  );
-};
 
 export const renderApproved = (
   <>
@@ -159,10 +129,10 @@ export const renderRejected = (callbackSeeLater: () => void): JSX.Element => {
         <LabelTitleCentered>
           Opa, precisamos que você envie fotos do seu documento novamente.
         </LabelTitleCentered>
-        <LabelDescBoxCentered>
-          A foto do documento enviado está ilegível. Precisamos que você faça o
-          envio novamente.
-        </LabelDescBoxCentered>
+        <LabelDescriptionCentered>
+          Não foi possível validar a foto do documento.
+          Precisamos que você faça o envio novamente.
+        </LabelDescriptionCentered>
       </ContentBox>
       <ContentSideBar>
         <CustomButton callbackEvent={() => goToSelectDocument()}>
