@@ -2,7 +2,6 @@ import React from 'react';
 
 import { ButtonLink, CustomButton } from '@/components/button';
 import { LabelCenter } from '@/components/label';
-import { DocumentCardBox } from '@/components/document';
 import { ContentBox, ContentSideBar } from '@/pages/main/styles/content.style';
 import { CustomLink } from '@/components/link';
 
