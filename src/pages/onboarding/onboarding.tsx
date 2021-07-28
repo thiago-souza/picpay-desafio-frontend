@@ -42,6 +42,13 @@ export const OnboardingPage: React.FC = () => {
       }
 
       const apiService = getApi(authData.token, authData.globoId);
+      const retorno = await apiService.IsGloboIdInExpressWhiteList();
+      if (!retorno.isMember) {
+        const cartolaURL = process.env.CARTOLA_URL || '';
+        window.location.href = cartolaURL;
+        return;
+      }
+
       setIsLoading(true);
       const statusResponse = await apiService.getStatus();
       console.log('status response: ', statusResponse);

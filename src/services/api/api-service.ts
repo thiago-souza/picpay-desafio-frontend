@@ -1,11 +1,13 @@
 class ApiService {
   apiURL: string;
+  cartolaApiURL: string;
   token: string;
   globoId: string;
   header: any;
 
   constructor(token: string, globoId: string) {
     this.apiURL = process.env.API_URL || '';
+    this.cartolaApiURL = process.env.CARTOLA_API_URL || '';
     this.token = token;
     this.globoId = globoId;
     this.header = {
@@ -138,6 +140,36 @@ class ApiService {
 
       return promise;
     }
+  }
+
+  /*
+    Verify if the globoId belongs to express whitelist
+  */
+  async IsGloboIdInExpressWhiteList(): Promise<any> {
+    const promise = new Promise<any>((resolve, reject) => {
+      if (!this.globoId) {
+        return reject(new Error('globoId is empty'));
+      }
+      if (!this.token) {
+        return reject(new Error('token is empty'));
+      }
+
+      fetch(`${this.cartolaApiURL}/auth/express`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          ...this.header,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('data: ', data);
+          return resolve(data);
+        })
+        .catch((error) => console.log('error: ', error));
+    });
+
+    return promise;
   }
 }
 
