@@ -23,10 +23,10 @@ export const UploadInstructionsPage: React.FC = () => {
           foto.
         </DocumentBox>
         <DocumentBox icon={LightIcon}>
-          O documento deve estar legível e centralizado na foto.
+          Fotografe seu documento em um ambiente bem iluminado.
         </DocumentBox>
         <DocumentBox icon={RgInstructionsIcon}>
-          Relaxa, seus dados estão seguros com a gente.
+          O documento deve estar legível e centralizado na foto.
         </DocumentBox>
       </ContentBox>
     </ContentItems>
