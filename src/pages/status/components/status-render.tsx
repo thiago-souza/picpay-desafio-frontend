@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { useHistory } from 'react-router-dom';
 import { ButtonLink, CustomButton } from '@/components/button';
 import { LabelCenter } from '@/components/label';
 import { ContentBox, ContentSideBar } from '@/pages/main/styles/content.style';
@@ -31,11 +31,6 @@ const goToCallCenter = () => {
 const goToHelpCenter = () => {
   //@ts-ignore
   window.open(urlHelpCenter, '_blank');
-};
-
-const goToSelectDocument = () => {
-  //@ts-ignore
-  window.location = '/select';
 };
 
 const buttonTryAgain = (
@@ -115,10 +110,12 @@ export const renderStillInProcess = (email: string): JSX.Element => (
 
 const GoToLobby = () => {
   //@ts-ignore
-  window.location = urlExpressDF;
+  window.location.href = urlExpressDF;
 };
 
 export const renderRejected = (callbackSeeLater: () => void): JSX.Element => {
+  const history = useHistory();
+
   return (
     <>
       <LabelCenter>
@@ -134,7 +131,7 @@ export const renderRejected = (callbackSeeLater: () => void): JSX.Element => {
         </LabelDescriptionCentered>
       </ContentBox>
       <ContentSideBar>
-        <CustomButton callbackEvent={() => goToSelectDocument()}>
+        <CustomButton callbackEvent={() => history.push('/select')}>
           Reniciar o processo
         </CustomButton>
       </ContentSideBar>
