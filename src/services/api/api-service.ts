@@ -166,7 +166,7 @@ class ApiService {
           console.log('data: ', data);
           return resolve(data);
         })
-        .catch((error) => console.log('error: ', error));
+        .catch((error) => reject(new Error(error)));
     });
 
     return promise;
