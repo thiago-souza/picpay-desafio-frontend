@@ -1,11 +1,13 @@
 class ApiService {
   apiURL: string;
+  cartolaApiURL: string;
   token: string;
   globoId: string;
   header: any;
 
   constructor(token: string, globoId: string) {
     this.apiURL = process.env.API_URL || '';
+    this.cartolaApiURL = process.env.CARTOLA_API_URL || '';
     this.token = token;
     this.globoId = globoId;
     this.header = {
@@ -30,11 +32,13 @@ class ApiService {
         fetch(`${this.apiURL}/accounts/attachments`, {
           method: 'GET',
           headers: this.header,
-        }).then((response) => {
-          response.json().then((json) => {
-            return resolve({ statusCode: response.status, data: json });
-          });
-        });
+        })
+          .then((response) => {
+            response.json().then((json) => {
+              return resolve({ statusCode: response.status, data: json });
+            });
+          })
+          .catch((error) => reject(new Error(error)));
       });
 
       return promise;
@@ -71,7 +75,7 @@ class ApiService {
             return resolve(response.status);
           })
           .then((data) => console.log('data: ', data))
-          .catch((error) => console.log('error: ', error));
+          .catch((error) => reject(new Error(error)));
       });
 
       return promise;
@@ -94,15 +98,17 @@ class ApiService {
         fetch(`${this.apiURL}/accounts/status`, {
           method: 'GET',
           headers: this.header,
-        }).then((response) => {
-          if (response.status == 200) {
-            response.json().then((json) => {
-              return resolve({ statusCode: response.status, data: json });
-            });
-          } else {
-            return resolve({ statusCode: response.status });
-          }
-        });
+        })
+          .then((response) => {
+            if (response.status == 200) {
+              response.json().then((json) => {
+                return resolve({ statusCode: response.status, data: json });
+              });
+            } else {
+              return resolve({ statusCode: response.status });
+            }
+          })
+          .catch((error) => reject(new Error(error)));
       });
 
       return promise;
@@ -133,11 +139,41 @@ class ApiService {
             return resolve(response.status);
           })
           .then((data) => console.log('data: ', data))
-          .catch((error) => console.log('error: ', error));
+          .catch((error) => reject(new Error(error)));
       });
 
       return promise;
     }
+  }
+
+  /*
+    Verify if the globoId belongs to express whitelist
+  */
+  async IsGloboIdInExpressWhiteList(): Promise<any> {
+    const promise = new Promise<any>((resolve, reject) => {
+      if (!this.globoId) {
+        return reject(new Error('globoId is empty'));
+      }
+      if (!this.token) {
+        return reject(new Error('token is empty'));
+      }
+
+      fetch(`${this.cartolaApiURL}/auth/express`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: this.header.Authorization
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('data: ', data);
+          return resolve(data);
+        })
+        .catch((error) => reject(new Error(error)));
+    });
+
+    return promise;
   }
 }
 
