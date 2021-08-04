@@ -1,11 +1,14 @@
 provider "tsuru" {
     tsuru_target_url = "https://tsuru.globoi.com"
-    tsuru_token = var.tsuru_token
+}
+
+terraform {
+  backend "http" {}
 }
 
 resource "tsuru_app" "app" {
     app_name = var.app_name
-    app_platform = "nodejs"
+    app_platform = "static"
     team_owner = var.team_owner
     description = var.app_description
     pool_name = var.pool_name

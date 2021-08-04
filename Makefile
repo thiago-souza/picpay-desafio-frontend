@@ -1,27 +1,27 @@
+PROJECT_TSURU_TEAM_OWNER = "cartolafc"
+PROJECT_NAME = "13431"
+
 help:
 	@echo "---------------- HELP ---------------------"
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/\://'| sed -e 's/##//'
 
 terraform-apply-%:	## Aplica receita terraform
-	cd infra/terraform/ && \
-	terraform init && \
-	terraform apply -auto-approve \
-	-var-file="$*/public.tfvars" \
-	-state="$*/terraform.tfstate"
+	cd infra/terraform && \
+	./scripts/terraform-init-backend.sh $* ${PROJECT_TSURU_TEAM_OWNER} ${PROJECT_NAME} && \
+	terraform apply \
+	-var-file="$*/public.tfvars"
 
 terraform-plan-%:	## Checa receita terraform
-	cd infra/terraform/ && \
-	terraform init && \
+	cd infra/terraform && \
+	./scripts/terraform-init-backend.sh $* ${PROJECT_TSURU_TEAM_OWNER} ${PROJECT_NAME} && \
 	terraform plan \
-	-var-file="$*/public.tfvars" \
-	-state="$*/terraform.tfstate"
+	-var-file="$*/public.tfvars"
 
 terraform-refresh-%:	## Refresh na receita terraform
-	cd infra/terraform/ && \
-	terraform init && \
-	terraform refresh \
-	-var-file="$*/public.tfvars" \
-	-state="$*/terraform.tfstate"
+	cd infra/terraform && \
+	./scripts/terraform-init-backend.sh $* ${PROJECT_TSURU_TEAM_OWNER} ${PROJECT_NAME} && \
+	terraform plan \
+	-var-file="$*/public.tfvars"
 
 rpaas-deploy-%: ## Faz o deploy do rpaas (qa|dev|prod)
 	@$(eval ENV := $*)

@@ -43,7 +43,28 @@ codeQuality:
   stage: codeQuality
   allow_failure: true
 
-build:
+build_dev:
+  stage: build
+  image: docker.artifactory.globoi.com/devops/python-node-workspace:v5
+  before_script:
+    - source $NVM_DIR/nvm.sh
+    - nvm install $NODE_VERSION
+    - nvm use $NODE_VERSION
+    - npm install
+  script:
+    - npm run build:fanduel
+  artifacts:
+    expire_in: 1 days
+    paths:
+      - dist
+      - node_modules
+  only:
+    refs:
+      - merge_requests
+    variables:
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "release"
+
+build_staging:
   stage: build
   image: docker.artifactory.globoi.com/devops/python-node-workspace:v5
   before_script:
@@ -58,13 +79,38 @@ build:
     paths:
       - dist
       - node_modules
+  only:
+    - release
+
+build_prod:
+  stage: build
+  image: docker.artifactory.globoi.com/devops/python-node-workspace:v5
+  before_script:
+    - source $NVM_DIR/nvm.sh
+    - nvm install $NODE_VERSION
+    - nvm use $NODE_VERSION
+    - npm install
+  script:
+    - npm run build:prod
+  artifacts:
+    expire_in: 1 days
+    paths:
+      - dist
+      - node_modules
+  only:
+    - master
 
 deploy_dev:
   stage: deploy
   extends: .deploy_tsuru
   variables:
-    APP_NAME: cartola-kyc-dev
+    APP_NAME: cartola-kyc-fanduel
   when: manual
+  only:
+    refs:
+      - merge_requests
+    variables:
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "release"
 
 deploy_staging:
   stage: deploy
@@ -80,3 +126,5 @@ deploy_prod:
   variables:
     APP_NAME: cartola-kyc-prod
   when: manual
+  only:
+    - master

@@ -1,7 +1,3 @@
-variable "tsuru_token" {
-  description = "Tsuru Token"
-}
-
 ## APP
 
 variable "app_name" {
