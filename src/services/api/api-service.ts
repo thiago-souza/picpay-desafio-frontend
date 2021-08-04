@@ -32,11 +32,13 @@ class ApiService {
         fetch(`${this.apiURL}/accounts/attachments`, {
           method: 'GET',
           headers: this.header,
-        }).then((response) => {
-          response.json().then((json) => {
-            return resolve({ statusCode: response.status, data: json });
-          });
-        });
+        })
+          .then((response) => {
+            response.json().then((json) => {
+              return resolve({ statusCode: response.status, data: json });
+            });
+          })
+          .catch((error) => reject(new Error(error)));
       });
 
       return promise;
@@ -73,7 +75,7 @@ class ApiService {
             return resolve(response.status);
           })
           .then((data) => console.log('data: ', data))
-          .catch((error) => console.log('error: ', error));
+          .catch((error) => reject(new Error(error)));
       });
 
       return promise;
@@ -96,15 +98,17 @@ class ApiService {
         fetch(`${this.apiURL}/accounts/status`, {
           method: 'GET',
           headers: this.header,
-        }).then((response) => {
-          if (response.status == 200) {
-            response.json().then((json) => {
-              return resolve({ statusCode: response.status, data: json });
-            });
-          } else {
-            return resolve({ statusCode: response.status });
-          }
-        });
+        })
+          .then((response) => {
+            if (response.status == 200) {
+              response.json().then((json) => {
+                return resolve({ statusCode: response.status, data: json });
+              });
+            } else {
+              return resolve({ statusCode: response.status });
+            }
+          })
+          .catch((error) => reject(new Error(error)));
       });
 
       return promise;
@@ -135,7 +139,7 @@ class ApiService {
             return resolve(response.status);
           })
           .then((data) => console.log('data: ', data))
-          .catch((error) => console.log('error: ', error));
+          .catch((error) => reject(new Error(error)));
       });
 
       return promise;
