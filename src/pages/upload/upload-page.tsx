@@ -85,18 +85,35 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     if (frontFileData) {
       setIsLoading(true);
       const fileEx = frontFileData.name.split('.').pop();
-      const uploadFrontRes = await apiService.upload(
-        `data:image/${fileEx};base64,${frontFileData.base64}`,
-        `${selectedDoc}_FRONT`,
-      );
+
+      let uploadFrontRes = null;
+      try {
+        uploadFrontRes = await apiService.upload(
+          `data:image/${fileEx};base64,${frontFileData.base64}`,
+          `${selectedDoc}_FRONT`,
+        );
+      } catch (error) {
+        console.log('Error: ', error);
+        history.push('/status/error');
+        return;
+      }
 
       if ((uploadFrontRes == 201 || uploadFrontRes == 202) && backFileData) {
         console.log('RESPONSE UPLOAD FRONT: ', uploadFrontRes);
         const fileEx = backFileData.name.split('.').pop();
-        const uploadBackRes = await apiService.upload(
-          `data:image/${fileEx};base64,${backFileData.base64}`,
-          `${selectedDoc}_BACK`,
-        );
+
+        let uploadBackRes = null;
+        try {
+          uploadBackRes = await apiService.upload(
+            `data:image/${fileEx};base64,${backFileData.base64}`,
+            `${selectedDoc}_BACK`,
+          );
+        } catch (error) {
+          console.log('Error: ', error);
+          history.push('/status/error');
+          return;
+        }
+
         handleUploadResponse(uploadBackRes);
         return;
       }
@@ -112,7 +129,16 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     const url = getRedirectUrl('accounts/attachments', status);
 
     if (url === 'verify') {
-      const verifyRes = await apiService.verify();
+
+      let verifyRes = null;
+      try {
+        verifyRes = await apiService.verify();
+      } catch (error) {
+        console.log('Error: ', error);
+        history.push('/status/error');
+        return;
+      }
+
       handleVerifyResponse(verifyRes);
     } else {
       setIsLoading(false);

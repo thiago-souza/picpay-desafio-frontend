@@ -42,15 +42,33 @@ export const OnboardingPage: React.FC = () => {
       }
 
       const apiService = getApi(authData.token, authData.globoId);
-      const retorno = await apiService.IsGloboIdInExpressWhiteList();
-      if (!retorno.isMember) {
+
+      let globoIdInWhiteList = null;
+      try {
+        globoIdInWhiteList = await apiService.IsGloboIdInExpressWhiteList();
+      } catch (error) {
+        console.log('Error: ', error);
+        history.push('/status/error');
+        return;
+      }
+
+      if (!globoIdInWhiteList.isMember) {
         const cartolaURL = apiService.cartolaApiURL;
         window.location.href = cartolaURL;
         return;
       }
 
       setIsLoading(true);
-      const statusResponse = await apiService.getStatus();
+
+      let statusResponse = null;
+      try {
+        statusResponse = await apiService.getStatus();
+      } catch (error) {
+        console.log('Error: ', error);
+        history.push('/status/error');
+        return;
+      }
+
       console.log('status response: ', statusResponse);
       let url = getRedirectUrl('accounts/status', statusResponse.statusCode);
       if (url === 'status/') {
