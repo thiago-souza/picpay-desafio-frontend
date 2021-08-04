@@ -162,7 +162,7 @@ class ApiService {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          ...this.header,
+          Authorization: this.header.Authorization
         },
       })
         .then((response) => response.json())

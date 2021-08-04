@@ -53,7 +53,7 @@ export const OnboardingPage: React.FC = () => {
       }
 
       if (!globoIdInWhiteList.isMember) {
-        const cartolaURL = apiService.cartolaApiURL;
+        const cartolaURL = process.env.CARTOLA_URL || '';
         window.location.href = cartolaURL;
         return;
       }
