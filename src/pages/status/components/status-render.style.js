@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { device } from '@/pages/main/styles';
 import { LabelDescription, LabelTitle } from '@/components/label';
 
 export const LabelTitleCentered = styled(LabelTitle)`

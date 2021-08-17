@@ -15,13 +15,23 @@ interface IUploadButton {
   onFileSelected: (fileData: FileData) => void;
   callbackDeleteFile: () => void;
   callbackImgPreview: () => void;
+  onClickEvent?: () => void;
   isShownModal?: boolean;
   typeFile: string;
   children: React.ReactNode;
 }
 
 export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
-  const { id = 'file', children, callbackDeleteFile, callbackImgPreview, isShownModal, typeFile, fileData } = props;
+  const {
+    id = 'file',
+    children,
+    callbackDeleteFile,
+    callbackImgPreview,
+    onClickEvent,
+    isShownModal,
+    typeFile,
+    fileData,
+  } = props;
 
   const isValid = props.fileData?.validExtension;
   const contentValues = {
@@ -44,7 +54,9 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
           <ModalStylePreview>
             <img src={imgPreviewRender(props.fileData?.base64)} />
           </ModalStylePreview>
-          <p>{typeFile}: {props.fileData?.name}</p>
+          <p>
+            {typeFile}: {props.fileData?.name}
+          </p>
         </>
       </Modal>
       <ImgPreviewStyle
@@ -62,6 +74,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
         onClick={(event: React.MouseEvent) => {
           const target = event.currentTarget as HTMLInputElement;
           target.value = '';
+          if (onClickEvent) onClickEvent();
         }}
         accept="image/png, image/jpeg, image/bmp"
       />

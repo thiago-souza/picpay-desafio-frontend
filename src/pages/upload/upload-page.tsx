@@ -16,13 +16,13 @@ import { FileData } from '@/services/files';
 import getRedirectUrl from '@/services/navigation';
 import getApi from '@/services/api/api-service';
 import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
+import { sendGTMEvent } from '@/services/tracking';
 
 interface IUploadBox {
   selectedDoc: string;
 }
 
 export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
-  console.log('🚀 selectedDoc', selectedDoc);
   const history = useHistory();
   const [frontFileData, setFrontFileData] = React.useState<FileData>();
   const [backFileData, setBackFileData] = React.useState<FileData>();
@@ -35,11 +35,65 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   };
   const [mState, setMState] = React.useState(modalState);
 
-  const handleDeleteFront = () => setFrontFileData(undefined);
-  const handleDeleteBack = () => setBackFileData(undefined);
+  const sendGTMEventWithAction = (action: string) => {
+    if (!action) {
+      return;
+    }
+    sendGTMEvent('know-your-costumer', 'enviar-documento', action);
+  };
 
-  const handleFileExtensionAndSizeError = (fileData: FileData | undefined) => {
+  const handleDeleteFront = () => {
+    sendGTMEventWithAction('remover-frente');
+    setFrontFileData(undefined);
+  };
+  const handleDeleteBack = () => {
+    sendGTMEventWithAction('remover-verso');
+    setBackFileData(undefined);
+  };
+
+  const handleLoadFrontFile = (file: FileData) => {
+    setFrontFileData(file);
+    sendGTMEventWithAction(`frente-${selectedDoc}-carregada`);
+  };
+
+  const handleLoadBackFile = (file: FileData) => {
+    setBackFileData(file);
+    sendGTMEventWithAction(`verso-${selectedDoc}-carregado`);
+  };
+
+  const handleGTMTypeError = (
+    validExtension?: boolean,
+    validSize?: boolean,
+  ) => {
+    if (!validExtension && !validSize) {
+      return 'extensao-e-tamanho-invalido';
+    }
+
+    return !validExtension ? 'extensao-invalida' : 'tamanho-invalido';
+  };
+
+  const handleFileExtensionAndSizeError = (
+    fileData: FileData | undefined,
+    fileType: string,
+  ) => {
     if (fileData?.validExtension && fileData?.validSize) return fileData.name;
+
+    const validExtension = fileData?.validExtension;
+    const validSize = fileData?.validSize;
+
+    fileType === 'Frente'
+      ? sendGTMEventWithAction(
+        `erro-frente-${selectedDoc}-${handleGTMTypeError(
+          validExtension,
+          validSize,
+        )}`,
+      )
+      : sendGTMEventWithAction(
+        `erro-verso-${selectedDoc}-${handleGTMTypeError(
+          validExtension,
+          validSize,
+        )}`,
+      );
 
     return 'Ops! A foto enviada é diferente do formato ou tamanho aceito. Envie uma nova foto.';
   };
@@ -50,6 +104,16 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     const valid = fileData?.validExtension && fileData?.validSize;
 
     return valid ? '' : 'error';
+  };
+
+  const handleFileDataLabel = (
+    fileData: FileData | undefined,
+    fileType: string,
+  ) => {
+    if (fileData === undefined) {
+      return 'Clique para enviar ou arraste a foto aqui.';
+    }
+    return handleFileExtensionAndSizeError(fileData, fileType);
   };
 
   const uploadLabels = (fileType: string) => {
@@ -65,9 +129,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
         <LabelDescriptionButton
           className={`${handleFileExtensionAndSizeClass(fileData)}`}
         >
-          {fileData === undefined
-            ? 'Clique para enviar ou arraste a foto aqui.'
-            : handleFileExtensionAndSizeError(fileData)}
+          {handleFileDataLabel(fileData, fileType)}
         </LabelDescriptionButton>
       </>
     );
@@ -78,6 +140,9 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       console.log('token ou globoid não informados');
       return;
     }
+
+    sendGTMEventWithAction('enviar');
+
     const apiService = getApi(authData.token, authData.globoId);
     console.log('base64 front: ', frontFileData?.base64);
     console.log('base64 back: ', backFileData?.base64);
@@ -174,11 +239,15 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       return checkIsFileValid(frontFileData) && checkIsFileValid(backFileData);
   };
 
+  const handleNavigationBack = () => {
+    sendGTMEventWithAction('voltar-envio-documento');
+  };
+
   return (
     <>
       <LoadingComponent isShow={isLoading} />
       <ContentSideBar>
-        <NavigationBack />
+        <NavigationBack onClickEvent={handleNavigationBack} />
         <UploadBoxStyle>
           <LabelSubtitle>Upload do documento</LabelSubtitle>
           <LabelDescription>
@@ -188,9 +257,10 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
           <UploadButton
             id={'front'}
             fileData={frontFileData}
-            onFileSelected={setFrontFileData}
+            onFileSelected={handleLoadFrontFile}
             callbackDeleteFile={handleDeleteFront}
             callbackImgPreview={() => handleModal('front')}
+            onClickEvent={() => sendGTMEventWithAction('frente')}
             isShownModal={mState.front}
             typeFile="Frente do documento"
           >
@@ -200,9 +270,10 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
           <UploadButton
             id={'back'}
             fileData={backFileData}
-            onFileSelected={setBackFileData}
+            onFileSelected={handleLoadBackFile}
             callbackDeleteFile={handleDeleteBack}
             callbackImgPreview={() => handleModal('back')}
+            onClickEvent={() => sendGTMEventWithAction('verso')}
             isShownModal={mState.back}
             typeFile="Verso do documento"
           >
