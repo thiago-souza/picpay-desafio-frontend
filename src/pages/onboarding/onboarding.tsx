@@ -21,6 +21,7 @@ import { AuthContext } from '@/components/auth-context';
 import getApi from '@/services/api/api-service';
 import getRedirectUrl from '@/services/navigation';
 import { ModalConfirm } from '../../components/modal-confirm';
+import { sendGTMEvent } from '@/services/tracking';
 
 export const OnboardingPage: React.FC = () => {
   const history = useHistory();
@@ -88,17 +89,28 @@ export const OnboardingPage: React.FC = () => {
     status();
   }, [authData]);
 
-  const handleClickDeixarDepois = () => {
+  const handleClickVerifyIdentity = () => {
+    sendGTMEvent(
+      'know-your-costumer',
+      'verificar-identidade',
+      'verificar-agora',
+    );
+    history.push('select');
+  };
+
+  const handleClickSeeLater = (fromModal = false) => {
+    sendGTMEvent(
+      'know-your-costumer',
+      'verificar-identidade',
+      fromModal ? 'verificar-agora-retificado' : 'deixar-pra-depois',
+    );
     setIsModalShown(!isModalShown);
   };
 
   return (
     <>
       <LoadingComponent isShow={isLoading} />
-      <ModalConfirm
-        isShown={isModalShown}
-        callbackHide={handleClickDeixarDepois}
-      />
+      <ModalConfirm isShown={isModalShown} callbackHide={() => handleClickSeeLater(true)} />
       <ContentItems>
         <LabelTitle>Verifique sua identidade</LabelTitle>
         <LabelDescription>
@@ -120,10 +132,10 @@ export const OnboardingPage: React.FC = () => {
           <DocumentBox icon={SecurityIcon} light={true}>
             Relaxa, seus dados estão seguros com a gente.
           </DocumentBox>
-          <CustomButton callbackEvent={() => history.push('select')}>
+          <CustomButton callbackEvent={handleClickVerifyIdentity}>
             Verificar identidade agora
           </CustomButton>
-          <CustomLink callbackEvent={handleClickDeixarDepois}>
+          <CustomLink callbackEvent={handleClickSeeLater}>
             Deixar pra depois
           </CustomLink>
         </ContentSideBar>

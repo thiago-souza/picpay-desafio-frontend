@@ -5,13 +5,19 @@ interface IButtonLink {
   disabled?: boolean;
   children: React.ReactNode;
   goToUrl?: string;
+  onClickEvent?: () => void;
 }
 
 export const ButtonLink: React.FC<IButtonLink> = (props: IButtonLink) => {
-  const { children, goToUrl = '#' } = props;
+  const { children, goToUrl = '#', onClickEvent } = props;
+
+  const handleCallback = () => {
+    if (onClickEvent)
+      onClickEvent();
+  }
 
   return (
-    <PrimaryButtonStyle>
+    <PrimaryButtonStyle onClick={handleCallback}>
       <LinkButtonStyle href={goToUrl} title={goToUrl}>
         {children}
       </LinkButtonStyle>

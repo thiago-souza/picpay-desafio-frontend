@@ -3,6 +3,7 @@ import { Modal } from '@/components/modal';
 import { ContentButtons, ContentDescription, ContentTitle, ModalContent, ModalWrapper } from './modal-confirm.style';
 import { ButtonLink } from '@/components/button';
 import { CustomLink } from '@/components/link';
+import { sendGTMEvent } from '@/services/tracking';
 
 interface IModalConfirm {
   isShown?: boolean;
@@ -14,6 +15,14 @@ export const ModalConfirm: React.FC<IModalConfirm> = ({
   callbackHide,
 }: IModalConfirm) => {
   const urlExpressDF = process.env.EXPRESS_DF;
+
+  const callbackSecondButton = () => {
+    sendGTMEvent(
+      'know-your-costumer',
+      'verificar-identidade',
+      'deixar-para-depois-confirmado',
+    );
+  };
 
   return (
     <Modal isShown={isShown} hide={callbackHide} showCloseButton={false}>
@@ -29,7 +38,7 @@ export const ModalConfirm: React.FC<IModalConfirm> = ({
           <CustomLink callbackEvent={() => callbackHide()}>
             Verificar agora
           </CustomLink>
-          <ButtonLink goToUrl={urlExpressDF}>Deixar para depois</ButtonLink>
+          <ButtonLink goToUrl={urlExpressDF} onClickEvent={callbackSecondButton} >Deixar para depois</ButtonLink>
         </ContentButtons>
       </ModalWrapper>
     </Modal >

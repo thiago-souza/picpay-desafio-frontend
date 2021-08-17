@@ -18,6 +18,7 @@ import ApprovedIcon from '@/assets/icons/approved-icon.png';
 import SuspectedIcon from '@/assets/icons/suspected-icon.png';
 import RejectedIcon from '@/assets/icons/rejected-icon.png';
 import ErrorIcon from '@/assets/icons/error-icon.png';
+import { sendGTMEvent } from '@/services/tracking';
 
 const urlExpressDF = process.env.EXPRESS_DF;
 const urlCallCenter = process.env.EXPRESS_CALL_CENTER;
@@ -33,13 +34,102 @@ const goToHelpCenter = () => {
   window.open(urlHelpCenter, '_blank');
 };
 
+const GoToLobby = () => {
+  //@ts-ignore
+  window.location.href = urlExpressDF;
+};
+
+const callbackApproved = () => {
+  sendGTMEvent(
+    'know-your-costumer',
+    'Continuar | Aprovado',
+    'Continuar',
+  );
+}
+
+const callbackInProcess = () => {
+  sendGTMEvent(
+    'know-your-costumer',
+    'Voltar | Em Andamento',
+    'Voltar',
+  );
+}
+
+const callbackStillInProcess = () => {
+  sendGTMEvent(
+    'know-your-costumer',
+    'Voltar | Em Andamento',
+    'Voltar',
+  );
+}
+
+const callbackRejectedReestart = (history: any) => {
+  sendGTMEvent(
+    'know-your-costumer',
+    'Reiniciar o Processo | Rejeitado',
+    'Reiniciar',
+  );
+
+  history.push('/select');
+}
+
+const callbackSuspectedBackToStart = () => {
+  sendGTMEvent(
+    'know-your-costumer',
+    'Voltar | Suspenso',
+    'Continuar',
+  );
+
+  GoToLobby();
+}
+
+const callbackSuspectedGetHelp = () => {
+  sendGTMEvent(
+    'know-your-costumer',
+    'Acessar Ajuda | Suspenso',
+    'Ajuda',
+  );
+
+  goToHelpCenter();
+}
+
+const callbackErrorOnlineHelp = () => {
+  sendGTMEvent(
+    'know-your-customer',
+    'Solicitar Atendimento | Erro',
+    'Atendimento Online',
+  );
+
+  goToCallCenter();
+}
+
+const callbackErrorBackToStart = () => {
+  sendGTMEvent(
+    'know-your-customer',
+    'Voltar | Erro',
+    'Voltar'
+  );
+
+  GoToLobby();
+}
+
+const callbackTryAgain = () => {
+  sendGTMEvent(
+    'know-your-customer',
+    'Novamente | Erro',
+    'Novamente'
+  );
+
+  history.back();
+}
+
 const buttonTryAgain = (
   <ContentSideBar>
-    <CustomButton callbackEvent={() => history.back()}>
+    <CustomButton callbackEvent={callbackTryAgain}>
       Tentar Novamente
     </CustomButton>
   </ContentSideBar>
-);
+)
 
 export const renderApproved = (
   <>
@@ -56,7 +146,7 @@ export const renderApproved = (
       </LabelDescBoxCentered>
     </ContentBox>
     <ContentSideBar>
-      <ButtonLink goToUrl={urlExpressDF}>Continuar</ButtonLink>
+      <ButtonLink goToUrl={urlExpressDF} onClickEvent={callbackApproved}>Continuar</ButtonLink>
     </ContentSideBar>
   </>
 );
@@ -80,7 +170,7 @@ export const renderInProcess = (email: string): JSX.Element => (
       </LabelDescriptionCentered>
     </ContentBox>
     <ContentSideBar>
-      <ButtonLink goToUrl={urlExpressDF}>Voltar para o início</ButtonLink>
+      <ButtonLink goToUrl={urlExpressDF} onClickEvent={callbackInProcess}>Voltar para o início</ButtonLink>
     </ContentSideBar>
   </>
 );
@@ -103,15 +193,10 @@ export const renderStillInProcess = (email: string): JSX.Element => (
       </LabelDescriptionCentered>
     </ContentBox>
     <ContentSideBar>
-      <ButtonLink goToUrl={urlExpressDF}>Voltar para o início</ButtonLink>
+      <ButtonLink goToUrl={urlExpressDF} onClickEvent={callbackStillInProcess}>Voltar para o início</ButtonLink>
     </ContentSideBar>
   </>
 );
-
-const GoToLobby = () => {
-  //@ts-ignore
-  window.location.href = urlExpressDF;
-};
 
 export const renderRejected = (callbackSeeLater: () => void): JSX.Element => {
   const history = useHistory();
@@ -131,7 +216,7 @@ export const renderRejected = (callbackSeeLater: () => void): JSX.Element => {
         </LabelDescriptionCentered>
       </ContentBox>
       <ContentSideBar>
-        <CustomButton callbackEvent={() => history.push('/select')}>
+        <CustomButton callbackEvent={() => callbackRejectedReestart(history)}>
           Reniciar o processo
         </CustomButton>
       </ContentSideBar>
@@ -140,7 +225,7 @@ export const renderRejected = (callbackSeeLater: () => void): JSX.Element => {
       </CustomLink>
     </>
   );
-};
+}
 
 export const renderSuspected = (
   <>
@@ -157,11 +242,11 @@ export const renderSuspected = (
       </LabelDescBoxCentered>
     </ContentBox>
     <ContentSideBar>
-      <CustomButton callbackEvent={() => GoToLobby()}>
+      <CustomButton callbackEvent={callbackSuspectedBackToStart}>
         Voltar para o início
       </CustomButton>
     </ContentSideBar>
-    <CustomLink callbackEvent={() => goToHelpCenter()}>
+    <CustomLink callbackEvent={callbackSuspectedGetHelp}>
       Acessar a ajuda
     </CustomLink>
   </>
@@ -180,12 +265,12 @@ export const renderIsPending = (
       <LabelDescBoxCentered>
         Por favor, entre em contato com o nosso antendimento.
       </LabelDescBoxCentered>
-      <CustomLink tiny callbackEvent={goToCallCenter}>
+      <CustomLink tiny callbackEvent={callbackErrorOnlineHelp}>
         Atendimento Online
       </CustomLink>
     </ContentBox>
     {buttonTryAgain}
-    <CustomLink callbackEvent={GoToLobby}>Voltar para o início</CustomLink>
+    <CustomLink callbackEvent={callbackErrorBackToStart}>Voltar para o início</CustomLink>
   </>
 );
 
@@ -203,11 +288,11 @@ export const renderError = (
         Por favor, tente novamente. Se o problema persistir, entre em contato
         com o nosso antendimento.
       </LabelDescBoxCentered>
-      <CustomLink tiny callbackEvent={goToCallCenter}>
+      <CustomLink tiny callbackEvent={callbackErrorOnlineHelp}>
         Atendimento Online
       </CustomLink>
     </ContentBox>
     {buttonTryAgain}
-    <CustomLink callbackEvent={GoToLobby}>Voltar para o início</CustomLink>
+    <CustomLink callbackEvent={callbackErrorBackToStart}>Voltar para o início</CustomLink>
   </>
 );

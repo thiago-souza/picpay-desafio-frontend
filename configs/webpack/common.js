@@ -1,5 +1,4 @@
 // shared config (dev and prod)
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -31,12 +30,6 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './template.html.ejs',
-      favicon: './favicon-cartola.png',
-    }),
-  ],
   externals: {
     react: 'React',
   },

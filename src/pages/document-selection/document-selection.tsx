@@ -7,6 +7,7 @@ import { NavigationBack } from '@/components/navigation/navigation-back';
 
 import RgIcon from '@/assets/icons/rg-only-icon.png';
 import CnhIcon from '@/assets/icons/cnh-only-icon.png';
+import { sendGTMEvent } from '@/services/tracking';
 
 interface IDocumentSelectionPage {
   selectedDoc?: string;
@@ -20,13 +21,27 @@ export const DocumentSelectionPage: React.FC<IDocumentSelectionPage> = (
   const { selectedCallback } = props;
 
   const handleSelectCallback = (selectedFile: string) => {
+    sendGTMEvent(
+      'know-your-costumer',
+      'escolher-documento',
+      selectedFile,
+    );
+
     selectedCallback(selectedFile);
     history.push('upload');
   };
 
+  const handleNavigationBack = () => {
+    sendGTMEvent(
+      'know-your-costumer',
+      'escolher-documento',
+      'voltar-escolha-documento',
+    );
+  }
+
   return (
     <ContentItems>
-      <NavigationBack />
+      <NavigationBack onClickEvent={handleNavigationBack} />
       <LabelSubtitle>Escolha o documento que você vai enviar:</LabelSubtitle>
       <LabelDescription>
         Olha, lembre-se que a foto deve ser do seu documento original.
