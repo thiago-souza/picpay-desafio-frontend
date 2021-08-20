@@ -282,17 +282,14 @@ export const renderError = (
     <LabelBoldCenter>CÓD. 100-A</LabelBoldCenter>
     <ContentBox>
       <LabelTitleCentered>
-        Ops! Isso não deveria ter acontecido.
+        Ops! Isso não deveria ter acontecido
       </LabelTitleCentered>
       <LabelDescBoxCentered>
         Por favor, tente novamente. Se o problema persistir, entre em contato
         com o nosso antendimento.
       </LabelDescBoxCentered>
-      <CustomLink tiny callbackEvent={callbackErrorOnlineHelp}>
-        Atendimento Online
-      </CustomLink>
     </ContentBox>
     {buttonTryAgain}
-    <CustomLink callbackEvent={callbackErrorBackToStart}>Voltar para o início</CustomLink>
+    <CustomLink callbackEvent={callbackErrorOnlineHelp}>Atendimento Online</CustomLink>
   </>
 );
