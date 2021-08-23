@@ -161,8 +161,8 @@ export const renderInProcess = (email: string): JSX.Element => (
         Enviado! Aguarde a verificação das suas informações.
       </LabelTitleCentered>
       <LabelDescBoxCentered>
-        Agora que você enviou as fotos, Vamos verificar suas informações. Fique
-        de olho no seu e-mail, em algumas horas te enviaremos um retorno
+        Agora que você enviou as fotos, vamos verificar suas informações. Fique
+        de olho no seu e-mail, em algumas horas te enviaremos um retorno.
       </LabelDescBoxCentered>
       <LabelDescriptionCentered>
         Vamos enviar um e-mail para <LabelBold>{email}</LabelBold> assim que
