@@ -54,12 +54,12 @@ export const DocumentSelectionPage: React.FC<IDocumentSelectionPage> = (
         >
           CNH
         </DocumentCardBox>
-        <DocumentCardBox
+        {/* <DocumentCardBox
           callbackEvent={() => handleSelectCallback('RG')}
           icon={RgIcon}
         >
           RG
-        </DocumentCardBox>
+        </DocumentCardBox> */}
       </ContentBox>
     </ContentItems>
   );
