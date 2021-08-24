@@ -5,7 +5,7 @@ import { LabelDescription, LabelSubtitle } from '@/components/label';
 import { ContentBox, ContentItems } from '@/pages/main/styles/content.style';
 import { NavigationBack } from '@/components/navigation/navigation-back';
 
-import RgIcon from '@/assets/icons/rg-only-icon.png';
+// import RgIcon from '@/assets/icons/rg-only-icon.png';
 import CnhIcon from '@/assets/icons/cnh-only-icon.png';
 import { sendGTMEvent } from '@/services/tracking';
 
