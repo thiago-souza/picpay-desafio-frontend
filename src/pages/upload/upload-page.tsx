@@ -111,7 +111,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     fileType: string,
   ) => {
     if (fileData === undefined) {
-      return 'Clique para enviar ou arraste a foto aqui.';
+      return 'Clique aqui para enviar a foto.';
     }
     return handleFileExtensionAndSizeError(fileData, fileType);
   };
