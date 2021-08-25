@@ -49,7 +49,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
 
   return (
     <UploadButtonStyle>
-      <Modal isShown={isShownModal} hide={callbackImgPreview}>
+      <Modal isShown={isShownModal} hide={callbackImgPreview} data-clarity-mask="true">
         <>
           <ModalStylePreview>
             <img src={imgPreviewRender(props.fileData?.base64)} />
@@ -63,6 +63,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
         className={`${props.fileData?.base64 ? 'active' : ''}`}
         {...contentValues}
         onClick={callbackImgPreview}
+        data-clarity-mask="true"
       >
         <img src={imgPreviewRender(props.fileData?.base64)} />
       </ImgPreviewStyle>
@@ -77,6 +78,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
           if (onClickEvent) onClickEvent();
         }}
         accept="image/png, image/jpeg, image/bmp"
+        data-clarity-mask="true"
       />
       <label className={`${fileData ? 'trim' : ''}`} htmlFor={id}>
         {children}
