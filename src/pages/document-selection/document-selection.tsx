@@ -6,7 +6,7 @@ import { ContentBox, ContentItems } from '@/pages/main/styles/content.style';
 import { NavigationBack } from '@/components/navigation/navigation-back';
 import RgIcon from '@/assets/icons/rg-only-icon.png';
 import CnhIcon from '@/assets/icons/cnh-only-icon.png';
-import { sendGTMEvent } from '@/services/tracking';
+import { sendEvent } from '@/services/tracking';
 import { theme } from '../main/styles';
 
 interface IDocumentSelectionPage {
@@ -21,7 +21,7 @@ export const DocumentSelectionPage: React.FC<IDocumentSelectionPage> = (
   const { selectedCallback } = props;
 
   const handleSelectCallback = (selectedFile: string) => {
-    sendGTMEvent(
+    sendEvent(
       'know-your-costumer',
       'escolher-documento',
       selectedFile,
@@ -32,7 +32,7 @@ export const DocumentSelectionPage: React.FC<IDocumentSelectionPage> = (
   };
 
   const handleNavigationBack = () => {
-    sendGTMEvent(
+    sendEvent(
       'know-your-costumer',
       'escolher-documento',
       'voltar-escolha-documento',

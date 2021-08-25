@@ -16,7 +16,7 @@ import { FileData } from '@/services/files';
 import getRedirectUrl from '@/services/navigation';
 import getApi from '@/services/api/api-service';
 import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
-import { sendGTMEvent } from '@/services/tracking';
+import { sendEvent } from '@/services/tracking';
 
 interface IUploadBox {
   selectedDoc: string;
@@ -39,7 +39,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     if (!action) {
       return;
     }
-    sendGTMEvent('know-your-costumer', 'enviar-documento', action);
+    sendEvent('know-your-costumer', 'enviar-documento', action);
   };
 
   const handleDeleteFront = () => {

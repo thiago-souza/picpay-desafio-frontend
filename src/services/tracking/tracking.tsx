@@ -5,6 +5,18 @@ declare global {
   }
 }
 
+const sendGAEvent = (eventCategory:string, eventAction:string, eventLabel:string) => {
+  if (window.ga) {
+    window.ga('send', 'event', {
+      eventCategory,
+      eventAction,
+      eventLabel,
+    });
+  } else {
+    console.warn('Não tem ga!!');
+  }
+};
+
 const sendGTMEvent = (
   eventCategory: string,
   eventAction: string,
@@ -46,4 +58,9 @@ const sendGAPageView = (globoId: string, pathname?: string): void => {
   console.log('v2 - GTM - pageview --> ', pathname || window.location.pathname);
 };
 
-export { sendGTMEvent, sendGAPageView };
+const sendEvent = (eventCategory:string, eventAction:string, eventLabel:string): void => {
+  sendGTMEvent(eventCategory, eventAction, eventLabel);
+  sendGAEvent(eventCategory, eventAction, eventLabel);
+};
+
+export { sendEvent, sendGAPageView };
