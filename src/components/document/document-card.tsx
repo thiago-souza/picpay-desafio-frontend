@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {
-  DocumentCardBoxStyle,
+  DocumentCardBoxStyleButton,
   DocumentCardImgStyle,
   DocumentTextStyle,
   DocumentLabelStyle,
@@ -9,11 +9,15 @@ import {
 } from './document.style';
 
 import FastIcon from '@/assets/icons/fast-icon.png';
+import { theme } from '@/pages/main/styles';
 
 interface IDocumentBox {
   icon: string;
   children: React.ReactNode;
   label?: string;
+  fastIcon?: boolean;
+  textColor?: string;
+  disabled?: boolean;
   callbackEvent?: () => void;
 }
 
@@ -21,6 +25,9 @@ export const DocumentCardBox = ({
   icon,
   children,
   label,
+  fastIcon = false,
+  textColor = theme.colors.black,
+  disabled = false,
   callbackEvent,
 }: IDocumentBox): JSX.Element => {
   const onEventClick = (e: React.MouseEvent) => {
@@ -31,7 +38,7 @@ export const DocumentCardBox = ({
   const textChild = children ? children : '';
   const textLabel = label ? label : '';
   return (
-    <DocumentCardBoxStyle onClick={onEventClick}>
+    <DocumentCardBoxStyleButton onClick={onEventClick} disabled={disabled}>
       <DocumentCardImgStyle>
         <img src={icon} />
       </DocumentCardImgStyle>
@@ -39,11 +46,11 @@ export const DocumentCardBox = ({
         <DocumentTextStyle>{textChild}</DocumentTextStyle>
         {label && (
           <DocumentTextIconStyle>
-            <img src={FastIcon} />
-            <DocumentLabelStyle>{textLabel}</DocumentLabelStyle>
+            {fastIcon && <img src={FastIcon} />}
+            <DocumentLabelStyle textColor={textColor}>{textLabel}</DocumentLabelStyle>
           </DocumentTextIconStyle>
         )}
       </DocumentCardTextStyle>
-    </DocumentCardBoxStyle>
+    </DocumentCardBoxStyleButton>
   );
 };

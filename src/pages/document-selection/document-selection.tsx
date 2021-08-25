@@ -4,10 +4,10 @@ import { DocumentCardBox } from '@/components/document';
 import { LabelDescription, LabelSubtitle } from '@/components/label';
 import { ContentBox, ContentItems } from '@/pages/main/styles/content.style';
 import { NavigationBack } from '@/components/navigation/navigation-back';
-
-// import RgIcon from '@/assets/icons/rg-only-icon.png';
+import RgIcon from '@/assets/icons/rg-only-icon.png';
 import CnhIcon from '@/assets/icons/cnh-only-icon.png';
 import { sendGTMEvent } from '@/services/tracking';
+import { theme } from '../main/styles';
 
 interface IDocumentSelectionPage {
   selectedDoc?: string;
@@ -51,15 +51,19 @@ export const DocumentSelectionPage: React.FC<IDocumentSelectionPage> = (
           callbackEvent={() => handleSelectCallback('CNH')}
           icon={CnhIcon}
           label={'Análise mais rápida (até 1 min)'}
+          fastIcon={true}
+          textColor={theme.colors.green}
         >
           CNH
         </DocumentCardBox>
-        {/* <DocumentCardBox
+        <DocumentCardBox
           callbackEvent={() => handleSelectCallback('RG')}
           icon={RgIcon}
+          label={'Em breve'}
+          disabled={true}
         >
           RG
-        </DocumentCardBox> */}
+        </DocumentCardBox>
       </ContentBox>
     </ContentItems>
   );

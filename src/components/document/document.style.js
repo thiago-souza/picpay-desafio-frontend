@@ -10,7 +10,7 @@ export const DocumentBoxStyle = styled.div`
   max-height: 64px;
 `;
 
-export const DocumentCardBoxStyle = styled.button`
+export const DocumentCardBoxStyleButton = styled.button`
   display: flex;
   align-items: center;
   width: 100%;
@@ -28,6 +28,17 @@ export const DocumentCardBoxStyle = styled.button`
   &:focus,
   &:checked {
     border: 1px solid ${(props) => props.theme.colors.orange};
+  }
+
+  &:disabled {
+    background: #F4F4F4;
+    cursor: not-allowed;
+    border: 0 none;
+    opacity: 0.5;
+
+    &:hover {
+      border: 0 none;
+    }
   }
 `;
 
@@ -57,8 +68,8 @@ export const DocumentTextStyle = styled.div`
   }
 `;
 
-export const DocumentLabelStyle = styled.div`
-  color: ${(props) => props.theme.colors.green};
+export const DocumentLabelStyle = styled.div.attrs((props => props))`
+  color: ${(props) => props.textColor};
   font-size: 0.75rem;
   margin: 3px 0;
 `;
