@@ -18,7 +18,7 @@ import ApprovedIcon from '@/assets/icons/approved-icon.png';
 import SuspectedIcon from '@/assets/icons/suspected-icon.png';
 import RejectedIcon from '@/assets/icons/rejected-icon.png';
 import ErrorIcon from '@/assets/icons/error-icon.png';
-import { sendGTMEvent } from '@/services/tracking';
+import { sendEvent } from '@/services/tracking';
 
 const urlExpressDF = process.env.EXPRESS_DF;
 const urlCallCenter = process.env.EXPRESS_CALL_CENTER;
@@ -40,7 +40,7 @@ const GoToLobby = () => {
 };
 
 const callbackApproved = () => {
-  sendGTMEvent(
+  sendEvent(
     'know-your-costumer',
     'Continuar | Aprovado',
     'Continuar',
@@ -48,7 +48,7 @@ const callbackApproved = () => {
 }
 
 const callbackInProcess = () => {
-  sendGTMEvent(
+  sendEvent(
     'know-your-costumer',
     'Voltar | Em Andamento',
     'Voltar',
@@ -56,7 +56,7 @@ const callbackInProcess = () => {
 }
 
 const callbackStillInProcess = () => {
-  sendGTMEvent(
+  sendEvent(
     'know-your-costumer',
     'Voltar | Em Andamento',
     'Voltar',
@@ -64,7 +64,7 @@ const callbackStillInProcess = () => {
 }
 
 const callbackRejectedReestart = (history: any) => {
-  sendGTMEvent(
+  sendEvent(
     'know-your-costumer',
     'Reiniciar o Processo | Rejeitado',
     'Reiniciar',
@@ -74,7 +74,7 @@ const callbackRejectedReestart = (history: any) => {
 }
 
 const callbackSuspectedBackToStart = () => {
-  sendGTMEvent(
+  sendEvent(
     'know-your-costumer',
     'Voltar | Suspenso',
     'Continuar',
@@ -84,7 +84,7 @@ const callbackSuspectedBackToStart = () => {
 }
 
 const callbackSuspectedGetHelp = () => {
-  sendGTMEvent(
+  sendEvent(
     'know-your-costumer',
     'Acessar Ajuda | Suspenso',
     'Ajuda',
@@ -94,7 +94,7 @@ const callbackSuspectedGetHelp = () => {
 }
 
 const callbackErrorOnlineHelp = () => {
-  sendGTMEvent(
+  sendEvent(
     'know-your-customer',
     'Solicitar Atendimento | Erro',
     'Atendimento Online',
@@ -104,7 +104,7 @@ const callbackErrorOnlineHelp = () => {
 }
 
 const callbackErrorBackToStart = () => {
-  sendGTMEvent(
+  sendEvent(
     'know-your-customer',
     'Voltar | Erro',
     'Voltar'
@@ -114,7 +114,7 @@ const callbackErrorBackToStart = () => {
 }
 
 const callbackTryAgain = () => {
-  sendGTMEvent(
+  sendEvent(
     'know-your-customer',
     'Novamente | Erro',
     'Novamente'

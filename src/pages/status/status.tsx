@@ -14,7 +14,7 @@ import {
 } from './components';
 import { ContentItems } from '@/pages/main/styles/content.style';
 import { ModalConfirm } from '@/components/modal-confirm';
-import { sendGTMEvent } from '@/services/tracking';
+import { sendEvent } from '@/services/tracking';
 
 export const StatusPage: React.FC = () => {
   const authData = React.useContext(AuthContext);
@@ -27,7 +27,7 @@ export const StatusPage: React.FC = () => {
   const { type } = useParams<{ type: string }>();
 
   const handleClickSeeLater = () => {
-    sendGTMEvent(
+    sendEvent(
       'know-your-customer',
       'Reiniciar | Rejeitado',
       'Depois'

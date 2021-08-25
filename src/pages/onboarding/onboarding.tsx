@@ -21,7 +21,7 @@ import { AuthContext } from '@/components/auth-context';
 import getApi from '@/services/api/api-service';
 import getRedirectUrl from '@/services/navigation';
 import { ModalConfirm } from '../../components/modal-confirm';
-import { sendGTMEvent } from '@/services/tracking';
+import { sendEvent } from '@/services/tracking';
 
 export const OnboardingPage: React.FC = () => {
   const history = useHistory();
@@ -90,7 +90,7 @@ export const OnboardingPage: React.FC = () => {
   }, [authData]);
 
   const handleClickVerifyIdentity = () => {
-    sendGTMEvent(
+    sendEvent(
       'know-your-costumer',
       'verificar-identidade',
       'verificar-agora',
@@ -99,7 +99,7 @@ export const OnboardingPage: React.FC = () => {
   };
 
   const handleClickSeeLater = (fromModal = false) => {
-    sendGTMEvent(
+    sendEvent(
       'know-your-costumer',
       'verificar-identidade',
       fromModal ? 'verificar-agora-retificado' : 'deixar-pra-depois',

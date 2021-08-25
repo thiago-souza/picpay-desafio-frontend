@@ -3,7 +3,7 @@ import { Modal } from '@/components/modal';
 import { ContentButtons, ContentDescription, ContentTitle, ModalContent, ModalWrapper } from './modal-confirm.style';
 import { ButtonLink } from '@/components/button';
 import { CustomLink } from '@/components/link';
-import { sendGTMEvent } from '@/services/tracking';
+import { sendEvent } from '@/services/tracking';
 
 interface IModalConfirm {
   isShown?: boolean;
@@ -17,7 +17,7 @@ export const ModalConfirm: React.FC<IModalConfirm> = ({
   const urlExpressDF = process.env.EXPRESS_DF;
 
   const callbackSecondButton = () => {
-    sendGTMEvent(
+    sendEvent(
       'know-your-costumer',
       'verificar-identidade',
       'deixar-para-depois-confirmado',
