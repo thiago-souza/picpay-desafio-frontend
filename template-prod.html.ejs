@@ -6,6 +6,27 @@
     <meta http-equiv="Content-Language" content="pt-br">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <title>Cartola Express - Know Your Client</title>
+    <link rel="icon" type="image/png" href="./favicon-cartola.png" />
+</head>
+
+
+<body>
+    <div id="main"></div>
+
+    <!-- Dependencies with Oficial CDN Links -->
+    <!-- https://pt-br.reactjs.org/docs/cdn-links.html#gatsby-focus-wrapper -->
+
+    <script src="https://s3.glbimg.com/cdn/libs/globoid-js/1.4.4/globoid-js.min.js"></script>
+    <% if (webpackConfig.mode=='production' ) { %>
+        <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+        <% } else { %>
+            <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+            <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+            <% } %>
+
+
     <script>
         window.dataLayer = [{
             'environment': 'prod'
@@ -44,26 +65,6 @@
         })(window, document, 'script', 'dataLayer', 'GTM-P9DRHZH');
     </script>
     <!-- End Google Tag Manager -->
-
-    <title>Cartola Express - Know Your Client</title>
-    <link rel="icon" type="image/png" href="./favicon-cartola.png" />
-</head>
-
-
-<body>
-    <div id="main"></div>
-
-    <!-- Dependencies with Oficial CDN Links -->
-    <!-- https://pt-br.reactjs.org/docs/cdn-links.html#gatsby-focus-wrapper -->
-
-    <script src="https://s3.glbimg.com/cdn/libs/globoid-js/1.4.4/globoid-js.min.js"></script>
-    <% if (webpackConfig.mode=='production' ) { %>
-        <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
-        <% } else { %>
-            <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
-            <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-            <% } %>
 </body>
 
 </html>
