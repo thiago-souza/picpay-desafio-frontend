@@ -4,7 +4,7 @@ import {
   ImgPreviewStyle,
   DeleteButtonStyle,
 } from '@/pages/upload/upload.style';
-import { FileData, getFileDataFromEvent } from '@/services/files';
+import { FileData, getFileDataFromEvent, getFileDataFromDropEvent } from '@/services/files';
 import DeleteIcon from '@/assets/icons/delete-icon.png';
 import { Modal } from '@/components/modal';
 import { ModalStylePreview } from '../modal/modal.style';
@@ -40,6 +40,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
   };
 
   const imgPreviewRender = (base64?: string) => {
+    console.log('base64: ', base64);
     return base64 ? `data:image/png;base64, ${base64}` : '';
   };
 
@@ -47,8 +48,50 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
     getFileDataFromEvent(event).then((data) => props.onFileSelected(data));
   };
 
+  const eDragOver = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    e.target.style.background = 'rgba(0, 187, 255, 0.06)';
+    e.target.style.border = '1px dotted #2596be';
+  }
+
+  const eDragEnter = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const eDragLeave = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    e.target.style.background = 'white';
+    e.target.style.border = '1px dashed #d5d5d5'
+  }
+
+  const eDrop = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const files = e.dataTransfer.files;
+
+    if (files.length > 0) {
+      getFileDataFromDropEvent(files[0]).then((data) => {
+        props.onFileSelected(data);
+      });
+    }
+
+    e.target.style.background = 'white';
+    e.target.style.border = '1px dashed #d5d5d5'
+  }
+
   return (
-    <UploadButtonStyle>
+    <UploadButtonStyle
+      onDragOver={eDragOver}
+      onDragEnter={eDragEnter}
+      onDragLeave={eDragLeave}
+      onDrop={eDrop}
+    >
       <Modal isShown={isShownModal} hide={callbackImgPreview} data-clarity-mask="true">
         <>
           <ModalStylePreview>

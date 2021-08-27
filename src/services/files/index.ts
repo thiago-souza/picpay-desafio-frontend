@@ -58,3 +58,37 @@ export const getFileDataFromEvent = (
 
   return promise;
 };
+
+export const getFileDataFromDropEvent = (file: any) : Promise<FileData> => {
+  const promise = new Promise<FileData>((resolve) => {
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = (readerEvt: any) => {
+      //console.log(' >>>>>>>>>>>>> base64: ', reader.result);//base64encoded string
+      //const binaryString = readerEvt.target.result;
+      //const base64 = fileContentsToBase64(binaryString);
+
+      let base64 = reader.result?.toString() || '';
+      base64 = base64.replace('data:image/png;base64,', '');
+
+      const fileData: FileData = {
+        name: file.name,
+        size: file.size,
+        base64,
+        validExtension: isFileExtensionValid(file.name),
+        validSize: isFileSizeValid(file.size),
+      };
+
+      resolve(fileData);
+    };
+
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+
+  });
+
+  return promise;
+}
