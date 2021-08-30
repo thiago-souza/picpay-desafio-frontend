@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { UploadButtonStyle } from './button.style';
+import { UploadButtonDragNDrop, UploadButtonStyle } from './button.style';
 import {
   ImgPreviewStyle,
   DeleteButtonStyle,
 } from '@/pages/upload/upload.style';
-import { FileData, getFileDataFromEvent, getFileDataFromDropEvent } from '@/services/files';
+import { FileData, getFileDataFromEvent } from '@/services/files';
 import DeleteIcon from '@/assets/icons/delete-icon.png';
 import { Modal } from '@/components/modal';
 import { ModalStylePreview } from '../modal/modal.style';
@@ -33,6 +33,8 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
     fileData,
   } = props;
 
+  const uploadButtonRef = React.useRef(null);
+
   const isValid = props.fileData?.validExtension;
   const contentValues = {
     content: isValid ? '✓' : '!',
@@ -45,28 +47,28 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
   };
 
   const handleChange = (event: React.ChangeEvent): void => {
-    getFileDataFromEvent(event).then((data) => props.onFileSelected(data));
+    getFileDataFromEvent(event, null).then((data) => props.onFileSelected(data));
   };
+
+  const handleUploadButtonHoverStyle = (backgroundColor: string, border: string) => {
+    if (uploadButtonRef && uploadButtonRef.current) {
+      uploadButtonRef.current.style.backgroundColor = backgroundColor;
+      uploadButtonRef.current.style.borderColor = border;
+    }
+  }
 
   const eDragOver = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
 
-    e.target.style.background = 'rgba(0, 187, 255, 0.06)';
-    e.target.style.border = '1px dotted #2596be';
+    handleUploadButtonHoverStyle('rgba(255, 116, 0, 0.1)', '#FF7400');
   }
-
-  const eDragEnter = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
 
   const eDragLeave = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
 
-    e.target.style.background = 'white';
-    e.target.style.border = '1px dashed #d5d5d5'
+    handleUploadButtonHoverStyle('white', '#d5d5d5');
   }
 
   const eDrop = (e: any) => {
@@ -76,63 +78,66 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
     const files = e.dataTransfer.files;
 
     if (files.length > 0) {
-      getFileDataFromDropEvent(files[0]).then((data) => {
+      getFileDataFromEvent(e, files[0]).then((data) => {
         props.onFileSelected(data);
       });
     }
 
-    e.target.style.background = 'white';
-    e.target.style.border = '1px dashed #d5d5d5'
+    handleUploadButtonHoverStyle('white', '#d5d5d5');
   }
 
   return (
-    <UploadButtonStyle
+    <UploadButtonDragNDrop
+      ref={uploadButtonRef}
+      className='upload-button'
       onDragOver={eDragOver}
-      onDragEnter={eDragEnter}
       onDragLeave={eDragLeave}
       onDrop={eDrop}
     >
-      <Modal isShown={isShownModal} hide={callbackImgPreview} data-clarity-mask="true">
-        <>
-          <ModalStylePreview>
-            <img src={imgPreviewRender(props.fileData?.base64)} />
-          </ModalStylePreview>
-          <p>
-            {typeFile}: {props.fileData?.name}
-          </p>
-        </>
-      </Modal>
-      <ImgPreviewStyle
-        className={`${props.fileData?.base64 ? 'active' : ''}`}
-        {...contentValues}
-        onClick={callbackImgPreview}
-        data-clarity-mask="true"
-      >
-        <img src={imgPreviewRender(props.fileData?.base64)} />
-      </ImgPreviewStyle>
-      <input
-        type="file"
-        id={id}
-        name={id}
-        onChange={handleChange}
-        onClick={(event: React.MouseEvent) => {
-          const target = event.currentTarget as HTMLInputElement;
-          target.value = '';
-          if (onClickEvent) onClickEvent();
-        }}
-        accept="image/png, image/jpeg, image/bmp"
-        data-clarity-mask="true"
-      />
-      <label className={`${fileData ? 'trim' : ''}`} htmlFor={id}>
-        {children}
-      </label>
+      <UploadButtonStyle>
+        <Modal isShown={isShownModal} hide={callbackImgPreview} data-clarity-mask="true">
+          <>
+            <ModalStylePreview>
+              <img src={imgPreviewRender(props.fileData?.base64)} />
+            </ModalStylePreview>
+            <p>
+              {typeFile}: {props.fileData?.name}
+            </p>
+          </>
+        </Modal>
+        <ImgPreviewStyle
+          className={`${props.fileData?.base64 ? 'active' : ''}`}
+          {...contentValues}
+          onClick={callbackImgPreview}
+          data-clarity-mask="true"
+        >
+          <img src={imgPreviewRender(props.fileData?.base64)} />
+        </ImgPreviewStyle>
+        <input
+          type="file"
+          id={id}
+          name={id}
+          onChange={handleChange}
+          onClick={(event: React.MouseEvent) => {
+            const target = event.currentTarget as HTMLInputElement;
+            target.value = '';
+            if (onClickEvent) onClickEvent();
+          }}
+          accept="image/png, image/jpeg, image/bmp"
+          data-clarity-mask="true"
+        />
+        <label className={`${fileData ? 'trim' : ''}`} htmlFor={id} id="labelTeste" style={{ display: 'block' }}>
+          {children}
+        </label>
 
-      <DeleteButtonStyle
-        onClick={() => callbackDeleteFile()}
-        className={` ${props.fileData?.base64 ? 'active' : ''}`}
-      >
-        <img src={DeleteIcon} />
-      </DeleteButtonStyle>
-    </UploadButtonStyle>
+        <DeleteButtonStyle
+          onClick={() => callbackDeleteFile()}
+          className={` ${props.fileData?.base64 ? 'active' : ''}`}
+        >
+          <img src={DeleteIcon} />
+        </DeleteButtonStyle>
+      </UploadButtonStyle>
+    </UploadButtonDragNDrop>
   );
 };
+

@@ -47,6 +47,16 @@ export const LinkButtonStyle = styled.a`
   cursor: pointer;
 `;
 
+export const UploadButtonDragNDrop = styled.div`
+  border: 1px dashed #d5d5d5;
+  border-radius: 6px;
+  margin-bottom: 16px;
+
+  &first-child {
+    margin-top: 16px;
+  }
+`;
+
 export const UploadButtonStyle = styled.div`
   display: flex;
   align-items: center;
@@ -54,11 +64,10 @@ export const UploadButtonStyle = styled.div`
   max-width: 579px;
   width: 100%;
   height: 76px;
-  margin-top: 16px;
   position: relative;
 
-  background: ${(props) => props.theme.colors.white};
-  border: 1px dashed #d5d5d5;
+  background: inherit;
+  border: 1px dashed inherit;
   border-radius: 6px;
 
   font-family: ${(props) => props.theme.fonts.proximaNovaBold};

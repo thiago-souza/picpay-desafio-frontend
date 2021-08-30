@@ -111,13 +111,14 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     fileType: string,
   ) => {
     if (fileData === undefined) {
-      return 'Clique aqui para enviar a foto.';
+      return 'Clique para enviar ou arraste a foto aqui.';
     }
     return handleFileExtensionAndSizeError(fileData, fileType);
   };
 
   const uploadLabels = (fileType: string) => {
     const fileData = fileType === 'Frente' ? frontFileData : backFileData;
+
     return (
       <>
         <LabelSubtitleButton

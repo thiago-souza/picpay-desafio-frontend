@@ -20,6 +20,7 @@ const LabelSubtitle = styled.h3`
 const LabelSubtitleButton = styled(LabelSubtitle)`
   display: flex;
   justify-content: center;
+  background-color: transparent;
 
   font-size: ${(props) => props.theme.fontSizes.small};
   color: #666666;
@@ -54,6 +55,7 @@ const LabelDescription = styled.p`
 const LabelDescriptionButton = styled(LabelDescription)`
   color: #999;
   text-transform: none;
+  background-color: transparent;
 
   &.error {
     color: ${(props) => props.theme.colors.red};
