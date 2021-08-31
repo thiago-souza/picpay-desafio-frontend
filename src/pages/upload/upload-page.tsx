@@ -95,7 +95,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
         )}`,
       );
 
-    return 'Ops! A foto enviada é diferente do formato ou tamanho aceito. Envie uma nova foto.';
+    return  "Ops! A foto enviada é diferente do formato \n ou tamanho aceito. Envie uma nova foto.";;
   };
 
   const handleFileExtensionAndSizeClass = (fileData?: FileData) => {

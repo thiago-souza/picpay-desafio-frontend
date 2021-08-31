@@ -38,6 +38,8 @@ export const ImgPreviewStyle = styled.div`
 
   &.active {
     display: flex;
+    margin: 0px 10px;
+    white-space: pre-wrap;
   }
 
   img {

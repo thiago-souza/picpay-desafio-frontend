@@ -58,8 +58,10 @@ const LabelDescriptionButton = styled(LabelDescription)`
   background-color: transparent;
 
   &.error {
+    font-size: ${(props) => props.theme.fontSizes.small};
     color: ${(props) => props.theme.colors.red};
     text-align: center;
+    white-space: pre;
   }
 
   &.bold {
