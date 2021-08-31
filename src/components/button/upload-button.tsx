@@ -33,7 +33,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
     fileData,
   } = props;
 
-  const uploadButtonRef = React.useRef(null);
+  const uploadButtonRef = React.useRef<HTMLInputElement>(null);
 
   const isValid = props.fileData?.validExtension;
   const contentValues = {
