@@ -3,8 +3,6 @@ import { device } from '@/pages/main/styles';
 
 export const UploadBoxStyle = styled.div`
   min-height: 40px;
-  //height: fit-content;
-  //max-height: 320px;
   padding: 24px;
   margin-bottom: 32px;
   cursor: pointer;
