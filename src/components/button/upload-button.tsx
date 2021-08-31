@@ -42,7 +42,6 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
   };
 
   const imgPreviewRender = (base64?: string) => {
-    //console.log('base64: ', base64);
     return base64 ? `data:image/png;base64, ${base64}` : '';
   };
 
