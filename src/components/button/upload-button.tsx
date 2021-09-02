@@ -8,6 +8,8 @@ import { FileData, getFileDataFromEvent } from '@/services/files';
 import DeleteIcon from '@/assets/icons/delete-icon.png';
 import { Modal } from '@/components/modal';
 import { ModalStylePreview } from '../modal/modal.style';
+import { DivDragNDropWithText, DivInfoButton, LabelDescriptionButton, LabelSubtitleButton } from '../label';
+import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
 
 interface IUploadButton {
   id?: string;
@@ -34,12 +36,20 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
   } = props;
 
   const uploadButtonRef = React.useRef<HTMLInputElement>(null);
+  const uploadDivInfoButton = React.useRef<HTMLDivElement>(null);
+  const uploadDivDragNDropWithText = React.useRef<HTMLDivElement>(null);
 
   const isValid = props.fileData?.validExtension;
   const contentValues = {
     content: isValid ? '✓' : '!',
     color: isValid ? '#26ca5e' : '#c22d1e',
   };
+
+  React.useEffect(() => {
+    if (uploadDivDragNDropWithText && uploadDivDragNDropWithText.current) {
+      uploadDivDragNDropWithText.current.style.display = 'none';
+    }
+  }, []);
 
   const imgPreviewRender = (base64?: string) => {
     return base64 ? `data:image/png;base64, ${base64}` : '';
@@ -61,6 +71,14 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
     e.stopPropagation();
 
     handleUploadButtonHoverStyle('rgba(255, 116, 0, 0.1)', '#FF7400');
+
+    if (uploadDivInfoButton && uploadDivInfoButton.current) {
+      uploadDivInfoButton.current.style.display = 'none';
+    }
+
+    if (uploadDivDragNDropWithText && uploadDivDragNDropWithText.current) {
+      uploadDivDragNDropWithText.current.style.display = 'block';
+    }
   }
 
   const eDragLeave = (e: any) => {
@@ -68,8 +86,15 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
     e.stopPropagation();
 
     handleUploadButtonHoverStyle('white', '#d5d5d5');
-  }
 
+    if (uploadDivInfoButton && uploadDivInfoButton.current) {
+      uploadDivInfoButton.current.style.display = 'block';
+    }
+
+    if (uploadDivDragNDropWithText && uploadDivDragNDropWithText.current) {
+      uploadDivDragNDropWithText.current.style.display = 'none';
+    }
+  }
 
   const eDrop = (e: any) => {
     e.preventDefault();
@@ -84,7 +109,61 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
     }
 
     handleUploadButtonHoverStyle('white', '#d5d5d5');
+
+    if (uploadDivInfoButton && uploadDivInfoButton.current) {
+      uploadDivInfoButton.current.style.display = 'block';
+    }
+
+    if (uploadDivDragNDropWithText && uploadDivDragNDropWithText.current) {
+      uploadDivDragNDropWithText.current.style.display = 'none';
+    }
   }
+
+  const handleFileDataLabel = (
+    fileData: FileData | undefined,
+    fileType: string,
+  ) => {
+    if (fileData === undefined) {
+      return 'Clique para enviar ou arraste a foto aqui.';
+    }
+    return handleFileExtensionAndSizeError(fileData, fileType);
+  };
+
+  const handleFileExtensionAndSizeError = (
+    fileData: FileData | undefined,
+    fileType: string,
+  ) => {
+    console.log(fileType)
+
+    if (fileData?.validExtension && fileData?.validSize) return fileData.name;
+
+    //const validExtension = fileData?.validExtension;
+    //const validSize = fileData?.validSize;
+
+    // fileType === 'Frente'
+    //   ? sendGTMEventWithAction(
+    //     `erro-frente-${selectedDoc}-${handleGTMTypeError(
+    //       validExtension,
+    //       validSize,
+    //     )}`,
+    //   )
+    //   : sendGTMEventWithAction(
+    //     `erro-verso-${selectedDoc}-${handleGTMTypeError(
+    //       validExtension,
+    //       validSize,
+    //     )}`,
+    //   );
+
+    return "Ops! A foto enviada é diferente do formato \n ou tamanho aceito. Envie uma nova foto.";
+  };
+
+  const handleFileExtensionAndSizeClass = (fileData?: FileData) => {
+    if (fileData === undefined) return '';
+
+    const valid = fileData?.validExtension && fileData?.validSize;
+
+    return valid ? '' : 'error';
+  };
 
   return (
     <UploadButtonDragNDrop
@@ -128,6 +207,29 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
         />
         <label className={`${fileData ? 'trim' : ''}`} htmlFor={id} id="labelTeste" style={{ display: 'block' }}>
           {children}
+
+          <DivInfoButton
+            ref={uploadDivInfoButton}
+          >
+            <LabelSubtitleButton
+              className={` ${fileData !== undefined ? 'tiny' : ''}`}
+            >
+              {fileData === undefined && <img src={UploadIcon} />}
+              {`${typeFile}`}
+            </LabelSubtitleButton>
+
+            <LabelDescriptionButton
+              className={`${handleFileExtensionAndSizeClass(fileData)}`}
+            >
+              {handleFileDataLabel(fileData, typeFile)}
+            </LabelDescriptionButton>
+          </DivInfoButton>
+
+          <DivDragNDropWithText
+            ref={uploadDivDragNDropWithText}
+          >
+            Solte para carregar a foto
+          </DivDragNDropWithText>
         </label>
 
         <DeleteButtonStyle

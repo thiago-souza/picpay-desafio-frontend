@@ -95,7 +95,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
         )}`,
       );
 
-    return  "Ops! A foto enviada é diferente do formato \n ou tamanho aceito. Envie uma nova foto.";
+    return "Ops! A foto enviada é diferente do formato \n ou tamanho aceito. Envie uma nova foto.";
   };
 
   const handleFileExtensionAndSizeClass = (fileData?: FileData) => {
@@ -265,7 +265,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             isShownModal={mState.front}
             typeFile="Frente do documento"
           >
-            {uploadLabels('Frente')}
+            {/* {uploadLabels('Frente')} */}
           </UploadButton>
 
           <UploadButton
@@ -278,7 +278,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             isShownModal={mState.back}
             typeFile="Verso do documento"
           >
-            {uploadLabels('Verso')}
+            {/* {uploadLabels('Verso')} */}
           </UploadButton>
         </UploadBoxStyle>
         <CustomButton disabled={!isValidFiles()} callbackEvent={uploadFiles}>
