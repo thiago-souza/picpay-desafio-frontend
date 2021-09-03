@@ -35,7 +35,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   };
   const [mState, setMState] = React.useState(modalState);
 
-  const sendGTMEventWithAction = (action: string) => {
+  const sendEventWithAction = (action: string) => {
     if (!action) {
       return;
     }
@@ -43,23 +43,23 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   };
 
   const handleDeleteFront = () => {
-    sendGTMEventWithAction('remover-frente');
+    sendEventWithAction('remover-frente');
     setFrontFileData(undefined);
   };
 
   const handleDeleteBack = () => {
-    sendGTMEventWithAction('remover-verso');
+    sendEventWithAction('remover-verso');
     setBackFileData(undefined);
   };
 
   const handleLoadFrontFile = (file: FileData) => {
     setFrontFileData(file);
-    sendGTMEventWithAction(`frente-${selectedDoc}-carregada`);
+    sendEventWithAction(`frente-${selectedDoc}-carregada`);
   };
 
   const handleLoadBackFile = (file: FileData) => {
     setBackFileData(file);
-    sendGTMEventWithAction(`verso-${selectedDoc}-carregado`);
+    sendEventWithAction(`verso-${selectedDoc}-carregado`);
   };
 
   const handleGTMTypeError = (
@@ -83,13 +83,13 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     const validSize = fileData?.validSize;
 
     fileType === 'Frente'
-      ? sendGTMEventWithAction(
+      ? sendEventWithAction(
         `erro-frente-${selectedDoc}-${handleGTMTypeError(
           validExtension,
           validSize,
         )}`,
       )
-      : sendGTMEventWithAction(
+      : sendEventWithAction(
         `erro-verso-${selectedDoc}-${handleGTMTypeError(
           validExtension,
           validSize,
@@ -143,7 +143,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       return;
     }
 
-    sendGTMEventWithAction('enviar');
+    sendEventWithAction('enviar');
 
     const apiService = getApi(authData.token, authData.globoId);
     console.log('base64 front: ', frontFileData?.base64);
@@ -242,7 +242,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   };
 
   const handleNavigationBack = () => {
-    sendGTMEventWithAction('voltar-envio-documento');
+    sendEventWithAction('voltar-envio-documento');
   };
 
   return (
@@ -262,7 +262,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             onFileSelected={handleLoadFrontFile}
             callbackDeleteFile={handleDeleteFront}
             callbackImgPreview={() => handleModal('front')}
-            onClickEvent={() => sendGTMEventWithAction('frente')}
+            onClickEvent={() => sendEventWithAction('frente')}
             isShownModal={mState.front}
             typeFile="Frente do documento"
           >
@@ -275,7 +275,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             onFileSelected={handleLoadBackFile}
             callbackDeleteFile={handleDeleteBack}
             callbackImgPreview={() => handleModal('back')}
-            onClickEvent={() => sendGTMEventWithAction('verso')}
+            onClickEvent={() => sendEventWithAction('verso')}
             isShownModal={mState.back}
             typeFile="Verso do documento"
           >
