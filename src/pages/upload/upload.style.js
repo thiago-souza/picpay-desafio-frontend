@@ -3,8 +3,6 @@ import { device } from '@/pages/main/styles';
 
 export const UploadBoxStyle = styled.div`
   min-height: 40px;
-  height: fit-content;
-  max-height: 316px;
   padding: 24px;
   margin-bottom: 32px;
   cursor: pointer;
@@ -38,6 +36,8 @@ export const ImgPreviewStyle = styled.div`
 
   &.active {
     display: flex;
+    margin: 0px 10px;
+    white-space: pre-wrap;
   }
 
   img {

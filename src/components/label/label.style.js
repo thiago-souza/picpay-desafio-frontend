@@ -20,6 +20,7 @@ const LabelSubtitle = styled.h3`
 const LabelSubtitleButton = styled(LabelSubtitle)`
   display: flex;
   justify-content: center;
+  background-color: transparent;
 
   font-size: ${(props) => props.theme.fontSizes.small};
   color: #666666;
@@ -54,10 +55,13 @@ const LabelDescription = styled.p`
 const LabelDescriptionButton = styled(LabelDescription)`
   color: #999;
   text-transform: none;
+  background-color: transparent;
 
   &.error {
+    font-size: ${(props) => props.theme.fontSizes.small};
     color: ${(props) => props.theme.colors.red};
     text-align: center;
+    white-space: pre;
   }
 
   &.bold {
@@ -72,6 +76,14 @@ const LabelDescriptionButton = styled(LabelDescription)`
   }
 `;
 
+const DivInfoButton = styled.div``;
+
+const DivDragNDropWithText = styled.div`
+  font-family: ${(props) => props.theme.fonts.proximaNova};
+  font-size: ${(props) => props.theme.fontSizes.small};
+  color: ${(props) => props.theme.colors.orange};
+`;
+
 export {
   LabelTitle,
   LabelSubtitle,
@@ -79,4 +91,6 @@ export {
   LabelSubtitleButton,
   LabelDescriptionButton,
   LabelCenter,
+  DivInfoButton,
+  DivDragNDropWithText
 };
