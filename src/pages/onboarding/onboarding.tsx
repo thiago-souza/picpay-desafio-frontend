@@ -19,10 +19,9 @@ import RgIcon from '@/assets/icons/rg-icon.png';
 import SecurityIcon from '@/assets/icons/security-icon.png';
 import { AuthContext } from '@/components/auth-context';
 import getApi from '@/services/api/api-service';
-import getRedirectUrl from '@/services/navigation';
 import { ModalConfirm } from '../../components/modal-confirm';
 import { sendEvent } from '@/services/tracking';
-import { checkAuthIsInvalid, checkGloboIdInWhitelist } from '@/services/onboarding';
+import { checkAuthIsInvalid, checkGloboIdInWhitelist, checkStatus } from '@/services/onboarding';
 
 export const OnboardingPage: React.FC = () => {
   const history = useHistory();
@@ -33,7 +32,7 @@ export const OnboardingPage: React.FC = () => {
   React.useEffect(() => {
     const status = async () => {
       setIsLoading(false);
-
+      debugger;
       if (checkAuthIsInvalid(authData)) {
         return;
       }
@@ -50,31 +49,14 @@ export const OnboardingPage: React.FC = () => {
         history.push('/status/error');
       });
 
+      setIsLoading(true);
 
-      // setIsLoading(true);
-
-      // let statusResponse = null;
-      // try {
-      //   statusResponse = await apiService.getStatus();
-      // } catch (error) {
-      //   console.log('Error: ', error);
-      //   history.push('/status/error');
-      //   return;
-      // }
-
-      // console.log('status response: ', statusResponse);
-      // let url = getRedirectUrl('accounts/status', statusResponse.statusCode);
-      // if (url === 'status/') {
-      //   if (statusResponse.data.status.toLowerCase() == 'in_process')
-      //     url = `${url}still_${statusResponse.data.status.toLowerCase()}`;
-      //   else if (statusResponse.data.status.toLowerCase() == 'created')
-      //     url = 'select';
-      //   else url = `${url}${statusResponse.data.status.toLowerCase()}`;
-      //   setIsLoading(false);
-      //   history.push(url);
-      // }
-
-      history.push('/upload');
+      await checkStatus(apiService).then((url) => {
+        history.push(url);
+      }).catch(() => {
+        history.push('/status/error');
+        return;
+      })
 
       setTimeout(() => {
         setIsLoading(false);
