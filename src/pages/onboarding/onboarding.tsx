@@ -22,6 +22,7 @@ import getApi from '@/services/api/api-service';
 import getRedirectUrl from '@/services/navigation';
 import { ModalConfirm } from '../../components/modal-confirm';
 import { sendEvent } from '@/services/tracking';
+import { checkAuthIsInvalid, checkGloboIdInWhitelist } from '@/services/onboarding';
 
 export const OnboardingPage: React.FC = () => {
   const history = useHistory();
@@ -32,55 +33,48 @@ export const OnboardingPage: React.FC = () => {
   React.useEffect(() => {
     const status = async () => {
       setIsLoading(false);
-      if (authData.token == null || authData.token == '') {
-        console.log('token is empty');
-        return;
-      }
 
-      if (authData.globoId == null || authData.globoId == '') {
-        console.log('globoId is empty');
+      if (checkAuthIsInvalid(authData)) {
         return;
       }
 
       const apiService = getApi(authData.token, authData.globoId);
 
-      let globoIdInWhiteList = null;
-      try {
-        globoIdInWhiteList = await apiService.IsGloboIdInExpressWhiteList();
-      } catch (error) {
-        console.log('Error: ', error);
+      await checkGloboIdInWhitelist(apiService).then((isMember) => {
+        if (!isMember) {
+          const cartolaURL = process.env.CARTOLA_URL || '';
+          window.location.href = cartolaURL;
+          return;
+        }
+      }).catch(() => {
         history.push('/status/error');
-        return;
-      }
+      });
 
-      if (!globoIdInWhiteList.isMember) {
-        const cartolaURL = process.env.CARTOLA_URL || '';
-        window.location.href = cartolaURL;
-        return;
-      }
 
-      setIsLoading(true);
+      // setIsLoading(true);
 
-      let statusResponse = null;
-      try {
-        statusResponse = await apiService.getStatus();
-      } catch (error) {
-        console.log('Error: ', error);
-        history.push('/status/error');
-        return;
-      }
+      // let statusResponse = null;
+      // try {
+      //   statusResponse = await apiService.getStatus();
+      // } catch (error) {
+      //   console.log('Error: ', error);
+      //   history.push('/status/error');
+      //   return;
+      // }
 
-      console.log('status response: ', statusResponse);
-      let url = getRedirectUrl('accounts/status', statusResponse.statusCode);
-      if (url === 'status/') {
-        if (statusResponse.data.status.toLowerCase() == 'in_process')
-          url = `${url}still_${statusResponse.data.status.toLowerCase()}`;
-        else if (statusResponse.data.status.toLowerCase() == 'created')
-          url = 'select';
-        else url = `${url}${statusResponse.data.status.toLowerCase()}`;
-        setIsLoading(false);
-        history.push(url);
-      }
+      // console.log('status response: ', statusResponse);
+      // let url = getRedirectUrl('accounts/status', statusResponse.statusCode);
+      // if (url === 'status/') {
+      //   if (statusResponse.data.status.toLowerCase() == 'in_process')
+      //     url = `${url}still_${statusResponse.data.status.toLowerCase()}`;
+      //   else if (statusResponse.data.status.toLowerCase() == 'created')
+      //     url = 'select';
+      //   else url = `${url}${statusResponse.data.status.toLowerCase()}`;
+      //   setIsLoading(false);
+      //   history.push(url);
+      // }
+
+      history.push('/upload');
 
       setTimeout(() => {
         setIsLoading(false);
