@@ -59,8 +59,6 @@ export const DocumentSelectionPage: React.FC<IDocumentSelectionPage> = (
         <DocumentCardBox
           callbackEvent={() => handleSelectCallback('RG')}
           icon={RgIcon}
-          label={'Em breve'}
-          disabled={true}
         >
           RG
         </DocumentCardBox>
