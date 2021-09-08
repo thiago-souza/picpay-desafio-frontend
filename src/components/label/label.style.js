@@ -76,14 +76,6 @@ const LabelDescriptionButton = styled(LabelDescription)`
   }
 `;
 
-const DivInfoButton = styled.div``;
-
-const DivDragNDropWithText = styled.div`
-  font-family: ${(props) => props.theme.fonts.proximaNova};
-  font-size: ${(props) => props.theme.fontSizes.small};
-  color: ${(props) => props.theme.colors.orange};
-`;
-
 export {
   LabelTitle,
   LabelSubtitle,
@@ -91,6 +83,4 @@ export {
   LabelSubtitleButton,
   LabelDescriptionButton,
   LabelCenter,
-  DivInfoButton,
-  DivDragNDropWithText
 };

@@ -3,7 +3,9 @@ import { useHistory } from 'react-router-dom';
 import { UploadBoxStyle } from './upload.style';
 import { CustomButton, UploadButton } from '@/components/button';
 import {
+  LabelDescriptionButton,
   LabelDescription,
+  LabelSubtitleButton,
   LabelSubtitle,
 } from '@/components/label';
 import { NavigationBack } from '@/components/navigation/navigation-back';
@@ -13,6 +15,7 @@ import { AuthContext } from '@/components/auth-context';
 import { FileData } from '@/services/files';
 import getRedirectUrl from '@/services/navigation';
 import getApi from '@/services/api/api-service';
+import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
 import { sendEvent } from '@/services/tracking';
 
 interface IUploadBox {
@@ -43,6 +46,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     sendEventWithAction('remover-frente');
     setFrontFileData(undefined);
   };
+
   const handleDeleteBack = () => {
     sendEventWithAction('remover-verso');
     setBackFileData(undefined);
@@ -56,6 +60,81 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   const handleLoadBackFile = (file: FileData) => {
     setBackFileData(file);
     sendEventWithAction(`verso-${selectedDoc}-carregado`);
+  };
+
+  const handleGTMTypeError = (
+    validExtension?: boolean,
+    validSize?: boolean,
+  ) => {
+    if (!validExtension && !validSize) {
+      return 'extensao-e-tamanho-invalido';
+    }
+
+    return !validExtension ? 'extensao-invalida' : 'tamanho-invalido';
+  };
+
+  const handleFileExtensionAndSizeError = (
+    fileData: FileData | undefined,
+    fileType: string,
+  ) => {
+    if (fileData?.validExtension && fileData?.validSize) return fileData.name;
+
+    const validExtension = fileData?.validExtension;
+    const validSize = fileData?.validSize;
+
+    fileType === 'Frente'
+      ? sendEventWithAction(
+        `erro-frente-${selectedDoc}-${handleGTMTypeError(
+          validExtension,
+          validSize,
+        )}`,
+      )
+      : sendEventWithAction(
+        `erro-verso-${selectedDoc}-${handleGTMTypeError(
+          validExtension,
+          validSize,
+        )}`,
+      );
+
+    return "Ops! A foto enviada é diferente do formato \n ou tamanho aceito. Envie uma nova foto.";
+  };
+
+  const handleFileExtensionAndSizeClass = (fileData?: FileData) => {
+    if (fileData === undefined) return '';
+
+    const valid = fileData?.validExtension && fileData?.validSize;
+
+    return valid ? '' : 'error';
+  };
+
+  const handleFileDataLabel = (
+    fileData: FileData | undefined,
+    fileType: string,
+  ) => {
+    if (fileData === undefined) {
+      return 'Clique para enviar ou arraste a foto aqui.';
+    }
+    return handleFileExtensionAndSizeError(fileData, fileType);
+  };
+
+  const uploadLabels = (fileType: string) => {
+    const fileData = fileType === 'Frente' ? frontFileData : backFileData;
+
+    return (
+      <>
+        <LabelSubtitleButton
+          className={` ${fileData !== undefined ? 'tiny' : ''}`}
+        >
+          {fileData === undefined && <img src={UploadIcon} />}
+          {`${fileType} do documento`}
+        </LabelSubtitleButton>
+        <LabelDescriptionButton
+          className={`${handleFileExtensionAndSizeClass(fileData)}`}
+        >
+          {handleFileDataLabel(fileData, fileType)}
+        </LabelDescriptionButton>
+      </>
+    );
   };
 
   const uploadFiles = async () => {
@@ -187,7 +266,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             isShownModal={mState.front}
             typeFile="Frente do documento"
           >
-            {/* {uploadLabels('Frente')} */}
+            {uploadLabels('Frente')}
           </UploadButton>
 
           <UploadButton
@@ -200,7 +279,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             isShownModal={mState.back}
             typeFile="Verso do documento"
           >
-            {/* {uploadLabels('Verso')} */}
+            {uploadLabels('Verso')}
           </UploadButton>
         </UploadBoxStyle>
         <CustomButton disabled={!isValidFiles()} callbackEvent={uploadFiles}>
