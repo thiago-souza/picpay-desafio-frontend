@@ -32,35 +32,38 @@ export const OnboardingPage: React.FC = () => {
   React.useEffect(() => {
     const status = async () => {
       setIsLoading(false);
-      debugger;
       if (checkAuthIsInvalid(authData)) {
         return;
       }
 
       const apiService = getApi(authData.token, authData.globoId);
 
-      await checkGloboIdInWhitelist(apiService).then((isMember) => {
+      await checkGloboIdInWhitelist(apiService).then(async (isMember) => {
         if (!isMember) {
           const cartolaURL = process.env.CARTOLA_URL || '';
           window.location.href = cartolaURL;
           return;
         }
-      }).catch(() => {
-        history.push('/status/error');
-      });
 
-      setIsLoading(true);
+        setIsLoading(true);
 
-      await checkStatus(apiService).then((url) => {
-        history.push(url);
+        await checkStatus(apiService).then((url) => {
+          console.log('URL>>>>>>>: ', url);
+          history.push(url);
+        }).catch(() => {
+          history.push('/status/error');
+          return;
+        });
+
+        history.push('/select');
+
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 950);
       }).catch(() => {
         history.push('/status/error');
         return;
-      })
-
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 950);
+      });
     };
     status();
   }, [authData]);

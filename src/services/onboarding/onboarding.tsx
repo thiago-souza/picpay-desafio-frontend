@@ -3,7 +3,6 @@ import { ApiService } from "../api";
 import getRedirectUrl from "../navigation";
 
 export const checkAuthIsInvalid = (authData: IAuth): boolean => {
-  debugger;
   if (authData.token == null || authData.token == '') {
     console.log('Error on checking Auth is token is empty');
     return true;
@@ -19,7 +18,6 @@ export const checkAuthIsInvalid = (authData: IAuth): boolean => {
 
 export const checkGloboIdInWhitelist = async (apiService: ApiService): Promise<boolean> => {
   const promise = new Promise<boolean>(async (resolve, reject) => {
-    debugger;
     let globoIdInWhiteList = null;
 
     try {
@@ -41,7 +39,6 @@ export const checkGloboIdInWhitelist = async (apiService: ApiService): Promise<b
 
 export const checkStatus = async (apiService: ApiService): Promise<string> => {
   const promise = new Promise<string>(async (resolve, reject) => {
-    debugger;
     let statusResponse = null;
 
     try {

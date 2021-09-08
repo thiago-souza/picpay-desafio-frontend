@@ -62,3 +62,22 @@ export const getFileDataFromEvent = (
 
   return promise;
 };
+
+const checkIsFileValid = ({ validExtension, validSize }: FileData) => {
+  return validExtension && validSize;
+};
+
+export const isValidFiles = (frontFileData?: FileData, backFileData?: FileData) => {
+  if (frontFileData == undefined && backFileData == undefined) return false;
+
+  if (frontFileData && backFileData)
+    return checkIsFileValid(frontFileData) && checkIsFileValid(backFileData);
+};
+
+export const fileExtensionAndSizeIsValid = (fileData?: FileData) => {
+  if (fileData === undefined) return '';
+
+  const valid = fileData?.validExtension && fileData?.validSize;
+
+  return valid ? '' : 'error';
+};
