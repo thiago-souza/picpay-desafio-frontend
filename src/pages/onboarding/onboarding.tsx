@@ -55,8 +55,6 @@ export const OnboardingPage: React.FC = () => {
           return;
         });
 
-        history.push('/select');
-
         setTimeout(() => {
           setIsLoading(false);
         }, 950);

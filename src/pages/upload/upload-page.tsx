@@ -77,8 +77,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     fileData: FileData | undefined,
     fileType: string,
   ) => {
-    if (fileExtensionAndSizeIsValid(fileData))
-      return fileData?.name;
+    if (fileData?.validExtension && fileData?.validSize) return fileData.name;
 
     const validExtension = fileData?.validExtension;
     const validSize = fileData?.validSize;
