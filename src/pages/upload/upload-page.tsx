@@ -17,6 +17,7 @@ import getRedirectUrl from '@/services/navigation';
 import getApi from '@/services/api/api-service';
 import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
 import { sendEvent } from '@/services/tracking';
+import { checkAuthIsInvalid } from '@/services/onboarding';
 
 interface IUploadBox {
   selectedDoc: string;
@@ -130,8 +131,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   };
 
   const uploadFiles = async () => {
-    if (authData.token == null || authData.globoId == null) {
-      console.log('token ou globoid não informados');
+    if (checkAuthIsInvalid(authData)) {
       return;
     }
 
