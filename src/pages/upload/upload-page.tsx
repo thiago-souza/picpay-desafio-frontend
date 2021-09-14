@@ -12,11 +12,12 @@ import { NavigationBack } from '@/components/navigation/navigation-back';
 import { ContentSideBar } from '@/pages/main/styles/content.style';
 import { LoadingComponent } from '@/components/loading';
 import { AuthContext } from '@/components/auth-context';
-import { FileData } from '@/services/files';
+import { FileData, fileExtensionAndSizeIsValid, isValidFiles } from '@/services/files';
 import getRedirectUrl from '@/services/navigation';
 import getApi from '@/services/api/api-service';
 import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
 import { sendEvent } from '@/services/tracking';
+import { checkAuthIsInvalid } from '@/services/onboarding';
 
 interface IUploadBox {
   selectedDoc: string;
@@ -99,14 +100,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     return "Ops! A foto enviada é diferente do formato \n ou tamanho aceito. Envie uma nova foto.";
   };
 
-  const handleFileExtensionAndSizeClass = (fileData?: FileData) => {
-    if (fileData === undefined) return '';
-
-    const valid = fileData?.validExtension && fileData?.validSize;
-
-    return valid ? '' : 'error';
-  };
-
   const handleFileDataLabel = (
     fileData: FileData | undefined,
     fileType: string,
@@ -129,7 +122,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
           {`${fileType} do documento`}
         </LabelSubtitleButton>
         <LabelDescriptionButton
-          className={`${handleFileExtensionAndSizeClass(fileData)}`}
+          className={`${fileExtensionAndSizeIsValid(fileData)}`}
         >
           {handleFileDataLabel(fileData, fileType)}
         </LabelDescriptionButton>
@@ -138,16 +131,13 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   };
 
   const uploadFiles = async () => {
-    if (authData.token == null || authData.globoId == null) {
-      console.log('token ou globoid não informados');
+    if (checkAuthIsInvalid(authData)) {
       return;
     }
 
     sendEventWithAction('enviar');
 
     const apiService = getApi(authData.token, authData.globoId);
-    console.log('base64 front: ', frontFileData?.base64);
-    console.log('base64 back: ', backFileData?.base64);
 
     if (frontFileData) {
       setIsLoading(true);
@@ -196,7 +186,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     const url = getRedirectUrl('accounts/attachments', status);
 
     if (url === 'verify') {
-
       let verifyRes = null;
       try {
         verifyRes = await apiService.verify();
@@ -228,17 +217,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       return;
     }
     setMState({ ...mState, back: !mState.back });
-  };
-
-  const checkIsFileValid = ({ validExtension, validSize }: FileData) => {
-    return validExtension && validSize;
-  };
-
-  const isValidFiles = () => {
-    if (frontFileData == undefined && backFileData == undefined) return false;
-
-    if (frontFileData && backFileData)
-      return checkIsFileValid(frontFileData) && checkIsFileValid(backFileData);
   };
 
   const handleNavigationBack = () => {
@@ -282,7 +260,9 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             {uploadLabels('Verso')}
           </UploadButton>
         </UploadBoxStyle>
-        <CustomButton disabled={!isValidFiles()} callbackEvent={uploadFiles}>
+        <CustomButton
+          disabled={!isValidFiles(frontFileData, backFileData)}
+          callbackEvent={uploadFiles}>
           Enviar documento
         </CustomButton>
       </ContentSideBar>

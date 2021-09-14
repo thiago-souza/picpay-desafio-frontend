@@ -1,7 +1,7 @@
 import React from 'react';
 import GloboIdClient from '@/services/globoid/globoid-service';
 
-interface IAuth {
+export interface IAuth {
   globoId: string;
   token: string;
   email: string;

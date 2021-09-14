@@ -1,4 +1,4 @@
-class ApiService {
+export class ApiService {
   apiURL: string;
   cartolaApiURL: string;
   token: string;
