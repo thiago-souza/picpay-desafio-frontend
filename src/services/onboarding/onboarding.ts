@@ -57,6 +57,8 @@ export const checkStatus = async (apiService: ApiService): Promise<string> => {
         return resolve('select');
       else
         return resolve(`${url}${statusResponse.data.status.toLowerCase()}`);
+    } else {
+      return resolve('/');
     }
   });
 
