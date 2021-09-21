@@ -12,7 +12,7 @@ import { NavigationBack } from '@/components/navigation/navigation-back';
 import { ContentSideBar } from '@/pages/main/styles/content.style';
 import { LoadingComponent } from '@/components/loading';
 import { AuthContext } from '@/components/auth-context';
-import { FileData, fileExtensionAndSizeIsValid, isValidFiles } from '@/services/files';
+import { checkIsFileValid, FileData, fileExtensionAndSizeIsValid, handleGTMTypeError, isValidFiles } from '@/services/files';
 import getRedirectUrl from '@/services/navigation';
 import getApi from '@/services/api/api-service';
 import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
@@ -63,43 +63,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     sendEventWithAction(`verso-${selectedDoc}-carregado`);
   };
 
-  const handleGTMTypeError = (
-    validExtension?: boolean,
-    validSize?: boolean,
-  ) => {
-    if (!validExtension && !validSize) {
-      return 'extensao-e-tamanho-invalido';
-    }
-
-    return !validExtension ? 'extensao-invalida' : 'tamanho-invalido';
-  };
-
-  const handleFileExtensionAndSizeError = (
-    fileData: FileData | undefined,
-    fileType: string,
-  ) => {
-    if (fileData?.validExtension && fileData?.validSize) return fileData.name;
-
-    const validExtension = fileData?.validExtension;
-    const validSize = fileData?.validSize;
-
-    fileType === 'Frente'
-      ? sendEventWithAction(
-        `erro-frente-${selectedDoc}-${handleGTMTypeError(
-          validExtension,
-          validSize,
-        )}`,
-      )
-      : sendEventWithAction(
-        `erro-verso-${selectedDoc}-${handleGTMTypeError(
-          validExtension,
-          validSize,
-        )}`,
-      );
-
-    return "Ops! A foto enviada é diferente do formato \n ou tamanho aceito. Envie uma nova foto.";
-  };
-
   const handleFileDataLabel = (
     fileData: FileData | undefined,
     fileType: string,
@@ -108,6 +71,30 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       return 'Clique para enviar ou arraste a foto aqui.';
     }
     return handleFileExtensionAndSizeError(fileData, fileType);
+  };
+
+  const handleFileExtensionAndSizeError = (
+    fileData: FileData | undefined,
+    fileType: string,
+  ) => {
+    if (fileData && checkIsFileValid(fileData))
+      return fileData?.name;
+
+    fileType === 'Frente'
+      ? sendEventWithAction(
+        `erro-frente-${selectedDoc}-${handleGTMTypeError(
+          fileData?.validExtension,
+          fileData?.validSize,
+        )}`,
+      )
+      : sendEventWithAction(
+        `erro-verso-${selectedDoc}-${handleGTMTypeError(
+          fileData?.validExtension,
+          fileData?.validSize,
+        )}`,
+      );
+
+    return "Ops! A foto enviada é diferente do formato \n ou tamanho aceito. Envie uma nova foto.";
   };
 
   const uploadLabels = (fileType: string) => {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { AuthContext } from '@/components/auth-context';
 import {
@@ -18,6 +18,7 @@ import { sendEvent } from '@/services/tracking';
 
 export const StatusPage: React.FC = () => {
   const authData = React.useContext(AuthContext);
+  const history = useHistory();
   const { email: userEmail } = authData;
 
   const [statusState, setStatusState] = React.useState({
@@ -36,6 +37,16 @@ export const StatusPage: React.FC = () => {
     setStatusState({ ...statusState, isModalShow: !statusState.isModalShow });
   };
 
+  const handleClickRejectedRestart = () => {
+    sendEvent(
+      'know-your-costumer',
+      'Reiniciar o Processo | Rejeitado',
+      'Reiniciar'
+    );
+  
+    history.push('/select');
+  }
+
   const getStatusType = type ? type.toLowerCase() : '';
 
   const renderTypeStatus = () => {
@@ -45,13 +56,13 @@ export const StatusPage: React.FC = () => {
       case 'still_in_process':
         return renderStillInProcess(userEmail);
       case 'active':
-        return renderRejected(handleClickSeeLater);
+        return renderRejected(handleClickSeeLater, handleClickRejectedRestart);
       case 'approved':
         return renderApproved;
       case 'suspected':
         return renderSuspected;
       case 'rejected':
-        return renderRejected(handleClickSeeLater);
+        return renderRejected(handleClickSeeLater, handleClickRejectedRestart);
       case 'is_pending':
         return renderIsPending;
       case 'error':

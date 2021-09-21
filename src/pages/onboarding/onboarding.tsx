@@ -21,7 +21,7 @@ import { AuthContext } from '@/components/auth-context';
 import getApi from '@/services/api/api-service';
 import { ModalConfirm } from '../../components/modal-confirm';
 import { sendEvent } from '@/services/tracking';
-import { checkAuthIsInvalid, checkGloboIdInWhitelist, checkStatus } from '@/services/onboarding';
+import { checkAuthIsInvalid, getPageFromStatus } from '@/services/onboarding';
 
 export const OnboardingPage: React.FC = () => {
   const history = useHistory();
@@ -38,26 +38,23 @@ export const OnboardingPage: React.FC = () => {
 
       const apiService = getApi(authData.token, authData.globoId);
 
-      await checkGloboIdInWhitelist(apiService).then(async (isMember) => {
-        if (!isMember) {
+      setIsLoading(true);
+
+      await apiService.IsGloboIdInExpressWhiteList().then(async res => {
+        if (!res.isMember) {
           const cartolaURL = process.env.CARTOLA_URL || '';
           window.location.href = cartolaURL;
           return;
         }
 
-        setIsLoading(true);
-
-        await checkStatus(apiService).then((url) => {
-          console.log('URL>>>>>>>: ', url);
-          history.push(url);
+        await apiService.getStatus().then(status => {
+          setIsLoading(false);
+          const newUrl = getPageFromStatus(status.statusCode, status.data?.status);
+          history.push(newUrl);
         }).catch(() => {
           history.push('/status/error');
           return;
         });
-
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 950);
       }).catch(() => {
         history.push('/status/error');
         return;
