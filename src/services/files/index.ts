@@ -5,17 +5,14 @@ export const isFileExtensionValid = (fileName: string): boolean => {
   const fileEx = fileName.split('.').pop();
   if (fileEx == undefined) return false;
 
-  return allowedExtensions.includes(fileEx);
+  return allowedExtensions.includes(fileEx.toLowerCase());
 };
 
 export const isFileSizeValid = (fileSize: number): boolean => {
-  const sizeInMB = (fileSize / (1024 * 1024)).toFixed(2);
-  console.log(`${sizeInMB} MB`);
-
   return fileSize < 3145728; //3mb
 };
 
-export const fileContentsToBase64 = (binaryString: string) => {
+export const fileContentsToBase64 = (binaryString: string): string => {
   return btoa(binaryString);
 };
 
@@ -63,21 +60,35 @@ export const getFileDataFromEvent = (
   return promise;
 };
 
-const checkIsFileValid = ({ validExtension, validSize }: FileData) => {
+export const checkIsFileValid = ({ validExtension, validSize }: FileData): boolean => {
   return validExtension && validSize;
 };
 
-export const isValidFiles = (frontFileData?: FileData, backFileData?: FileData) => {
-  if (frontFileData == undefined && backFileData == undefined) return false;
+export const isValidFiles = (frontFileData?: FileData, backFileData?: FileData): boolean | undefined => {
+  if (frontFileData == undefined && backFileData == undefined) {
+    return false;
+  }
 
   if (frontFileData && backFileData)
     return checkIsFileValid(frontFileData) && checkIsFileValid(backFileData);
 };
 
-export const fileExtensionAndSizeIsValid = (fileData?: FileData) => {
+export const fileExtensionAndSizeIsValid = (fileData?: FileData): string => {
   if (fileData === undefined) return '';
 
   const valid = fileData?.validExtension && fileData?.validSize;
 
   return valid ? '' : 'error';
 };
+
+export const handleGTMTypeError = (
+  validExtension?: boolean,
+  validSize?: boolean,
+): string => {
+  if (!validExtension && !validSize) {
+    return 'extensao-e-tamanho-invalido';
+  }
+
+  return !validExtension ? 'extensao-invalida' : 'tamanho-invalido';
+};
+

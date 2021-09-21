@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { ButtonLink, CustomButton } from '@/components/button';
 import { LabelCenter } from '@/components/label';
 import { ContentBox, ContentSideBar } from '@/pages/main/styles/content.style';
@@ -61,16 +60,6 @@ const callbackStillInProcess = () => {
     'Voltar | Em Andamento',
     'Voltar',
   );
-}
-
-const callbackRejectedReestart = (history: any) => {
-  sendEvent(
-    'know-your-costumer',
-    'Reiniciar o Processo | Rejeitado',
-    'Reiniciar',
-  );
-
-  history.push('/select');
 }
 
 const callbackSuspectedBackToStart = () => {
@@ -198,9 +187,7 @@ export const renderStillInProcess = (email: string): JSX.Element => (
   </>
 );
 
-export const renderRejected = (callbackSeeLater: () => void): JSX.Element => {
-  const history = useHistory();
-
+export const renderRejected = (callbackSeeLater: () => void, callbackRejectedRestart: () => void): JSX.Element => {
   return (
     <>
       <LabelCenter>
@@ -216,8 +203,8 @@ export const renderRejected = (callbackSeeLater: () => void): JSX.Element => {
         </LabelDescriptionCentered>
       </ContentBox>
       <ContentSideBar>
-        <CustomButton callbackEvent={() => callbackRejectedReestart(history)}>
-          Reniciar o processo
+        <CustomButton callbackEvent={callbackRejectedRestart}>
+          Reiniciar o processo
         </CustomButton>
       </ContentSideBar>
       <CustomLink callbackEvent={callbackSeeLater}>

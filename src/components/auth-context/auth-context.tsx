@@ -29,6 +29,7 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
         console.log('token: ', tokenResponse.access_token);
 
         const userInfo = await client.loadUserInfo();
+        console.log('globoId: ', userInfo.globo_id);
         setAuthData({
           globoId: userInfo.globo_id,
           token: tokenResponse.access_token,
