@@ -12,13 +12,12 @@ export const CustomLink: React.FC<ILink> = ({
   children,
   tiny,
 }: ILink) => {
-  const onEventClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const onEventClick = () => {
     callbackEvent && callbackEvent();
   };
   return (
     <LinkDescription className={`${tiny ? `tiny` : ''}`}>
-      <div onClick={onEventClick}>{children}</div>
+      <div data-testid="btn-custom-link" onClick={onEventClick}>{children}</div>
     </LinkDescription>
   );
 };

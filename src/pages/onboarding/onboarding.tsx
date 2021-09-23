@@ -18,7 +18,7 @@ import CnhRgIcon from '@/assets/icons/cnh-rg-icon.png';
 import RgIcon from '@/assets/icons/rg-icon.png';
 import SecurityIcon from '@/assets/icons/security-icon.png';
 import { AuthContext } from '@/components/auth-context';
-import getApi from '@/services/api/api-service';
+import getApi, { ApiService } from '@/services/api/api-service';
 import { ModalConfirm } from '../../components/modal-confirm';
 import { sendEvent } from '@/services/tracking';
 import { checkAuthIsInvalid, getPageFromStatus } from '@/services/onboarding';
@@ -29,38 +29,44 @@ export const OnboardingPage: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [isModalShown, setIsModalShown] = React.useState(false);
 
+  const redirectUserOffWhitelist = async (apiService: ApiService) => {
+    await apiService.IsGloboIdInExpressWhiteList().then(res => {
+      if (!res.isMember) {
+        window.location.href = process.env.CARTOLA_URL || '';
+        return;
+      }
+    }).catch(() => {
+      history.push('/status/error');
+      return;
+    });
+  }
+
+  const redirectUserByStatus = (apiService: ApiService) => {
+    apiService.getStatus().then(status => {  
+      const newUrl = getPageFromStatus(status.statusCode, status.data?.status);
+      history.push(newUrl);
+    }).catch(() => {
+      history.push('/status/error');
+    });
+  }
+
   React.useEffect(() => {
-    const status = async () => {
+    (async () => {
       setIsLoading(false);
+    
       if (checkAuthIsInvalid(authData)) {
         return;
       }
 
       const apiService = getApi(authData.token, authData.globoId);
-
       setIsLoading(true);
-
-      await apiService.IsGloboIdInExpressWhiteList().then(async res => {
-        if (!res.isMember) {
-          const cartolaURL = process.env.CARTOLA_URL || '';
-          window.location.href = cartolaURL;
-          return;
-        }
-
-        await apiService.getStatus().then(status => {
-          setIsLoading(false);
-          const newUrl = getPageFromStatus(status.statusCode, status.data?.status);
-          history.push(newUrl);
-        }).catch(() => {
-          history.push('/status/error');
-          return;
-        });
-      }).catch(() => {
-        history.push('/status/error');
-        return;
-      });
-    };
-    status();
+      
+      
+      await redirectUserOffWhitelist(apiService),
+      await redirectUserByStatus(apiService)
+      
+      setIsLoading(false);
+    })()
   }, [authData]);
 
   const handleClickVerifyIdentity = () => {
@@ -87,7 +93,7 @@ export const OnboardingPage: React.FC = () => {
       <ModalConfirm isShown={isModalShown} callbackHide={() => handleClickSeeLater(true)} />
       <ContentItems>
         <LabelTitle>Verifique sua identidade</LabelTitle>
-        <LabelDescription>
+        <LabelDescription data-testid="header-description">
           Para continuar, precisamos que você faça a verificação da sua
           identidade. Isso garante a segurança das suas transações financeiras
           no Cartola Express. Veja o que você precisa enviar:
@@ -102,7 +108,7 @@ export const OnboardingPage: React.FC = () => {
             Pode ser foto da sua CNH ou RG.
           </DocumentBox>
         </ContentBox>
-        <ContentSideBar>
+        <ContentSideBar data-testid="content-side-bar">
           <DocumentBox icon={SecurityIcon} light={true}>
             Relaxa, seus dados estão seguros com a gente.
           </DocumentBox>

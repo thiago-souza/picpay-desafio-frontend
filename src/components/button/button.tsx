@@ -17,7 +17,7 @@ export const CustomButton: React.FC<ICustomButton> = (props: ICustomButton) => {
 
   return (
     <PrimaryButtonStyle>
-      <button disabled={disabled} onClick={onEventClick}>
+      <button disabled={disabled} onClick={onEventClick} data-testid="btn-custom">
         {children}
       </button>
     </PrimaryButtonStyle>
