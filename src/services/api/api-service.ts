@@ -27,6 +27,7 @@ export class ApiService {
     if (!this.globoId) {
       return Error('globoId is empty');
     }
+
     if (!this.token) {
       return Error('token is empty');
     }
@@ -47,36 +48,35 @@ export class ApiService {
     Upload attachment document
   */
   async upload(attach: string, type: string): Promise<any> {
-    if (this.apiURL != null && this.apiURL != '') {
-      const promise = new Promise<any>((resolve, reject) => {
-        if (!this.globoId) {
-          return reject(new Error('globoId is empty'));
-        }
-        if (!this.token) {
-          return reject(new Error('token is empty'));
-        }
+    if (!this.apiURL) {
+      return Error('apiURL is empty');
+    }
 
-        const req = {
-          content: attach,
-          type: type,
-        };
+    if (!this.globoId) {
+      return Error('globoId is empty');
+    }
 
-        fetch(`${this.apiURL}/accounts/attachments`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            ...this.header,
-          },
-          body: JSON.stringify(req),
-        })
-          .then((response) => {
-            return resolve(response.status);
-          })
-          .then((data) => console.log('data: ', data))
-          .catch((error) => reject(new Error(error)));
+    if (!this.token) {
+      return Error('token is empty');
+    }
+
+    try {
+      const req = {
+        content: attach,
+        type: type,
+      };
+
+      const result = await fetch(`${this.apiURL}/accounts/attachments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...this.header,
+        },
+        body: JSON.stringify(req),
       });
-
-      return promise;
+      return { statusCode: result.status };
+    } catch (e: any) {
+      return e;
     }
   }
 
@@ -84,32 +84,28 @@ export class ApiService {
     Get Status on the user document
   */
   async getStatus(): Promise<any> {
-    if (this.apiURL != null && this.apiURL != '') {
-      const promise = new Promise<any>((resolve, reject) => {
-        if (!this.globoId) {
-          return reject(new Error('globoId is empty'));
-        }
-        if (!this.token) {
-          return reject(new Error('token is empty'));
-        }
+    if (!this.apiURL) {
+      return Error('apiURL is empty');
+    }
 
-        fetch(`${this.apiURL}/accounts/status`, {
-          method: 'GET',
-          headers: this.header,
-        })
-          .then((response) => {
-            if (response.status == 200) {
-              response.json().then((json) => {
-                return resolve({ statusCode: response.status, data: json });
-              });
-            } else {
-              return resolve({ statusCode: response.status });
-            }
-          })
-          .catch((error) => reject(new Error(error)));
+    if (!this.globoId) {
+      return Error('globoId is empty');
+    }
+
+    if (!this.token) {
+      return Error('token is empty');
+    }
+
+    try {
+      const result = await fetch(`${this.apiURL}/accounts/status`, {
+        method: 'GET',
+        headers: this.header,
       });
 
-      return promise;
+      const json = await result.json();
+      return { statusCode: result.status, status: json.status };
+    } catch (e: any) {
+      return e;
     }
   }
 
@@ -117,30 +113,30 @@ export class ApiService {
     Start KYC with IdWall process
   */
   async verify(): Promise<any> {
-    if (this.apiURL != null && this.apiURL != '') {
-      const promise = new Promise<any>((resolve, reject) => {
-        if (!this.globoId) {
-          return reject(new Error('globoId is empty'));
-        }
-        if (!this.token) {
-          return reject(new Error('token is empty'));
-        }
+    if (!this.apiURL) {
+      return Error('apiURL is empty');
+    }
 
-        fetch(`${this.apiURL}/accounts/verify`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            ...this.header,
-          },
-        })
-          .then((response) => {
-            return resolve(response.status);
-          })
-          .then((data) => console.log('data: ', data))
-          .catch((error) => reject(new Error(error)));
+    if (!this.globoId) {
+      return Error('globoId is empty');
+    }
+
+    if (!this.token) {
+      return Error('token is empty');
+    }
+
+    try {
+      const result = await fetch(`${this.apiURL}/accounts/verify`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...this.header,
+        },
       });
 
-      return promise;
+      return { statusCode: result.status };
+    } catch (e: any) {
+      return e;
     }
   }
 
@@ -148,30 +144,31 @@ export class ApiService {
     Verify if the globoId belongs to express whitelist
   */
   async IsGloboIdInExpressWhiteList(): Promise<any> {
-    const promise = new Promise<any>((resolve, reject) => {
-      if (!this.globoId) {
-        return reject(new Error('globoId is empty'));
-      }
-      if (!this.token) {
-        return reject(new Error('token is empty'));
-      }
+    if (!this.cartolaApiURL) {
+      return Error('cartolaApiURL is empty');
+    }
 
-      fetch(`${this.cartolaApiURL}/auth/express`, {
+    if (!this.globoId) {
+      return Error('globoId is empty');
+    }
+
+    if (!this.token) {
+      return Error('token is empty');
+    }
+
+    try {
+      const result = await fetch(`${this.cartolaApiURL}/auth/express`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Authorization: this.header.Authorization
         },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('data: ', data);
-          return resolve(data);
-        })
-        .catch((error) => reject(new Error(error)));
-    });
+      });
 
-    return promise;
+      return await result.json();
+    } catch (e: any) {
+      return e;
+    }
   }
 }
 
