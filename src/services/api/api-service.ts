@@ -5,9 +5,9 @@ export class ApiService {
   globoId: string;
   header: any;
 
-  constructor(token: string, globoId: string) {
-    this.apiURL = process.env.API_URL || '';
-    this.cartolaApiURL = process.env.CARTOLA_API_URL || '';
+  constructor(token: string, globoId: string, apiUrl?: string, cartolaApiUrl?: string) {
+    this.apiURL = process.env.API_URL || (apiUrl || '');
+    this.cartolaApiURL = process.env.CARTOLA_API_URL || (cartolaApiUrl || '');
     this.token = token;
     this.globoId = globoId;
     this.header = {
@@ -20,28 +20,26 @@ export class ApiService {
     Get status on the user document
   */
   async getAttachments(): Promise<any> {
-    if (this.apiURL != null && this.apiURL != '') {
-      const promise = new Promise<any>((resolve, reject) => {
-        if (!this.globoId) {
-          return reject(new Error('globoId is empty'));
-        }
-        if (!this.token) {
-          return reject(new Error('token is empty'));
-        }
+    if (!this.apiURL) {
+      return Error('apiURL is empty');
+    }
 
-        fetch(`${this.apiURL}/accounts/attachments`, {
-          method: 'GET',
-          headers: this.header,
-        })
-          .then((response) => {
-            response.json().then((json) => {
-              return resolve({ statusCode: response.status, data: json });
-            });
-          })
-          .catch((error) => reject(new Error(error)));
+    if (!this.globoId) {
+      return Error('globoId is empty');
+    }
+    if (!this.token) {
+      return Error('token is empty');
+    }
+
+    try {
+      const result = await fetch(`${this.apiURL}/accounts/attachments`, {
+        method: 'GET',
+        headers: this.header,
       });
 
-      return promise;
+      return await result.json();
+    } catch (e: any) {
+      return e;
     }
   }
 
@@ -179,10 +177,11 @@ export class ApiService {
 
 let instance: ApiService;
 
-export function getApi(token: string, globoId: string): ApiService {
+export function getApi(token: string, globoId: string, apiUrl?: string, cartolaApiUrl?: string): ApiService {
   if (!instance) {
-    instance = new ApiService(token, globoId);
+    instance = new ApiService(token, globoId, apiUrl, cartolaApiUrl);
   }
   return instance;
 }
+
 export default getApi;
