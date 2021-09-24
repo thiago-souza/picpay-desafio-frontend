@@ -31,7 +31,8 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
         const userInfo = await client.loadUserInfo();
         console.log('globoId: ', userInfo.globo_id);
         setAuthData({
-          globoId: userInfo.globo_id,
+          globoId: 'bf7ab5c1-14c6-4e2d-bb1a-592a5fdd45fc',
+          //globoId: userInfo.globo_id,
           token: tokenResponse.access_token,
           email: userInfo.email,
         });

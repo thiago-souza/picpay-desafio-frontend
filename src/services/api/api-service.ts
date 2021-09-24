@@ -21,63 +21,72 @@ export class ApiService {
   */
   async getAttachments(): Promise<any> {
     if (!this.apiURL) {
-      return Error('apiURL is empty');
+      throw new Error('apiURL is empty');
     }
 
     if (!this.globoId) {
-      return Error('globoId is empty');
+      throw new Error('globoId is empty');
     }
 
     if (!this.token) {
-      return Error('token is empty');
+      throw new Error('token is empty');
     }
 
-    try {
-      const result = await fetch(`${this.apiURL}/accounts/attachments`, {
-        method: 'GET',
-        headers: this.header,
-      });
+    return await fetch(`${this.apiURL}/accounts/attachments`, {
+      method: 'GET',
+      headers: this.header,
+    }).then((res) => res.json()).then((response) => {
+      if (!Array.isArray(response) && Object.keys(response).length === 0) {
+        throw new Error();
+      }
 
-      return await result.json();
-    } catch (e: any) {
-      return e;
-    }
+      return response;
+    })
+    //return await result.json();
   }
 
   /*
     Upload attachment document
   */
   async upload(attach: string, type: string): Promise<any> {
+    debugger;
     if (!this.apiURL) {
-      return Error('apiURL is empty');
+      throw new Error('apiURL is empty');
     }
 
     if (!this.globoId) {
-      return Error('globoId is empty');
+      throw new Error('globoId is empty');
     }
 
     if (!this.token) {
-      return Error('token is empty');
+      throw new Error('token is empty');
     }
 
-    try {
-      const req = {
-        content: attach,
-        type: type,
-      };
+    const req = {
+      content: attach,
+      type: type,
+    };
 
-      const result = await fetch(`${this.apiURL}/accounts/attachments`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...this.header,
-        },
-        body: JSON.stringify(req),
-      });
-      return { statusCode: result.status };
-    } catch (e: any) {
-      return e;
-    }
+    return await fetch(`${this.apiURL}/accounts/attachments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...this.header,
+      },
+      body: JSON.stringify(req),
+    }).then(async (res) => {
+      debugger;
+      //const resData = await res.json();
+      return { statusCode: res.status };
+    }).then((response) => {
+      debugger;
+      if (!Array.isArray(response) && Object.keys(response).length === 0) {
+        throw new Error();
+      }
+
+      return response;
+    })
+    //return { statusCode: result.status };
   }
 
   /*
@@ -85,28 +94,35 @@ export class ApiService {
   */
   async getStatus(): Promise<any> {
     if (!this.apiURL) {
-      return Error('apiURL is empty');
+      throw new Error('apiURL is empty');
     }
 
     if (!this.globoId) {
-      return Error('globoId is empty');
+      throw new Error('globoId is empty');
     }
 
     if (!this.token) {
-      return Error('token is empty');
+      throw new Error('token is empty');
     }
 
-    try {
-      const result = await fetch(`${this.apiURL}/accounts/status`, {
-        method: 'GET',
-        headers: this.header,
-      });
+    return await fetch(`${this.apiURL}/accounts/status`, {
+      method: 'GET',
+      headers: this.header,
+    }).then(async (res) => {
+      if (res.status == 204) {
+        return { statusCode: res.status };
+      }
+      else {
+        const data = await res.json();
+        return { statusCode: res.status, status: data.status };
+      }
+    }).then((response) => {
+      if (!Array.isArray(response) && Object.keys(response).length === 0) {
+        throw new Error();
+      }
 
-      const json = await result.json();
-      return { statusCode: result.status, status: json.status };
-    } catch (e: any) {
-      return e;
-    }
+      return response;
+    });
   }
 
   /*
@@ -114,30 +130,30 @@ export class ApiService {
   */
   async verify(): Promise<any> {
     if (!this.apiURL) {
-      return Error('apiURL is empty');
+      throw new Error('apiURL is empty');
     }
 
     if (!this.globoId) {
-      return Error('globoId is empty');
+      throw new Error('globoId is empty');
     }
 
     if (!this.token) {
-      return Error('token is empty');
+      throw new Error('token is empty');
     }
 
-    try {
-      const result = await fetch(`${this.apiURL}/accounts/verify`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...this.header,
-        },
-      });
+    return await fetch(`${this.apiURL}/accounts/verify`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...this.header,
+      },
+    }).then((res) => res.json()).then((response) => {
+      if (!Array.isArray(response) && Object.keys(response).length === 0) {
+        throw new Error();
+      }
 
-      return { statusCode: result.status };
-    } catch (e: any) {
-      return e;
-    }
+      return response;
+    });
   }
 
   /*
@@ -145,30 +161,30 @@ export class ApiService {
   */
   async IsGloboIdInExpressWhiteList(): Promise<any> {
     if (!this.cartolaApiURL) {
-      return Error('cartolaApiURL is empty');
+      throw new Error('cartolaApiURL is empty');
     }
 
     if (!this.globoId) {
-      return Error('globoId is empty');
+      throw new Error('globoId is empty');
     }
 
     if (!this.token) {
-      return Error('token is empty');
+      throw new Error('token is empty');
     }
 
-    try {
-      const result = await fetch(`${this.cartolaApiURL}/auth/express`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: this.header.Authorization
-        },
-      });
+    return await fetch(`${this.cartolaApiURL}/auth/express`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: this.header.Authorization
+      },
+    }).then((res) => res.json()).then((response) => {
+      if (!Array.isArray(response) && Object.keys(response).length === 0) {
+        throw new Error();
+      }
 
-      return await result.json();
-    } catch (e: any) {
-      return e;
-    }
+      return response;
+    });
   }
 }
 

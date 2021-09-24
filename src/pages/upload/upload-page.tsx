@@ -130,39 +130,67 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       setIsLoading(true);
       const fileEx = frontFileData.name.split('.').pop();
 
+      debugger;
       let uploadFrontRes = null;
-      try {
-        uploadFrontRes = await apiService.upload(
-          `data:image/${fileEx};base64,${frontFileData.base64}`,
-          `${selectedDoc}_FRONT`,
-        );
-      } catch (error) {
+      //try {
+      debugger;
+      uploadFrontRes = await apiService.upload(
+        `data:image/${fileEx};base64,${frontFileData.base64}`,
+        `${selectedDoc}_FRONT`,
+      ).then((res) => {
+        debugger;
+        if ((res == 201 || res == 202) && backFileData) {
+          const fileEx = backFileData.name.split('.').pop();
+
+          // let uploadBackRes = null;
+          // try {
+          //   uploadBackRes = await apiService.upload(
+          //     `data:image/${fileEx};base64,${backFileData.base64}`,
+          //     `${selectedDoc}_BACK`,
+          //   );
+          // } catch (error) {
+          //   console.log('Error: ', error);
+          //   history.push('/status/error');
+          //   return;
+          // }
+
+          // handleUploadResponse(uploadBackRes);
+          return;
+        }
+      }).catch((error) => {
+        debugger;
         console.log('Error: ', error);
         history.push('/status/error');
         return;
-      }
+      })
+      //} catch (error) {
+      // debugger;
+      // console.log('Error: ', error);
+      // history.push('/status/error');
+      // return;
+      //}
 
-      if ((uploadFrontRes == 201 || uploadFrontRes == 202) && backFileData) {
-        console.log('RESPONSE UPLOAD FRONT: ', uploadFrontRes);
-        const fileEx = backFileData.name.split('.').pop();
+      // if ((uploadFrontRes == 201 || uploadFrontRes == 202) && backFileData) {
+      //   console.log('RESPONSE UPLOAD FRONT: ', uploadFrontRes);
+      //   const fileEx = backFileData.name.split('.').pop();
 
-        let uploadBackRes = null;
-        try {
-          uploadBackRes = await apiService.upload(
-            `data:image/${fileEx};base64,${backFileData.base64}`,
-            `${selectedDoc}_BACK`,
-          );
-        } catch (error) {
-          console.log('Error: ', error);
-          history.push('/status/error');
-          return;
-        }
+      //   let uploadBackRes = null;
+      //   try {
+      //     uploadBackRes = await apiService.upload(
+      //       `data:image/${fileEx};base64,${backFileData.base64}`,
+      //       `${selectedDoc}_BACK`,
+      //     );
+      //   } catch (error) {
+      //     console.log('Error: ', error);
+      //     history.push('/status/error');
+      //     return;
+      //   }
 
-        handleUploadResponse(uploadBackRes);
-        return;
-      }
+      //   handleUploadResponse(uploadBackRes);
+      //   return;
+      // }
 
-      handleUploadResponse(uploadFrontRes);
+      //handleUploadResponse(uploadFrontRes);
     }
   };
 
