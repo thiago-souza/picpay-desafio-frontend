@@ -41,15 +41,13 @@ export class ApiService {
       }
 
       return response;
-    })
-    //return await result.json();
+    });
   }
 
   /*
     Upload attachment document
   */
   async upload(attach: string, type: string): Promise<any> {
-    debugger;
     if (!this.apiURL) {
       throw new Error('apiURL is empty');
     }
@@ -75,18 +73,14 @@ export class ApiService {
       },
       body: JSON.stringify(req),
     }).then(async (res) => {
-      debugger;
-      //const resData = await res.json();
       return { statusCode: res.status };
     }).then((response) => {
-      debugger;
       if (!Array.isArray(response) && Object.keys(response).length === 0) {
         throw new Error();
       }
 
       return response;
-    })
-    //return { statusCode: result.status };
+    });
   }
 
   /*
@@ -147,7 +141,9 @@ export class ApiService {
         'Content-Type': 'application/json',
         ...this.header,
       },
-    }).then((res) => res.json()).then((response) => {
+    }).then(async (res) => {
+      return { statusCode: res.status };
+    }).then((response) => {
       if (!Array.isArray(response) && Object.keys(response).length === 0) {
         throw new Error();
       }
