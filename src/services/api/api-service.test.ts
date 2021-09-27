@@ -32,7 +32,7 @@ describe("Tests on getAttachments", () => {
       .finally(() => {
         expect(onResponse).toHaveBeenCalled();
         expect(onError).not.toHaveBeenCalled();
-        expect(onResponse.mock.calls[0][0]).toEqual(expectedResponse);
+        expect(onResponse).toHaveBeenCalledWith(expectedResponse);
       });
   });
 
@@ -49,7 +49,7 @@ describe("Tests on getAttachments", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error);
+        expect(onError).toHaveBeenCalledWith(Error);
       });
   });
 
@@ -66,7 +66,7 @@ describe("Tests on getAttachments", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("apiURL is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("apiURL is empty"));
       });
   });
 
@@ -83,7 +83,7 @@ describe("Tests on getAttachments", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("globoId is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("globoId is empty"));
       });
   });
 
@@ -100,7 +100,7 @@ describe("Tests on getAttachments", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("token is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("token is empty"));
       });
   });
 });
@@ -123,7 +123,7 @@ describe("Tests on upload", () => {
       .finally(() => {
         expect(onResponse).toHaveBeenCalled();
         expect(onError).not.toHaveBeenCalled();
-        expect(onResponse.mock.calls[0][0]).toEqual(expectedResponse);
+        expect(onResponse).toHaveBeenCalledWith(expectedResponse);
       });
   });
 
@@ -141,6 +141,7 @@ describe("Tests on upload", () => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
         expect(onError.mock.calls[0][0]).toEqual(Error);
+        expect(onError).toHaveBeenCalledWith(Error);
       });
   });
 
@@ -157,7 +158,7 @@ describe("Tests on upload", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("apiURL is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("apiURL is empty"));
       });
   });
 
@@ -174,7 +175,7 @@ describe("Tests on upload", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("globoId is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("globoId is empty"));
       });
   });
 
@@ -191,7 +192,7 @@ describe("Tests on upload", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("token is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("token is empty"));
       });
   });
 });
@@ -215,7 +216,7 @@ describe("Tests on getStatus", () => {
       .finally(() => {
         expect(onResponse).toHaveBeenCalled();
         expect(onError).not.toHaveBeenCalled();
-        expect(onResponse.mock.calls[0][0]).toEqual(expectedResponse);
+        expect(onResponse).toHaveBeenCalledWith(expectedResponse);
       });
   });
 
@@ -233,6 +234,7 @@ describe("Tests on getStatus", () => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
         expect(onError.mock.calls[0][0]).toEqual(Error);
+        expect(onError).toHaveBeenCalledWith(Error);
       });
   });
 
@@ -249,7 +251,7 @@ describe("Tests on getStatus", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("apiURL is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("apiURL is empty"));
       });
   });
 
@@ -266,7 +268,7 @@ describe("Tests on getStatus", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("globoId is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("globoId is empty"));
       });
   });
 
@@ -283,7 +285,7 @@ describe("Tests on getStatus", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("token is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("token is empty"));
       });
   });
 });
@@ -306,7 +308,7 @@ describe("Tests on verify", () => {
       .finally(() => {
         expect(onResponse).toHaveBeenCalled();
         expect(onError).not.toHaveBeenCalled();
-        expect(onResponse.mock.calls[0][0]).toEqual(expectedResponse);
+        expect(onResponse).toHaveBeenCalledWith(expectedResponse);
       });
   });
 
@@ -324,6 +326,7 @@ describe("Tests on verify", () => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
         expect(onError.mock.calls[0][0]).toEqual(Error);
+        expect(onError).toHaveBeenCalledWith(Error);
       });
   });
 
@@ -340,7 +343,7 @@ describe("Tests on verify", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("apiURL is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("apiURL is empty"));
       });
   });
 
@@ -357,7 +360,7 @@ describe("Tests on verify", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("globoId is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("globoId is empty"));
       });
   });
 
@@ -374,7 +377,7 @@ describe("Tests on verify", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("token is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("token is empty"));
       });
   });
 });
@@ -397,7 +400,7 @@ describe("Tests on IsGloboIdInExpressWhiteList", () => {
       .finally(() => {
         expect(onResponse).toHaveBeenCalled();
         expect(onError).not.toHaveBeenCalled();
-        expect(onResponse.mock.calls[0][0]).toEqual(expectedResponse);
+        expect(onResponse).toHaveBeenCalledWith(expectedResponse);
       });
   });
 
@@ -414,7 +417,7 @@ describe("Tests on IsGloboIdInExpressWhiteList", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error);
+        expect(onError).toHaveBeenCalledWith(Error);
       });
   });
 
@@ -431,7 +434,7 @@ describe("Tests on IsGloboIdInExpressWhiteList", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("cartolaApiURL is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("cartolaApiURL is empty"));
       });
   });
 
@@ -448,7 +451,7 @@ describe("Tests on IsGloboIdInExpressWhiteList", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("globoId is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("globoId is empty"));
       });
   });
 
@@ -465,7 +468,7 @@ describe("Tests on IsGloboIdInExpressWhiteList", () => {
       .finally(() => {
         expect(onResponse).not.toHaveBeenCalled();
         expect(onError).toHaveBeenCalled();
-        expect(onError.mock.calls[0][0]).toEqual(Error("token is empty"));
+        expect(onError).toHaveBeenCalledWith(Error("token is empty"));
       });
   });
 });
