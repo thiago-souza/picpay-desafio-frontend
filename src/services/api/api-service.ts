@@ -108,7 +108,7 @@ export class ApiService {
       }
       else {
         const data = await res.json();
-        return { statusCode: res.status, status: data.status };
+        return { statusCode: res.status, status: data?.status };
       }
     }).then((response) => {
       if (!Array.isArray(response) && Object.keys(response).length === 0) {
@@ -167,6 +167,8 @@ export class ApiService {
     if (!this.token) {
       throw new Error('token is empty');
     }
+
+    console.log(`cartola api: ${this.cartolaApiURL}`);
 
     return await fetch(`${this.cartolaApiURL}/auth/express`, {
       method: 'GET',
