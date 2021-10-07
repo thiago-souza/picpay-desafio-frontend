@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 import { device } from '@/pages/main/styles';
 
+export const ModalContainer = styled.div`
+  display: none;
+
+  &.show {
+    display: flex;
+  }
+`
 export const Wrapper = styled.div`
-  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -12,7 +18,7 @@ export const Wrapper = styled.div`
 
   transform: translate(-50%, -50%);
 
-  z-index: 700;
+  z-index: 10;
   outline: 0;
 
   img {
@@ -33,7 +39,7 @@ export const Backdrop = styled.div`
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.9);
-  z-index: 500;
+  z-index: 5;
 `;
 
 export const CloseButton = styled.button`
