@@ -62,7 +62,7 @@ describe('Test onboarding page', () => {
     fireEvent.click(btnSeeLater)
 
     // get modalConfirm in container and btnSeeLaterModal in modalConfirm
-    const modalConfirm = getByTestId(container, 'modal-confirm')
+    const modalConfirm = getByTestId(container, 'modal-confirm-single')
     const btnSeeLaterModal = getByTestId(modalConfirm, 'btn-custom-link')
 
     // checks if the modal is being applied and its content
@@ -81,7 +81,7 @@ describe('Test onboarding page', () => {
     const { container } = render(renderOnboardingPage);
 
     // get modalConfirm in container and btnSeeLaterModal in modalConfirm
-    const modalConfirm = getByTestId(container, 'modal-confirm')
+    const modalConfirm = getByTestId(container, 'modal-confirm-single')
     const linkSeeLaterModal = await waitFor(() => getByTestId(modalConfirm, 'btn-link-url'))
 
     // check if the URL is correct

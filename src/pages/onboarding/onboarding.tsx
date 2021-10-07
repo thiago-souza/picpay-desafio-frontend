@@ -42,8 +42,8 @@ export const OnboardingPage: React.FC = () => {
   }
 
   const redirectUserByStatus = (apiService: ApiService) => {
-    apiService.getStatus().then(status => {  
-      const newUrl = getPageFromStatus(status.statusCode, status.data?.status);
+    return apiService.getStatus().then(res => {  
+      const newUrl = getPageFromStatus(res.statusCode, res?.status);
       history.push(newUrl);
     }).catch(() => {
       history.push('/status/error');
@@ -60,7 +60,6 @@ export const OnboardingPage: React.FC = () => {
 
       const apiService = getApi(authData.token, authData.globoId);
       setIsLoading(true);
-      
       
       await redirectUserOffWhitelist(apiService),
       await redirectUserByStatus(apiService)

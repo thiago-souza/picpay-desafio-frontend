@@ -1,120 +1,474 @@
 import '@testing-library/jest-dom/extend-expect';
 import { getApi } from '.';
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
 
-afterEach(() => {
-  jest.clearAllMocks();
+beforeEach(() => {
+  fetchMock.resetMocks();
 });
 
-describe('Should test getAttachments fetch method', () => {
-  const apiService = getApi('token', 'globoId');
-
-  it('should getAttachments have been called and return response', async () => {
-    const expectedResponse = [{
-      'type': 'CNH',
-      'content': 'string',
-      'status': 'active'
-    }];
-
-    jest.spyOn(apiService, 'getAttachments').mockImplementation(() => Promise.resolve(expectedResponse));
-
-    const result = await apiService.getAttachments();
-    expect(result).toEqual(expectedResponse);
-    expect(apiService.getAttachments).toHaveBeenCalledTimes(1);
-  });
-
-  it('should getAttachments have been called and return error', async () => {
-    jest.spyOn(apiService, 'getAttachments').mockImplementation(() => Promise.resolve(Error));
-
-    const result = await apiService.getAttachments();
-    expect(result).toEqual(Error);
-    expect(apiService.getAttachments).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe('Should test upload fetch method', () => {
-  const apiService = getApi('token', 'globoId');
-
-  it('should upload have been called and return status code', async () => {
-    jest.spyOn(apiService, 'upload').mockImplementation(() => Promise.resolve(200));
-
-    const result = await apiService.upload('attach', 'type');
-    expect(result).toEqual(200);
-    expect(apiService.upload).toHaveBeenCalledTimes(1);
-  });
-
-  it('should upload have been called and return error code', async () => {
-    jest.spyOn(apiService, 'upload').mockImplementation(() => Promise.resolve(Error));
-
-    const result = await apiService.upload('attach', 'type');
-    expect(result).toEqual(Error);
-    expect(apiService.upload).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe('Should test getStatus fetch method', () => {
-  const apiService = getApi('token', 'globoId');
-
-  it('should get status method have been called and return the response', async () => {
+describe("Tests on getAttachments", () => {
+  test("GET: Attachments should return expected response", async () => {
     const expectedResponse = {
-      'status': 'IN_PROCESS',
+      data: [
+        {
+          'content': 'string',
+          'status': 'active',
+          'type': 'CNH',
+        }
+      ],
+      statusCode: 200,
     };
 
-    jest.spyOn(apiService, 'getStatus').mockImplementation(() => Promise.resolve(expectedResponse));
+    //@ts-ignore
+    fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
 
-    const result = await apiService.getStatus();
-    expect(result).toEqual(expectedResponse);
-    expect(apiService.getStatus).toHaveBeenCalledTimes(1);
+    const apiService = getApi('token', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.getAttachments()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).toHaveBeenCalled();
+        expect(onError).not.toHaveBeenCalled();
+        expect(onResponse).toHaveBeenCalledWith(expectedResponse);
+      });
   });
 
-  it('should get status method have been called and return error code', async () => {
-    jest.spyOn(apiService, 'getStatus').mockImplementation(() => Promise.resolve(Error));
+  test("GET: Attachments should return exception - API is down", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
 
-    const result = await apiService.getStatus();
-    expect(result).toEqual(Error);
-    expect(apiService.getStatus).toHaveBeenCalledTimes(1);
+    const apiService = getApi('token', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.getAttachments()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error);
+      });
+  });
+
+  test("GET: Attachments should return exception - apiURL is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("apiURL is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', 'globoId', '', 'cartolaApiUrl');
+    return await apiService.getAttachments()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("apiURL is empty"));
+      });
+  });
+
+  test("GET: Attachments should return exception - globoId is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("globoId is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', '', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.getAttachments()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("globoId is empty"));
+      });
+  });
+
+  test("GET: Attachments should return exception - token is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("token is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.getAttachments()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("token is empty"));
+      });
   });
 });
 
-describe('Should test verify fetch method', () => {
-  const apiService = getApi('token', 'globoId');
-
-  it('should verify method have been called and return status code', async () => {
-    jest.spyOn(apiService, 'verify').mockImplementation(() => Promise.resolve(200));
-
-    const result = await apiService.verify()
-    expect(result).toEqual(200);
-    expect(apiService.verify).toHaveBeenCalledTimes(1);
-  });
-
-  it('should verify method have been called and return error code', async () => {
-    jest.spyOn(apiService, 'verify').mockImplementation(() => Promise.resolve(Error));
-
-    const result = await apiService.verify();
-    expect(result).toEqual(Error);
-    expect(apiService.verify).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe('Should test IsGloboIdInExpressWhiteList method', () => {
-  const apiService = getApi('token', 'globoId');
-
-  it('should isGloboIdInExpressWhitelist method have been called and return the response', async () => {
+describe("Tests on upload", () => {
+  test("POST: upload should return expected response", async () => {
     const expectedResponse = {
-      'isMember': true,
+      statusCode: 200
     };
 
-    jest.spyOn(apiService, 'IsGloboIdInExpressWhiteList').mockImplementation(() => Promise.resolve(expectedResponse));
+    //@ts-ignore
+    fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
 
-    const result = await apiService.IsGloboIdInExpressWhiteList();
-    expect(result).toEqual(expectedResponse);
-    expect(apiService.IsGloboIdInExpressWhiteList).toHaveBeenCalledTimes(1);
+    const apiService = getApi('token', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.upload('attach', 'type')
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).toHaveBeenCalled();
+        expect(onError).not.toHaveBeenCalled();
+        expect(onResponse).toHaveBeenCalledWith(expectedResponse);
+      });
   });
 
-  it('should isGloboIdInExpressWhitelist method have been called and return error code', async () => {
-    jest.spyOn(apiService, 'IsGloboIdInExpressWhiteList').mockImplementation(() => Promise.resolve(Error));
+  test("POST: upload should return exception - API is down", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
 
-    const result = await apiService.IsGloboIdInExpressWhiteList();
-    expect(result).toEqual(Error);
-    expect(apiService.IsGloboIdInExpressWhiteList).toHaveBeenCalledTimes(1);
+    const apiService = getApi('token', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.upload('attach', 'type')
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError.mock.calls[0][0]).toEqual(Error);
+        expect(onError).toHaveBeenCalledWith(Error);
+      });
+  });
+
+  test("POST: upload should return exception - apiURL is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("apiURL is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', 'globoId', '', 'cartolaApiUrl');
+    return await apiService.upload('attach', 'type')
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("apiURL is empty"));
+      });
+  });
+
+  test("POST: upload should return exception - globoId is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("globoId is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', '', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.upload('attach', 'type')
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("globoId is empty"));
+      });
+  });
+
+  test("POST: upload should return exception - token is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("token is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.upload('attach', 'type')
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("token is empty"));
+      });
+  });
+});
+
+describe("Tests on getStatus", () => {
+  test("GET: getStatus should return expected response", async () => {
+    const expectedResponse = {
+      status: 'IN_PROCESS',
+      statusCode: 200,
+    };
+
+    //@ts-ignore
+    fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.getStatus()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).toHaveBeenCalled();
+        expect(onError).not.toHaveBeenCalled();
+        expect(onResponse).toHaveBeenCalledWith(expectedResponse);
+      });
+  });
+
+  test("GET: getStatus should return exception - API is down", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.getStatus()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError.mock.calls[0][0]).toEqual(Error);
+        expect(onError).toHaveBeenCalledWith(Error);
+      });
+  });
+
+  test("GET: getStatus should return exception - apiURL is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("apiURL is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', 'globoId', '', 'cartolaApiUrl');
+    return await apiService.getStatus()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("apiURL is empty"));
+      });
+  });
+
+  test("GET: getStatus should return exception - globoId is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("globoId is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', '', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.getStatus()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("globoId is empty"));
+      });
+  });
+
+  test("GET: getStatus should return exception - token is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("token is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.getStatus()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("token is empty"));
+      });
+  });
+});
+
+describe("Tests on verify", () => {
+  test("POST: verify should return expected response", async () => {
+    const expectedResponse = {
+      statusCode: 200,
+    };
+
+    //@ts-ignore
+    fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.verify()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).toHaveBeenCalled();
+        expect(onError).not.toHaveBeenCalled();
+        expect(onResponse).toHaveBeenCalledWith(expectedResponse);
+      });
+  });
+
+  test("POST: verify should return exception - API is down", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.verify()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError.mock.calls[0][0]).toEqual(Error);
+        expect(onError).toHaveBeenCalledWith(Error);
+      });
+  });
+
+  test("POST: verify should return exception - apiURL is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("apiURL is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', 'globoId', '', 'cartolaApiUrl');
+    return await apiService.verify()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("apiURL is empty"));
+      });
+  });
+
+  test("POST: verify should return exception - globoId is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("globoId is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', '', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.verify()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("globoId is empty"));
+      });
+  });
+
+  test("POST: verify should return exception - token is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("token is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return await apiService.verify()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("token is empty"));
+      });
+  });
+});
+
+describe("Tests on IsGloboIdInExpressWhiteList", () => {
+  test("GET: isGloboIdInExpressWhiteList should return expected response", async () => {
+    const expectedResponse = {
+      isMember: true,
+    };
+
+    //@ts-ignore
+    fetch.mockResponseOnce(JSON.stringify(expectedResponse));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return apiService.IsGloboIdInExpressWhiteList()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).toHaveBeenCalled();
+        expect(onError).not.toHaveBeenCalled();
+        expect(onResponse).toHaveBeenCalledWith(expectedResponse);
+      });
+  });
+
+  test("GET: isGloboIdInExpressWhiteList should return exception - API is down", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return apiService.IsGloboIdInExpressWhiteList()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error);
+      });
+  });
+
+  test("GET: isGloboIdInExpressWhiteList should return exception - cartolaApiURL is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("cartolaApiURL is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', 'globoId', 'apiURL', '');
+    return apiService.IsGloboIdInExpressWhiteList()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("cartolaApiURL is empty"));
+      });
+  });
+
+  test("GET: isGloboIdInExpressWhiteList should return exception - globoId is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("globoId is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('token', '', 'apiUrl', 'cartolaApiUrl');
+    return apiService.IsGloboIdInExpressWhiteList()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("globoId is empty"));
+      });
+  });
+
+  test("GET: isGloboIdInExpressWhiteList should return exception - token is empty", async () => {
+    //@ts-ignore
+    fetch.mockReject(() => Promise.reject(Error("token is empty")));
+    const onResponse = jest.fn();
+    const onError = jest.fn();
+
+    const apiService = getApi('', 'globoId', 'apiUrl', 'cartolaApiUrl');
+    return apiService.IsGloboIdInExpressWhiteList()
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
+        expect(onError).toHaveBeenCalledWith(Error("token is empty"));
+      });
   });
 });

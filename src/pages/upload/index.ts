@@ -1,1 +1,2 @@
-export * from './upload-page';
+export * from './upload-box';
+export * from './upload-labels';
