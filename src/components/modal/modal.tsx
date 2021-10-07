@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Wrapper, CloseButton, Content, Backdrop } from './modal.style';
+import { ModalContainer, Wrapper, CloseButton, Content, Backdrop } from './modal.style';
 
 export interface ModalProps {
   isShown?: boolean;
@@ -16,15 +15,13 @@ export const Modal: React.FC<ModalProps> = ({
   children,
 }: ModalProps) => {
 
-  const modal = (
-    <>
+  return (
+    <ModalContainer data-testid="modal-confirm" className={` ${isShown ? "show" : "hide"}`}>
       <Backdrop />
       <Wrapper>
         {showCloseButton && <CloseButton onClick={hide}>X</CloseButton>}
         <Content>{children}</Content>
       </Wrapper>
-    </>
-  );
-
-  return isShown ? ReactDOM.createPortal(modal, document.body) : null;
+    </ModalContainer>
+  )
 };

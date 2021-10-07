@@ -17,8 +17,8 @@ export const ButtonLink: React.FC<IButtonLink> = (props: IButtonLink) => {
   }
 
   return (
-    <PrimaryButtonStyle onClick={handleCallback}>
-      <LinkButtonStyle href={goToUrl} title={goToUrl}>
+    <PrimaryButtonStyle onClick={handleCallback} data-testid="btn-link">
+      <LinkButtonStyle href={goToUrl} title={goToUrl} data-testid="btn-link-url">
         {children}
       </LinkButtonStyle>
     </PrimaryButtonStyle>
