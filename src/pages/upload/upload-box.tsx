@@ -3,21 +3,19 @@ import { useHistory } from 'react-router-dom';
 import { UploadBoxStyle } from './upload.style';
 import { CustomButton, UploadButton } from '@/components/button';
 import {
-  LabelDescriptionButton,
   LabelDescription,
-  LabelSubtitleButton,
   LabelSubtitle,
 } from '@/components/label';
 import { NavigationBack } from '@/components/navigation/navigation-back';
 import { ContentSideBar } from '@/pages/main/styles/content.style';
 import { LoadingComponent } from '@/components/loading';
 import { AuthContext } from '@/components/auth-context';
-import { checkIsFileValid, FileData, fileExtensionAndSizeIsValid, handleGTMTypeError, isValidFiles } from '@/services/files';
+import { FileData, isValidFiles } from '@/services/files';
 import getRedirectUrl from '@/services/navigation';
 import getApi from '@/services/api/api-service';
-import UploadIcon from '@/assets/icons/cloud-upload-icon.png';
 import { sendEvent } from '@/services/tracking';
 import { checkAuthIsInvalid } from '@/services/onboarding';
+import { UploadLabels } from '@/pages/upload'
 
 interface IUploadBox {
   selectedDoc: string;
@@ -63,61 +61,8 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     sendEventWithAction(`verso-${selectedDoc}-carregado`);
   };
 
-  const handleFileDataLabel = (
-    fileData: FileData | undefined,
-    fileType: string,
-  ) => {
-    if (fileData === undefined) {
-      return 'Clique para enviar ou arraste a foto aqui.';
-    }
-    return handleFileExtensionAndSizeError(fileData, fileType);
-  };
-
-  const handleFileExtensionAndSizeError = (
-    fileData: FileData | undefined,
-    fileType: string,
-  ) => {
-    if (fileData && checkIsFileValid(fileData))
-      return fileData?.name;
-
-    fileType === 'Frente'
-      ? sendEventWithAction(
-        `erro-frente-${selectedDoc}-${handleGTMTypeError(
-          fileData?.validExtension,
-          fileData?.validSize,
-        )}`,
-      )
-      : sendEventWithAction(
-        `erro-verso-${selectedDoc}-${handleGTMTypeError(
-          fileData?.validExtension,
-          fileData?.validSize,
-        )}`,
-      );
-
-    return "Ops! A foto enviada é diferente do formato \n ou tamanho aceito. Envie uma nova foto.";
-  };
-
-  const uploadLabels = (fileType: string) => {
-    const fileData = fileType === 'Frente' ? frontFileData : backFileData;
-
-    return (
-      <>
-        <LabelSubtitleButton
-          className={` ${fileData !== undefined ? 'tiny' : ''}`}
-        >
-          {fileData === undefined && <img src={UploadIcon} />}
-          {`${fileType} do documento`}
-        </LabelSubtitleButton>
-        <LabelDescriptionButton
-          className={`${fileExtensionAndSizeIsValid(fileData)}`}
-        >
-          {handleFileDataLabel(fileData, fileType)}
-        </LabelDescriptionButton>
-      </>
-    );
-  };
-
   const uploadFiles = async () => {
+   
     if (checkAuthIsInvalid(authData)) {
       return;
     }
@@ -167,8 +112,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   };
 
   const handleUploadResponse = async (status: number) => {
-    console.log('RESPONSE UPLOAD: ', status);
-
     const apiService = getApi(authData.token, authData.globoId);
     const url = getRedirectUrl('accounts/attachments', status);
 
@@ -183,10 +126,12 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       }
 
       handleVerifyResponse(verifyRes);
-    } else {
-      setIsLoading(false);
-      history.push(url);
-    }
+      return;
+    } 
+
+    setIsLoading(false);
+    history.push(url);
+  
   };
 
   const handleVerifyResponse = (status: number) => {
@@ -213,7 +158,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   return (
     <>
       <LoadingComponent isShow={isLoading} />
-      <ContentSideBar>
+      <ContentSideBar data-testid="upload-content">
         <NavigationBack onClickEvent={handleNavigationBack} />
         <UploadBoxStyle>
           <LabelSubtitle>Upload do documento</LabelSubtitle>
@@ -231,7 +176,11 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             isShownModal={mState.front}
             typeFile="Frente do documento"
           >
-            {uploadLabels('Frente')}
+            <UploadLabels 
+              fileType={'Frente'}
+              fileData={frontFileData}
+              selectedDoc={selectedDoc}
+            />
           </UploadButton>
 
           <UploadButton
@@ -243,8 +192,12 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             onClickEvent={() => sendEventWithAction('verso')}
             isShownModal={mState.back}
             typeFile="Verso do documento"
-          >
-            {uploadLabels('Verso')}
+          > 
+            <UploadLabels 
+              fileType={'Verso'}
+              fileData={backFileData}
+              selectedDoc={selectedDoc}
+            />
           </UploadButton>
         </UploadBoxStyle>
         <CustomButton

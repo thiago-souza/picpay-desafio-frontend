@@ -92,9 +92,10 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
       onDragOver={eDragOver}
       onDragLeave={eDragLeave}
       onDrop={eDrop}
+      data-testid={`upload-drag-n-drop-${id}`}
     >
       <UploadButtonStyle>
-        <Modal isShown={isShownModal} hide={callbackImgPreview} data-clarity-mask="true">
+        <Modal id={id} isShown={isShownModal} hide={callbackImgPreview} data-clarity-mask="true">
           <>
             <ModalStylePreview>
               <img src={imgPreviewRender(props.fileData?.base64)} />
@@ -105,6 +106,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
           </>
         </Modal>
         <ImgPreviewStyle
+          data-testid={`upload-img-preview-${id}`}
           className={`${props.fileData?.base64 ? 'active' : ''}`}
           {...contentValues}
           onClick={callbackImgPreview}
@@ -117,6 +119,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
           id={id}
           name={id}
           onChange={handleChange}
+          data-testid={`upload-file-${id}`}
           onClick={(event: React.MouseEvent) => {
             const target = event.currentTarget as HTMLInputElement;
             target.value = '';
@@ -130,6 +133,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
         </label>
 
         <DeleteButtonStyle
+          data-testid={`upload-delete-${id}`}
           onClick={() => callbackDeleteFile()}
           className={` ${props.fileData?.base64 ? 'active' : ''}`}
         >
