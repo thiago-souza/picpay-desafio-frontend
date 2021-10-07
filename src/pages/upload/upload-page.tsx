@@ -142,8 +142,8 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
         return;
       }
 
-      if ((uploadFrontRes == 201 || uploadFrontRes == 202) && backFileData) {
-        console.log('RESPONSE UPLOAD FRONT: ', uploadFrontRes);
+      if ((uploadFrontRes.statusCode == 201 || uploadFrontRes.statusCode == 202) && backFileData) {
+        console.log('RESPONSE UPLOAD FRONT:', uploadFrontRes);
         const fileEx = backFileData.name.split('.').pop();
 
         let uploadBackRes = null;
@@ -158,7 +158,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
           return;
         }
 
-        handleUploadResponse(uploadBackRes);
+        handleUploadResponse(uploadBackRes.statusCode);
         return;
       }
 

@@ -47,9 +47,9 @@ export const OnboardingPage: React.FC = () => {
           return;
         }
 
-        await apiService.getStatus().then(status => {
+        await apiService.getStatus().then(res => {
           setIsLoading(false);
-          const newUrl = getPageFromStatus(status.statusCode, status.data?.status);
+          const newUrl = getPageFromStatus(res.statusCode, res?.status);
           history.push(newUrl);
         }).catch(() => {
           history.push('/status/error');
