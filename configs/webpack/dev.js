@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const commonConfig = require('./common');
 const Dotenv = require('dotenv-webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = merge(commonConfig, {
   mode: 'development',
@@ -24,6 +25,9 @@ module.exports = merge(commonConfig, {
     new HtmlWebpackPlugin({
       template: './template-test.html.ejs',
       favicon: './favicon-cartola.png',
+    }),
+    new CopyPlugin({
+      patterns: [{ from: './src/robots.txt', to: 'robots.txt' }],
     }),
     new webpack.HotModuleReplacementPlugin(), // enable HMR globally,
     new Dotenv({
