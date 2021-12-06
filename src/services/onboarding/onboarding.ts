@@ -20,7 +20,7 @@ export const getPageFromStatus = (statusCode: number, statusResponse: string): s
     if (statusResponse.toLowerCase() == 'in_process')
       return `${url}still_${statusResponse.toLowerCase()}`;
     else if (statusResponse.toLowerCase() == 'created')
-      return 'select';
+      return '/';
     else
       return `${url}${statusResponse.toLowerCase()}`;
   } else {

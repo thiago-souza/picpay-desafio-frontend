@@ -6,7 +6,7 @@ const mapRedirects: rotes = {
   'accounts/status': {
     200: 'status/',
     201: 'select',
-    204: 'select',
+    204: '/',
   },
   'accounts/attachments': {
     201: 'verify',
