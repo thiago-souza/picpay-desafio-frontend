@@ -34,7 +34,7 @@ describe('Test get page from status', () => {
 
   test('Should return select', () => {
     const result = getPageFromStatus(200, 'created');
-    expect(result).toBe("select");
+    expect(result).toBe("/");
   });
 
   test('Should return active', () => {
@@ -69,6 +69,6 @@ describe('Test get page from status', () => {
 
   test('Should return select from statuscode 204', () => {
     const result = getPageFromStatus(204, '');
-    expect(result).toBe('select');
+    expect(result).toBe('/');
   });
 })

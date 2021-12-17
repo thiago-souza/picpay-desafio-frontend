@@ -14,7 +14,7 @@ describe('Test get redirect url for accounts/status endpoint', () => {
 
   test('Should return the select page for the status code 204', () => {
     const result = getRedirectUrl('accounts/status', 204);
-    expect(result).toBe('select');
+    expect(result).toBe('/');
   });
 });
 
