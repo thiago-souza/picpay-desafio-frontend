@@ -40,7 +40,7 @@ const GoToLobby = () => {
 
 const callbackApproved = () => {
   sendEvent(
-    'know-your-costumer',
+    'know-your-customer',
     'Continuar | Aprovado',
     'Continuar',
   );
@@ -48,7 +48,7 @@ const callbackApproved = () => {
 
 const callbackInProcess = () => {
   sendEvent(
-    'know-your-costumer',
+    'know-your-customer',
     'Voltar | Em Andamento',
     'Voltar',
   );
@@ -56,7 +56,7 @@ const callbackInProcess = () => {
 
 const callbackStillInProcess = () => {
   sendEvent(
-    'know-your-costumer',
+    'know-your-customer',
     'Voltar | Em Andamento',
     'Voltar',
   );
@@ -64,7 +64,7 @@ const callbackStillInProcess = () => {
 
 const callbackSuspectedBackToStart = () => {
   sendEvent(
-    'know-your-costumer',
+    'know-your-customer',
     'Voltar | Suspenso',
     'Continuar',
   );
@@ -74,7 +74,7 @@ const callbackSuspectedBackToStart = () => {
 
 const callbackSuspectedGetHelp = () => {
   sendEvent(
-    'know-your-costumer',
+    'know-your-customer',
     'Acessar Ajuda | Suspenso',
     'Ajuda',
   );

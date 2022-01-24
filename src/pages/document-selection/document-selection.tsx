@@ -22,7 +22,7 @@ export const DocumentSelectionPage: React.FC<IDocumentSelectionPage> = (
 
   const handleSelectCallback = (selectedFile: string) => {
     sendEvent(
-      'know-your-costumer',
+      'know-your-customer',
       'escolher-documento',
       selectedFile,
     );
@@ -33,7 +33,7 @@ export const DocumentSelectionPage: React.FC<IDocumentSelectionPage> = (
 
   const handleNavigationBack = () => {
     sendEvent(
-      'know-your-costumer',
+      'know-your-customer',
       'escolher-documento',
       'voltar-escolha-documento',
     );
