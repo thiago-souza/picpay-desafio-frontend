@@ -70,7 +70,7 @@ export const OnboardingPage: React.FC = () => {
 
   const handleClickVerifyIdentity = () => {
     sendEvent(
-      'know-your-costumer',
+      'know-your-customer',
       'verificar-identidade',
       'verificar-agora',
     );
@@ -79,7 +79,7 @@ export const OnboardingPage: React.FC = () => {
 
   const handleClickSeeLater = (fromModal = false) => {
     sendEvent(
-      'know-your-costumer',
+      'know-your-customer',
       'verificar-identidade',
       fromModal ? 'verificar-agora-retificado' : 'deixar-pra-depois',
     );

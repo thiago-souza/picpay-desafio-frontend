@@ -39,7 +39,7 @@ export const StatusPage: React.FC = () => {
 
   const handleClickRejectedRestart = () => {
     sendEvent(
-      'know-your-costumer',
+      'know-your-customer',
       'Reiniciar o Processo | Rejeitado',
       'Reiniciar'
     );

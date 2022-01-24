@@ -34,31 +34,31 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   };
   const [mState, setMState] = React.useState(modalState);
 
-  const sendEventWithAction = (action: string) => {
-    if (!action) {
+  const sendEventWithLabel = (label: string) => {
+    if (!label) {
       return;
     }
-    sendEvent('know-your-costumer', 'enviar-documento', action);
+    sendEvent('know-your-customer', 'enviar-documento', label);
   };
 
   const handleDeleteFront = () => {
-    sendEventWithAction('remover-frente');
+    sendEventWithLabel('remover-frente');
     setFrontFileData(undefined);
   };
 
   const handleDeleteBack = () => {
-    sendEventWithAction('remover-verso');
+    sendEventWithLabel('remover-verso');
     setBackFileData(undefined);
   };
 
   const handleLoadFrontFile = (file: FileData) => {
     setFrontFileData(file);
-    sendEventWithAction(`frente-${selectedDoc}-carregada`);
+    sendEventWithLabel(`frente-${selectedDoc}-carregada`);
   };
 
   const handleLoadBackFile = (file: FileData) => {
     setBackFileData(file);
-    sendEventWithAction(`verso-${selectedDoc}-carregado`);
+    sendEventWithLabel(`verso-${selectedDoc}-carregado`);
   };
 
   const uploadFiles = async () => {
@@ -67,7 +67,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       return;
     }
 
-    sendEventWithAction('enviar');
+    sendEventWithLabel('enviar');
 
     const apiService = getApi(authData.token, authData.globoId);
 
@@ -152,7 +152,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   };
 
   const handleNavigationBack = () => {
-    sendEventWithAction('voltar-envio-documento');
+    sendEventWithLabel('voltar-envio-documento');
   };
 
   return (
@@ -172,7 +172,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             onFileSelected={handleLoadFrontFile}
             callbackDeleteFile={handleDeleteFront}
             callbackImgPreview={() => handleModal('front')}
-            onClickEvent={() => sendEventWithAction('frente')}
+            onClickEvent={() => sendEventWithLabel('frente')}
             isShownModal={mState.front}
             typeFile="Frente do documento"
           >
@@ -189,7 +189,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             onFileSelected={handleLoadBackFile}
             callbackDeleteFile={handleDeleteBack}
             callbackImgPreview={() => handleModal('back')}
-            onClickEvent={() => sendEventWithAction('verso')}
+            onClickEvent={() => sendEventWithLabel('verso')}
             isShownModal={mState.back}
             typeFile="Verso do documento"
           > 

@@ -23,11 +23,11 @@ export const UploadLabels = ({
   fileData,
   selectedDoc,
 }: IUploadLabels): JSX.Element => {
-  const sendEventWithAction = (action: string) => {
-    if (!action) {
+  const sendEventWithLabel = (label: string) => {
+    if (!label) {
       return;
     }
-    sendEvent('know-your-costumer', 'enviar-documento', action);
+    sendEvent('know-your-customer', 'enviar-documento', label);
   };
 
   const handleFileExtensionAndSizeError = (
@@ -38,7 +38,7 @@ export const UploadLabels = ({
 
     const errorLabel = fileType === 'Frente' ? 'frente' : 'verso';
 
-    sendEventWithAction(
+    sendEventWithLabel(
       `erro-${errorLabel}-${selectedDoc}-${handleGTMTypeError(
         fileData?.validExtension,
         fileData?.validSize,

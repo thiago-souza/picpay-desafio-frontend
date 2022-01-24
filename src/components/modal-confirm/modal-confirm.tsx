@@ -18,7 +18,7 @@ export const ModalConfirm: React.FC<IModalConfirm> = ({
 
   const callbackSecondButton = () => {
     sendEvent(
-      'know-your-costumer',
+      'know-your-customer',
       'verificar-identidade',
       'deixar-para-depois-confirmado',
     );
