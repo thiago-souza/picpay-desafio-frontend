@@ -168,8 +168,6 @@ export class ApiService {
       throw new Error('token is empty');
     }
 
-    console.log(`cartola api: ${this.cartolaApiURL}`);
-
     return await fetch(`${this.cartolaApiURL}/auth/express`, {
       method: 'GET',
       headers: {

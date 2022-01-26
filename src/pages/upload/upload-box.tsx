@@ -88,7 +88,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       }
 
       if ((uploadFrontRes.statusCode == 201 || uploadFrontRes.statusCode == 202) && backFileData) {
-        console.log('RESPONSE UPLOAD FRONT:', uploadFrontRes);
         const fileEx = backFileData.name.split('.').pop();
 
         let uploadBackRes = null;
@@ -125,7 +124,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
         return;
       }
 
-      handleVerifyResponse(verifyRes);
+      handleVerifyResponse(verifyRes.statusCode);
       return;
     } 
 
@@ -135,7 +134,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   };
 
   const handleVerifyResponse = (status: number) => {
-    console.log('RESPONSE VERIFY: ', status);
 
     const url = getRedirectUrl('accounts/verify', status);
 
