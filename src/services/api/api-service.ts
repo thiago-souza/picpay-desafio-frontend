@@ -151,37 +151,6 @@ export class ApiService {
       return response;
     });
   }
-
-  /*
-    Verify if the globoId belongs to express whitelist
-  */
-  async IsGloboIdInExpressWhiteList(): Promise<any> {
-    if (!this.cartolaApiURL) {
-      throw new Error('cartolaApiURL is empty');
-    }
-
-    if (!this.globoId) {
-      throw new Error('globoId is empty');
-    }
-
-    if (!this.token) {
-      throw new Error('token is empty');
-    }
-
-    return await fetch(`${this.cartolaApiURL}/auth/express`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: this.header.Authorization
-      },
-    }).then((res) => res.json()).then((response) => {
-      if (!Array.isArray(response) && Object.keys(response).length === 0) {
-        throw new Error();
-      }
-
-      return response;
-    });
-  }
 }
 
 let instance: ApiService;

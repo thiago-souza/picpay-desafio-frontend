@@ -29,18 +29,6 @@ export const OnboardingPage: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [isModalShown, setIsModalShown] = React.useState(false);
 
-  const redirectUserOffWhitelist = async (apiService: ApiService) => {
-    await apiService.IsGloboIdInExpressWhiteList().then(res => {
-      if (!res.isMember) {
-        window.location.href = process.env.CARTOLA_URL || '';
-        return;
-      }
-    }).catch(() => {
-      history.push('/status/error');
-      return;
-    });
-  }
-
   const redirectUserByStatus = (apiService: ApiService) => {
     return apiService.getStatus().then(res => {  
       const newUrl = getPageFromStatus(res.statusCode, res?.status);
@@ -61,7 +49,6 @@ export const OnboardingPage: React.FC = () => {
       const apiService = getApi(authData.token, authData.globoId);
       setIsLoading(true);
       
-      await redirectUserOffWhitelist(apiService),
       await redirectUserByStatus(apiService)
       
       setIsLoading(false);

@@ -134,7 +134,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   };
 
   const handleVerifyResponse = (status: number) => {
-
     const url = getRedirectUrl('accounts/verify', status);
 
     setIsLoading(false);
