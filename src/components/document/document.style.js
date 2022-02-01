@@ -44,12 +44,12 @@ export const DocumentCardBoxStyleButton = styled.button`
 
 export const DocumentCardImgStyle = styled.div`
   max-width: 64px;
-  padding: 13px 7px 13px 13px;
+  padding: 16px 7px 10px 23px;
 
   width: fit-content;
 
   @media ${device.tablet} {
-    padding: 23px 7px 23px 23px;
+    padding: 17px 7px 12px 23px;
   }
 `;
 
@@ -59,9 +59,10 @@ export const DocumentImgStyle = styled.div`
 `;
 
 export const DocumentTextStyle = styled.div`
-  margin-left: 18px;
+  margin-left: 14px;
   color: ${(props) => props.theme.colors.grey};
   font-size: ${(props) => props.theme.fontSizes.small};
+  line-height: 20px;
 
   &.light {
     color: ${(props) => props.theme.colors.greyLight};
@@ -80,7 +81,7 @@ export const DocumentCardTextStyle = styled.div`
 
 export const DocumentTextIconStyle = styled.div`
   display: flex;
-  margin-left: 18px;
+  margin-left: 14px;
   align-items: center;
 
   img {

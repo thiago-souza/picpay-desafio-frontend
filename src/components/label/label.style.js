@@ -12,9 +12,13 @@ const LabelTitle = styled.h2`
 
 const LabelSubtitle = styled.h3`
   font-family: ${(props) => props.theme.fonts.proximaNovaBold};
-  font-size: ${(props) => props.theme.fontSizes.medium};
+  font-size: ${(props) => props.theme.fontSizes.mediumXL};
   color: ${(props) => props.theme.colors.black};
   line-height: 1.5rem;
+`;
+
+const LabelSubTitleSmall = styled(LabelSubtitle)`
+  font-size: ${(props) => props.theme.fontSizes.mediumL};
 `;
 
 const LabelSubtitleButton = styled(LabelSubtitle)`
@@ -22,13 +26,18 @@ const LabelSubtitleButton = styled(LabelSubtitle)`
   justify-content: center;
   background-color: transparent;
 
-  font-size: ${(props) => props.theme.fontSizes.small};
+  font-size: ${(props) => props.theme.fontSizes.medium};
   color: #666666;
   text-transform: none;
 
   &.tiny {
     font-family: ${(props) => props.theme.fonts.proximaNova};
     font-weight: normal;
+  }
+
+  img { 
+    position: relative;
+    top: -2px;
   }
 `;
 
@@ -52,13 +61,21 @@ const LabelDescription = styled.p`
   margin: 12px 0px;
 `;
 
+const LabelDescriptionSubTitle = styled(LabelDescription)`
+  font-size: ${(props) => props.theme.fontSizes.small};
+
+  b { 
+    font-family: ${(props) => props.theme.fonts.proximaNovaBold};
+  }
+`;
+
 const LabelDescriptionButton = styled(LabelDescription)`
   color: #999;
   text-transform: none;
   background-color: transparent;
+  font-size: ${(props) => props.theme.fontSizes.small};
 
   &.error {
-    font-size: ${(props) => props.theme.fontSizes.small};
     color: ${(props) => props.theme.colors.red};
     text-align: center;
     white-space: pre;
@@ -79,8 +96,10 @@ const LabelDescriptionButton = styled(LabelDescription)`
 export {
   LabelTitle,
   LabelSubtitle,
+  LabelSubTitleSmall,
   LabelDescription,
   LabelSubtitleButton,
   LabelDescriptionButton,
   LabelCenter,
+  LabelDescriptionSubTitle
 };

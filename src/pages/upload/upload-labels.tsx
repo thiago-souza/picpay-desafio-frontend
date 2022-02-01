@@ -58,13 +58,15 @@ export const UploadLabels = ({
     return handleFileExtensionAndSizeError(fileData, fileType);
   };
 
+  const uploadLabel = selectedDoc === 'CNH' ? 'da CNH' : 'do RG';
+
   return (
     <>
       <LabelSubtitleButton
         className={` ${fileData !== undefined ? 'tiny' : ''}`}
       >
         {fileData === undefined && <img src={UploadIcon} />}
-        {`${fileType} do documento`}
+        {`${fileType} ${uploadLabel}`}
       </LabelSubtitleButton>
       <LabelDescriptionButton
         data-testid={`uploaded-label-${fileType.toLowerCase()}`}

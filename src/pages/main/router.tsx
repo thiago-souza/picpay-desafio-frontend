@@ -27,7 +27,7 @@ const Routes: React.FC<IDocumentSelectionPage> = (
       </Route>
       <Route path="/upload">
         <>
-          <UploadInstructionsPage />
+          <UploadInstructionsPage selectedDoc={props.selectedDoc} />
           <UploadBox selectedDoc={props.selectedDoc} />
         </>
       </Route>
