@@ -2,10 +2,7 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { UploadBoxStyle } from './upload.style';
 import { CustomButton, UploadButton } from '@/components/button';
-import {
-  LabelDescription,
-  LabelSubtitle,
-} from '@/components/label';
+import { LabelDescriptionSubTitle, LabelSubTitleSmall } from '@/components/label';
 import { NavigationBack } from '@/components/navigation/navigation-back';
 import { ContentSideBar } from '@/pages/main/styles/content.style';
 import { LoadingComponent } from '@/components/loading';
@@ -15,7 +12,7 @@ import getRedirectUrl from '@/services/navigation';
 import getApi from '@/services/api/api-service';
 import { sendEvent } from '@/services/tracking';
 import { checkAuthIsInvalid } from '@/services/onboarding';
-import { UploadLabels } from '@/pages/upload'
+import { UploadLabels } from '@/pages/upload';
 
 interface IUploadBox {
   selectedDoc: string;
@@ -62,7 +59,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   };
 
   const uploadFiles = async () => {
-   
     if (checkAuthIsInvalid(authData)) {
       return;
     }
@@ -87,7 +83,11 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
         return;
       }
 
-      if ((uploadFrontRes.statusCode == 201 || uploadFrontRes.statusCode == 202) && backFileData) {
+      if (
+        (uploadFrontRes.statusCode == 201 ||
+          uploadFrontRes.statusCode == 202) &&
+        backFileData
+      ) {
         const fileEx = backFileData.name.split('.').pop();
 
         let uploadBackRes = null;
@@ -126,11 +126,10 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
 
       handleVerifyResponse(verifyRes.statusCode);
       return;
-    } 
+    }
 
     setIsLoading(false);
     history.push(url);
-  
   };
 
   const handleVerifyResponse = (status: number) => {
@@ -152,16 +151,23 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     sendEventWithLabel('voltar-envio-documento');
   };
 
+  const subtitleLabel =
+    selectedDoc === 'CNH'
+      ? 'Carteira de Motorista (CNH)'
+      : 'Cédula de Identidade (RG)'; 
+
   return (
     <>
       <LoadingComponent isShow={isLoading} />
       <ContentSideBar data-testid="upload-content">
         <NavigationBack onClickEvent={handleNavigationBack} />
         <UploadBoxStyle>
-          <LabelSubtitle>Upload do documento</LabelSubtitle>
-          <LabelDescription>
-            Formatos: JPG, PNG ou BMP | O tamanho deve ser até 3 MB.
-          </LabelDescription>
+          <LabelSubTitleSmall>
+            Upload da sua {subtitleLabel}
+          </LabelSubTitleSmall>
+          <LabelDescriptionSubTitle>
+            Formatos: <b>JPG, PNG</b> ou <b>BMP</b>  | Tamanho do arquivo: <b>min. 200KB</b> e <b>max. 9MB.</b>
+          </LabelDescriptionSubTitle>
 
           <UploadButton
             id={'front'}
@@ -173,7 +179,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             isShownModal={mState.front}
             typeFile="Frente do documento"
           >
-            <UploadLabels 
+            <UploadLabels
               fileType={'Frente'}
               fileData={frontFileData}
               selectedDoc={selectedDoc}
@@ -189,8 +195,8 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             onClickEvent={() => sendEventWithLabel('verso')}
             isShownModal={mState.back}
             typeFile="Verso do documento"
-          > 
-            <UploadLabels 
+          >
+            <UploadLabels
               fileType={'Verso'}
               fileData={backFileData}
               selectedDoc={selectedDoc}
@@ -199,7 +205,8 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
         </UploadBoxStyle>
         <CustomButton
           disabled={!isValidFiles(frontFileData, backFileData)}
-          callbackEvent={uploadFiles}>
+          callbackEvent={uploadFiles}
+        >
           Enviar documento
         </CustomButton>
       </ContentSideBar>

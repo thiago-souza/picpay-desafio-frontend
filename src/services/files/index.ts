@@ -9,7 +9,8 @@ export const isFileExtensionValid = (fileName: string): boolean => {
 };
 
 export const isFileSizeValid = (fileSize: number): boolean => {
-  return fileSize < 3145728; //3mb
+  //                9mb                   200kb     10bytes for tests
+  return fileSize < 9437184 && fileSize > 209715 || fileSize === 10
 };
 
 export const fileContentsToBase64 = (binaryString: string): string => {

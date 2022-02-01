@@ -16,6 +16,8 @@ const theme = {
     tiny: '0.75rem',
     small: '0.875rem',
     medium: '1rem',
+    mediumL: '1.15rem',
+    mediumXL: '1.25rem',
     large: '1.5rem',
   },
   breakpoints: {

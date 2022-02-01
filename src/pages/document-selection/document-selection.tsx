@@ -42,7 +42,7 @@ export const DocumentSelectionPage: React.FC<IDocumentSelectionPage> = (
   return (
     <ContentItems>
       <NavigationBack onClickEvent={handleNavigationBack} />
-      <LabelSubtitle>Escolha o documento que você vai enviar:</LabelSubtitle>
+      <LabelSubtitle>Escolha o documento que você vai enviar</LabelSubtitle>
       <LabelDescription>
         Olha, lembre-se que a foto deve ser do seu documento original.
       </LabelDescription>
@@ -54,13 +54,13 @@ export const DocumentSelectionPage: React.FC<IDocumentSelectionPage> = (
           fastIcon={true}
           textColor={theme.colors.green}
         >
-          CNH
+          CNH - Carteira de Motorista
         </DocumentCardBox>
         <DocumentCardBox
           callbackEvent={() => handleSelectCallback('RG')}
           icon={RgIcon}
         >
-          RG
+          RG - Cédula de Identidade
         </DocumentCardBox>
       </ContentBox>
     </ContentItems>

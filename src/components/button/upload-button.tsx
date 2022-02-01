@@ -95,10 +95,10 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
       data-testid={`upload-drag-n-drop-${id}`}
     >
       <UploadButtonStyle>
-        <Modal id={id} isShown={isShownModal} hide={callbackImgPreview} data-clarity-mask="true">
+        <Modal id={id} isShown={isShownModal} hide={callbackImgPreview} >
           <>
             <ModalStylePreview>
-              <img src={imgPreviewRender(props.fileData?.base64)} />
+              <img src={imgPreviewRender(props.fileData?.base64)} data-clarity-mask="true" />
             </ModalStylePreview>
             <p>
               {typeFile}: {props.fileData?.name}
@@ -112,7 +112,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
           onClick={callbackImgPreview}
           data-clarity-mask="true"
         >
-          <img src={imgPreviewRender(props.fileData?.base64)} />
+          <img src={imgPreviewRender(props.fileData?.base64)} data-clarity-mask="true" />
         </ImgPreviewStyle>
         <input
           type="file"
