@@ -31,18 +31,17 @@ export const UploadLabels = ({
   };
 
   const handleFileExtensionAndSizeError = (
-    fileData: FileData | undefined,
+    fileData: FileData,
     fileType: string,
   ) => {
     if (fileData && checkIsFileValid(fileData)) return fileData?.name;
 
     const errorLabel = fileType === 'Frente' ? 'frente' : 'verso';
 
+    const { name, size, validSize, validExtension } = fileData;
+
     sendEventWithLabel(
-      `erro-${errorLabel}-${selectedDoc}-${handleGTMTypeError(
-        fileData?.validExtension,
-        fileData?.validSize,
-      )}`,
+      `erro-${errorLabel}-${selectedDoc}-${handleGTMTypeError(name, size, validSize, validExtension)}`,
     );
 
     return 'Ops! A foto enviada é diferente do formato \n ou tamanho aceito. Envie uma nova foto.';
