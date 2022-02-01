@@ -27,7 +27,8 @@ export const AuthProvider: React.FC<React.ReactNode> = ({ children }) => {
       } else {
         const tokenResponse = await client.getTokens();
         const userInfo = await client.loadUserInfo();
-
+        window.clarity('set', 'globoID', userInfo.globo_id)
+        
         setAuthData({
           globoId: userInfo.globo_id,
           token: tokenResponse.access_token,

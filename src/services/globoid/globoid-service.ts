@@ -1,6 +1,7 @@
 declare global {
   interface Window {
     glb: any;
+    clarity: any;
   }
 }
 

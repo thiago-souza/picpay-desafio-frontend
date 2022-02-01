@@ -8,11 +8,18 @@ import RgPlasticIcon from '@/assets/icons/rg-plastic-icon.png';
 import LightIcon from '@/assets/icons/light-icon.png';
 import RgInstructionsIcon from '@/assets/icons/rg-instructions-icon.png';
 
-export const UploadInstructionsPage: React.FC = () => {
+interface IUploadBox {
+  selectedDoc: string;
+}
+
+export const UploadInstructionsPage = ({ selectedDoc }: IUploadBox): JSX.Element => {
+
+  const titleLabel = selectedDoc === 'CNH' ? 'Carteira de Motorista (CNH)' : 'Cédula de Identidade (RG)';
+
   return (
     <ContentItems>
       <NavigationBack />
-      <LabelSubtitle>Envie o documento que você escolheu</LabelSubtitle>
+      <LabelSubtitle>Envie as fotos da sua {titleLabel}</LabelSubtitle>
       <LabelDescription>
         Agora, é só seguir as instruções para enviar a foto do seu documento de
         identificação.

@@ -40,7 +40,7 @@ describe('Test upload box', () => {
     const { getByText, getByTestId } = render(renderUploadBox);
 
     // check if a box was rendered with some desired content
-    expect(getByText('Upload do documento')).toBeInTheDocument();
+    expect(getByText(/Upload da sua/)).toBeInTheDocument();
 
     // get by id for dragDrop front and back in drag n drop area
     const dragDropFront = getByTestId('upload-drag-n-drop-front');

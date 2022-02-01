@@ -12,7 +12,7 @@ export const UploadBoxStyle = styled.div`
   border-radius: 3px;
 
   h3 {
-    margin: 0 0 8px 0;
+    margin: 8px 0 4px 0;
   }
 
   p {

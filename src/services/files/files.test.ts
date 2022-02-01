@@ -36,12 +36,12 @@ describe('Test if file extension is valid or invalid', () => {
 
 describe('Test if is file size valid', () => {
   test('Should return the file size is valid', () => {
-    const result = isFileSizeValid(3145728 - 1000);
+    const result = isFileSizeValid(9437184 - 1000);
     expect(result).toBeTruthy();
   });
 
   test('Should return the file size is invalid', () => {
-    const result = isFileSizeValid(3145728 + 1000);
+    const result = isFileSizeValid(9437184 + 1000);
     expect(result).toBeFalsy();
   });
 });
