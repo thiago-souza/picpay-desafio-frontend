@@ -1,29 +1,35 @@
 import '@testing-library/jest-dom/extend-expect';
-import { fileExtensionAndSizeIsValid, handleGTMTypeError, isFileExtensionValid, isFileSizeValid, isValidFiles } from '.';
+import {
+  fileExtensionAndSizeIsValid,
+  handleGTMTypeError,
+  isFileExtensionValid,
+  isFileSizeValid,
+  isValidFiles,
+} from '.';
 
 describe('Test if file extension is valid or invalid', () => {
   test('Should return the file extensions is valid for jpg', () => {
-    const result = isFileExtensionValid("file.jpg");
+    const result = isFileExtensionValid('file.jpg');
     expect(result).toBeTruthy();
   });
 
   test('Should return the file extensions is valid for jpeg', () => {
-    const result = isFileExtensionValid("file.jpeg");
+    const result = isFileExtensionValid('file.jpeg');
     expect(result).toBeTruthy();
   });
 
   test('Should return the file extensions is valid for jpeg', () => {
-    const result = isFileExtensionValid("file.bmp");
+    const result = isFileExtensionValid('file.bmp');
     expect(result).toBeTruthy();
   });
 
   test('Should return the file extensions is valid for jpeg', () => {
-    const result = isFileExtensionValid("file.png");
+    const result = isFileExtensionValid('file.png');
     expect(result).toBeTruthy();
   });
 
   test('Should return the file extensions is invalid for pdf', () => {
-    const result = isFileExtensionValid("file.pdf");
+    const result = isFileExtensionValid('file.pdf');
     expect(result).toBeFalsy();
   });
 });
@@ -31,12 +37,12 @@ describe('Test if file extension is valid or invalid', () => {
 describe('Test if is file size valid', () => {
   test('Should return the file size is valid', () => {
     const result = isFileSizeValid(9437184 - 1000);
-    expect(result).toBeTruthy()
+    expect(result).toBeTruthy();
   });
 
   test('Should return the file size is invalid', () => {
     const result = isFileSizeValid(9437184 + 1000);
-    expect(result).toBeFalsy()
+    expect(result).toBeFalsy();
   });
 });
 
@@ -114,17 +120,17 @@ describe('Test if the extension and size is valid to return the correct class', 
 
 describe('Test if the handleGTMTypeError returns the correct type of error', () => {
   test('should return that extension and size is invalid', () => {
-    const result = handleGTMTypeError(false, false);
-    expect(result).toBe('extensao-e-tamanho-invalido');
+    const result = handleGTMTypeError('file', 100, false, false);
+    expect(result).toBe('tamanho-e-extensao-invalido-100Bytes-file');
   });
 
   test('should return that extension is invalid', () => {
-    const result = handleGTMTypeError(false, true);
-    expect(result).toBe('extensao-invalida');
+    const result = handleGTMTypeError('file', 10000, false, true);
+    expect(result).toBe('tamanho-invalido-9.77KB-file');
   });
 
   test('should return that size is invalid', () => {
-    const result = handleGTMTypeError(true, false);
-    expect(result).toBe('tamanho-invalido');
+    const result = handleGTMTypeError('file', 1000, true, false);
+    expect(result).toBe('extensao-invalida-1000Bytes-file');
   });
 });

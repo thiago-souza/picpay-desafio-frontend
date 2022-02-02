@@ -1,16 +1,22 @@
+export const getExtensionType = (fileName: string) => {
+  const fileEx = fileName.split('.').pop();
+  if (fileEx == undefined) return false;
+  return fileEx.toLowerCase();
+};
+
 export const isFileExtensionValid = (fileName: string): boolean => {
   if (fileName.length <= 0) return true;
 
   const allowedExtensions = ['jpg', 'jpeg', 'bmp', 'png'];
-  const fileEx = fileName.split('.').pop();
-  if (fileEx == undefined) return false;
+  const fileEx = getExtensionType(fileName);
 
-  return allowedExtensions.includes(fileEx.toLowerCase());
+  if (!fileEx) return false;
+  return allowedExtensions.includes(fileEx);
 };
 
 export const isFileSizeValid = (fileSize: number): boolean => {
   //                9mb                   200kb     10bytes for tests
-  return fileSize < 9437184 && fileSize > 209715 || fileSize === 10
+  return (fileSize < 9437184 && fileSize > 209715) || fileSize === 10;
 };
 
 export const fileContentsToBase64 = (binaryString: string): string => {
@@ -61,11 +67,17 @@ export const getFileDataFromEvent = (
   return promise;
 };
 
-export const checkIsFileValid = ({ validExtension, validSize }: FileData): boolean => {
+export const checkIsFileValid = ({
+  validExtension,
+  validSize,
+}: FileData): boolean => {
   return validExtension && validSize;
 };
 
-export const isValidFiles = (frontFileData?: FileData, backFileData?: FileData): boolean | undefined => {
+export const isValidFiles = (
+  frontFileData?: FileData,
+  backFileData?: FileData,
+): boolean | undefined => {
   if (frontFileData == undefined && backFileData == undefined) {
     return false;
   }
@@ -82,14 +94,31 @@ export const fileExtensionAndSizeIsValid = (fileData?: FileData): string => {
   return valid ? '' : 'error';
 };
 
-export const handleGTMTypeError = (
-  validExtension?: boolean,
-  validSize?: boolean,
-): string => {
-  if (!validExtension && !validSize) {
-    return 'extensao-e-tamanho-invalido';
-  }
+const formatBytes = (bytes: number, decimals = 2) => {
+  if (bytes === 0) return '0 Bytes';
 
-  return !validExtension ? 'extensao-invalida' : 'tamanho-invalido';
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + sizes[i];
 };
 
+export const handleGTMTypeError = (
+  name: string,
+  size: number,
+  validExtension?: boolean,
+  validSize?: boolean,
+) => {
+  const fileInfo = `${formatBytes(size)}-${getExtensionType(name)}`;
+
+  if (!validExtension && !validSize) {
+    return `tamanho-e-extensao-invalido-${fileInfo}`;
+  }
+
+  return validExtension
+    ? `extensao-invalida-${fileInfo}`
+    : `tamanho-invalido-${fileInfo}`;
+};
