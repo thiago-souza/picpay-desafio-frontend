@@ -121,16 +121,16 @@ describe('Test if the extension and size is valid to return the correct class', 
 describe('Test if the handleGTMTypeError returns the correct type of error', () => {
   test('should return that extension and size is invalid', () => {
     const result = handleGTMTypeError('file', 100, false, false);
-    expect(result).toBe('extensao-e-tamanho-invalido');
+    expect(result).toBe('tamanho-e-extensao-invalido-100Bytes-file');
   });
 
   test('should return that extension is invalid', () => {
     const result = handleGTMTypeError('file', 10000, false, true);
-    expect(result).toBe('extensao-invalida');
+    expect(result).toBe('tamanho-invalido-9.77KB-file');
   });
 
   test('should return that size is invalid', () => {
     const result = handleGTMTypeError('file', 1000, true, false);
-    expect(result).toBe('tamanho-invalido');
+    expect(result).toBe('extensao-invalida-1000Bytes-file');
   });
 });
