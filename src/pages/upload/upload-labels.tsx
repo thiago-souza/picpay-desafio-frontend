@@ -23,12 +23,27 @@ export const UploadLabels = ({
   fileData,
   selectedDoc,
 }: IUploadLabels): JSX.Element => {
+
+  const msgErrorInvalidExtension = 'Ops! Este formato de arquivo não é aceito. Envie \n outro em JPG, PNG ou BMP para seguir.'
+  const msgErrorInvalidSizeSmall = 'Ops! O arquivo enviado é menor que 200kb. Envie \n um arquivo maior para seguir.'
+  const msgErrorInvalidSizeLarge = 'Ops! O arquivo enviado é maior que 9MB. Envie \n um arquivo menor para seguir.'
+
   const sendEventWithLabel = (label: string) => {
     if (!label) {
       return;
     }
     sendEvent('know-your-customer', 'enviar-documento', label);
   };
+
+  const handleMsgError = (validSize: boolean, validExtension: boolean, size: number) => {
+    if(!validExtension) {
+      return msgErrorInvalidExtension
+    }
+    if(!validSize && size < 200000) {
+      return msgErrorInvalidSizeSmall
+    }
+    return msgErrorInvalidSizeLarge
+  }
 
   const handleFileExtensionAndSizeError = (
     fileData: FileData,
@@ -44,7 +59,7 @@ export const UploadLabels = ({
       `erro-${errorLabel}-${selectedDoc}-${handleGTMTypeError(name, size, validSize, validExtension)}`,
     );
 
-    return 'Ops! A foto enviada é diferente do formato \n ou tamanho aceito. Envie uma nova foto.';
+    return handleMsgError(validSize, validExtension, size);
   };
 
   const handleFileDataLabel = (
