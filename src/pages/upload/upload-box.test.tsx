@@ -104,8 +104,8 @@ describe('Test upload box', () => {
 
     // Check if the image of front and back are "RG" document and test if it was loaded and invalid
     await waitFor(() => {
-      expect(labelErrorFront).toContainHTML('Ops! A foto enviada é diferente');
-      expect(labelErrorVerso).toContainHTML('Ops! A foto enviada é diferente');
+      expect(labelErrorFront).toContainHTML('Ops! Este formato de arquivo não é aceito');
+      expect(labelErrorVerso).toContainHTML('Ops! Este formato de arquivo não é aceito');
     });
 
     // Check if the button for the next step is disabled
@@ -131,7 +131,7 @@ describe('Test upload box', () => {
     // Check if image in front is "RG" document and tests if it was loaded and invalid
     await waitFor(() => {
       expect(getByTestId('upload-img-preview-front')).toBeInTheDocument();
-      expect(getByText(/Ops! A foto enviada é diferente/)).toBeInTheDocument();
+      expect(getByText(/Ops! Este formato de arquivo não é aceito/)).toBeInTheDocument();
     });
 
     // Check if the button for the next step is disabled
@@ -155,7 +155,7 @@ describe('Test upload box', () => {
     // Check if image in back is "RG" document and tests to check if it was loaded and invalid
     await waitFor(() => {
       expect(getByTestId('upload-img-preview-back')).toBeInTheDocument();
-      expect(getByText(/Ops! A foto enviada é diferente/)).toBeInTheDocument();
+      expect(getByText(/Ops! Este formato de arquivo não é aceito/)).toBeInTheDocument();
     });
 
     // Check if the button for the next step is disabled

@@ -37,7 +37,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
 
   const isValid = props.fileData?.validExtension && props.fileData?.validSize;
   const contentValues = {
-    content: isValid ? '✓' : '!',
+    content: isValid ? '✓' : '×',
     color: isValid ? '#26ca5e' : '#c22d1e',
   };
 

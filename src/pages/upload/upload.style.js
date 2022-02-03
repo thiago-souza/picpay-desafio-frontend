@@ -56,12 +56,13 @@ export const ImgPreviewStyle = styled.div`
     content: '${(props) => props.content}';
     color: ${(props) => props.color};
 
-    right: 0;
-    bottom: 0;
+    right: 1px;
+    bottom: 2px;
 
     width: 24px;
     height: 24px;
     font-size: ${(props) => props.theme.fontSizes.large};
+    line-height: 24px;
 
     background: #ffffff;
     border: 1px solid rgba(213, 213, 213, 0.2);
