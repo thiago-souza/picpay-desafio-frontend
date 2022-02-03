@@ -125,7 +125,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
             target.value = '';
             if (onClickEvent) onClickEvent();
           }}
-          accept="image/png, image/jpeg, image/bmp"
+          accept="image/png, image/jpeg"
           data-clarity-mask="true"
         />
         <label className={`${fileData ? 'trim' : ''}`} htmlFor={id} style={{ display: 'block' }}>

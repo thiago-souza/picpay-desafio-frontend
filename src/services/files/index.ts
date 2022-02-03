@@ -7,7 +7,7 @@ export const getExtensionType = (fileName: string) => {
 export const isFileExtensionValid = (fileName: string): boolean => {
   if (fileName.length <= 0) return true;
 
-  const allowedExtensions = ['jpg', 'jpeg', 'bmp', 'png'];
+  const allowedExtensions = ['jpg', 'jpeg', 'png'];
   const fileEx = getExtensionType(fileName);
 
   if (!fileEx) return false;
@@ -15,8 +15,8 @@ export const isFileExtensionValid = (fileName: string): boolean => {
 };
 
 export const isFileSizeValid = (fileSize: number): boolean => {
-  //                9mb                   200kb     10bytes for tests
-  return (fileSize < 9437184 && fileSize > 209715) || fileSize === 10;
+  //                3.8mb                   200kb     10bytes for tests
+  return (fileSize < 3984588 && fileSize > 209715) || fileSize === 10;
 };
 
 export const fileContentsToBase64 = (binaryString: string): string => {

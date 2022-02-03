@@ -17,12 +17,6 @@ describe('Test if file extension is valid or invalid', () => {
     const result = isFileExtensionValid('file.jpeg');
     expect(result).toBeTruthy();
   });
-
-  test('Should return the file extensions is valid for jpeg', () => {
-    const result = isFileExtensionValid('file.bmp');
-    expect(result).toBeTruthy();
-  });
-
   test('Should return the file extensions is valid for jpeg', () => {
     const result = isFileExtensionValid('file.png');
     expect(result).toBeTruthy();
@@ -36,12 +30,12 @@ describe('Test if file extension is valid or invalid', () => {
 
 describe('Test if is file size valid', () => {
   test('Should return the file size is valid', () => {
-    const result = isFileSizeValid(9437184 - 1000);
+    const result = isFileSizeValid(3984588 - 1000);
     expect(result).toBeTruthy();
   });
 
   test('Should return the file size is invalid', () => {
-    const result = isFileSizeValid(9437184 + 1000);
+    const result = isFileSizeValid(3984588 + 1000);
     expect(result).toBeFalsy();
   });
 });
