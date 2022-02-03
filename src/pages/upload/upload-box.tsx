@@ -166,7 +166,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             Upload da sua {subtitleLabel}
           </LabelSubTitleSmall>
           <LabelDescriptionSubTitle>
-            Formatos: <b>JPG, PNG</b> ou <b>BMP</b>  | Tamanho do arquivo: <b>min. 200KB</b> e <b>max. 9MB.</b>
+            Formatos: <b>JPG</b> ou <b>PNG</b> | Tamanho do arquivo: <b>min. 200KB</b> e <b>max. 3.8MB.</b>
           </LabelDescriptionSubTitle>
 
           <UploadButton

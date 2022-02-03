@@ -24,9 +24,9 @@ export const UploadLabels = ({
   selectedDoc,
 }: IUploadLabels): JSX.Element => {
 
-  const msgErrorInvalidExtension = 'Ops! Este formato de arquivo não é aceito. Envie \n outro em JPG, PNG ou BMP para seguir.'
+  const msgErrorInvalidExtension = 'Ops! Este formato de arquivo não é aceito. Envie \n outro em JPG ou PNG para seguir.'
   const msgErrorInvalidSizeSmall = 'Ops! O arquivo enviado é menor que 200kb. Envie \n um arquivo maior para seguir.'
-  const msgErrorInvalidSizeLarge = 'Ops! O arquivo enviado é maior que 9MB. Envie \n um arquivo menor para seguir.'
+  const msgErrorInvalidSizeLarge = 'Ops! O arquivo enviado é maior que 3.8MB. Envie \n um arquivo menor para seguir.'
 
   const sendEventWithLabel = (label: string) => {
     if (!label) {
