@@ -9,12 +9,14 @@ interface IDocumentBox {
   icon: string;
   light?: boolean;
   children: React.ReactNode;
+  tiny?: boolean;
 }
 
 export const DocumentBox = ({
   icon,
   children,
   light = false,
+  tiny,
 }: IDocumentBox): JSX.Element => {
   const textLabel = children ? children : '';
   return (
@@ -22,7 +24,9 @@ export const DocumentBox = ({
       <DocumentImgStyle>
         <img src={icon} />
       </DocumentImgStyle>
-      <DocumentTextStyle className={`${light ? 'light' : ''}`}>
+      <DocumentTextStyle
+        className={`${light ? 'light' : ''} ${tiny && 'tiny'}`}
+      >
         {textLabel}
       </DocumentTextStyle>
     </DocumentBoxStyle>

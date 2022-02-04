@@ -67,6 +67,10 @@ export const DocumentTextStyle = styled.div`
   &.light {
     color: ${(props) => props.theme.colors.greyLight};
   }
+
+  &.tiny {
+   font-size: ${(props) => props.theme.fontSizes.tiny};
+  }
 `;
 
 export const DocumentLabelStyle = styled.div.attrs((props => props))`
