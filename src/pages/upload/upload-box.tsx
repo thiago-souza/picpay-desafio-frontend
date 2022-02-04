@@ -2,7 +2,10 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { UploadBoxStyle } from './upload.style';
 import { CustomButton, UploadButton } from '@/components/button';
-import { LabelDescriptionSubTitle, LabelSubTitleSmall } from '@/components/label';
+import {
+  LabelDescriptionSubTitle,
+  LabelSubTitleSmall,
+} from '@/components/label';
 import { NavigationBack } from '@/components/navigation/navigation-back';
 import { ContentSideBar } from '@/pages/main/styles/content.style';
 import { LoadingComponent } from '@/components/loading';
@@ -154,7 +157,7 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   const subtitleLabel =
     selectedDoc === 'CNH'
       ? 'Carteira de Motorista (CNH)'
-      : 'Cédula de Identidade (RG)'; 
+      : 'Cédula de Identidade (RG)';
 
   return (
     <>
@@ -162,11 +165,10 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
       <ContentSideBar data-testid="upload-content">
         <NavigationBack onClickEvent={handleNavigationBack} />
         <UploadBoxStyle>
-          <LabelSubTitleSmall>
-            Upload da sua {subtitleLabel}
-          </LabelSubTitleSmall>
+          <LabelSubTitleSmall>Upload da sua {subtitleLabel}</LabelSubTitleSmall>
           <LabelDescriptionSubTitle>
-            Formatos: <b>JPG</b> ou <b>PNG</b> | Tamanho do arquivo: <b>min. 200KB</b> e <b>max. 3.8MB.</b>
+            Formatos: <b>JPG</b> ou <b>PNG</b> | Tamanho do arquivo:{' '}
+            <b>min. 200KB</b> e <b>max. 9MB.</b>
           </LabelDescriptionSubTitle>
 
           <UploadButton

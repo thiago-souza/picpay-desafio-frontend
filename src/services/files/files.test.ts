@@ -30,12 +30,12 @@ describe('Test if file extension is valid or invalid', () => {
 
 describe('Test if is file size valid', () => {
   test('Should return the file size is valid', () => {
-    const result = isFileSizeValid(3984588 - 1000);
+    const result = isFileSizeValid(9437184 - 1000);
     expect(result).toBeTruthy();
   });
 
   test('Should return the file size is invalid', () => {
-    const result = isFileSizeValid(3984588 + 1000);
+    const result = isFileSizeValid(9437184 + 1000);
     expect(result).toBeFalsy();
   });
 });
@@ -44,7 +44,7 @@ describe('Test if file is valid', () => {
   test('Should return that file is valid', () => {
     const frontFileData = {
       name: 'frontFile.png',
-      size: 3145728 - 1000,
+      size: 9437184 - 1000,
       base64: 'base64',
       validExtension: true,
       validSize: true,
@@ -52,7 +52,7 @@ describe('Test if file is valid', () => {
 
     const backFileData = {
       name: 'backFile.png',
-      size: 3145728 - 1000,
+      size: 9437184 - 1000,
       base64: 'base64',
       validExtension: true,
       validSize: true,
@@ -65,7 +65,7 @@ describe('Test if file is valid', () => {
   test('Should return that file is invalid', () => {
     const frontFileData = {
       name: 'frontFile.png',
-      size: 3145728 - 1000,
+      size: 9437184 - 1000,
       base64: 'base64',
       validExtension: false,
       validSize: false,
@@ -73,7 +73,7 @@ describe('Test if file is valid', () => {
 
     const backFileData = {
       name: 'backFile.png',
-      size: 3145728 - 1000,
+      size: 9437184 - 1000,
       base64: 'base64',
       validExtension: false,
       validSize: false,
@@ -88,7 +88,7 @@ describe('Test if the extension and size is valid to return the correct class', 
   test('Should return that extension and size is valid', () => {
     const fileData = {
       name: 'file.png',
-      size: 3145728 - 1000,
+      size: 9437184 - 1000,
       base64: 'base64',
       validExtension: true,
       validSize: true,
@@ -101,7 +101,7 @@ describe('Test if the extension and size is valid to return the correct class', 
   test('Should return that extension and size is invalid', () => {
     const fileData = {
       name: 'file.png',
-      size: 3145728 - 1000,
+      size: 9437184 - 1000,
       base64: 'base64',
       validExtension: false,
       validSize: false,
