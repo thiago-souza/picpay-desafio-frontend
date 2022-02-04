@@ -6,6 +6,7 @@ import {
 } from '@/pages/upload/upload.style';
 import { FileData, getFileDataFromEvent } from '@/services/files';
 import DeleteIcon from '@/assets/icons/delete-icon.png';
+import EmptyFile from '@/assets/icons/empty-file-icon.png';
 import { Modal } from '@/components/modal';
 import { ModalStylePreview } from '../modal/modal.style';
 
@@ -35,10 +36,11 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
 
   const uploadButtonRef = React.useRef<HTMLInputElement>(null);
 
-  const isValid = props.fileData?.validExtension && props.fileData?.validSize;
+  const isValidFile =
+    props.fileData?.validExtension && props.fileData?.validSize;
   const contentValues = {
-    content: isValid ? '✓' : '×',
-    color: isValid ? '#26ca5e' : '#c22d1e',
+    content: isValidFile ? '✓' : '×',
+    color: isValidFile ? '#26ca5e' : '#c22d1e',
   };
 
   const imgPreviewRender = (base64?: string) => {
@@ -46,29 +48,34 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
   };
 
   const handleChange = (event: React.ChangeEvent): void => {
-    getFileDataFromEvent(event, null).then((data) => props.onFileSelected(data));
+    getFileDataFromEvent(event, null).then((data) =>
+      props.onFileSelected(data),
+    );
   };
 
-  const handleUploadButtonHoverStyle = (backgroundColor: string, border: string) => {
+  const handleUploadButtonHoverStyle = (
+    backgroundColor: string,
+    border: string,
+  ) => {
     if (uploadButtonRef && uploadButtonRef.current) {
       uploadButtonRef.current.style.backgroundColor = backgroundColor;
       uploadButtonRef.current.style.borderColor = border;
     }
-  }
+  };
 
   const eDragOver = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
 
     handleUploadButtonHoverStyle('rgba(255, 116, 0, 0.1)', '#FF7400');
-  }
+  };
 
   const eDragLeave = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
 
     handleUploadButtonHoverStyle('white', '#d5d5d5');
-  }
+  };
 
   const eDrop = (e: any) => {
     e.preventDefault();
@@ -83,22 +90,29 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
     }
 
     handleUploadButtonHoverStyle('white', '#d5d5d5');
-  }
+  };
+
+  const handleCallBackPreview = () => {
+    isValidFile ? callbackImgPreview() : null;
+  };
 
   return (
     <UploadButtonDragNDrop
       ref={uploadButtonRef}
-      className='upload-button'
+      className="upload-button"
       onDragOver={eDragOver}
       onDragLeave={eDragLeave}
       onDrop={eDrop}
       data-testid={`upload-drag-n-drop-${id}`}
     >
       <UploadButtonStyle>
-        <Modal id={id} isShown={isShownModal} hide={callbackImgPreview} >
+        <Modal id={id} isShown={isShownModal} hide={callbackImgPreview}>
           <>
             <ModalStylePreview>
-              <img src={imgPreviewRender(props.fileData?.base64)} data-clarity-mask="true" />
+              <img
+                src={imgPreviewRender(props.fileData?.base64)}
+                data-clarity-mask="true"
+              />
             </ModalStylePreview>
             <p>
               {typeFile}: {props.fileData?.name}
@@ -107,12 +121,21 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
         </Modal>
         <ImgPreviewStyle
           data-testid={`upload-img-preview-${id}`}
-          className={`${props.fileData?.base64 ? 'active' : ''}`}
+          className={`${props.fileData?.base64 ? 'active' : ''} ${
+            !isValidFile && 'invalid'
+          }`}
           {...contentValues}
-          onClick={callbackImgPreview}
+          onClick={handleCallBackPreview}
           data-clarity-mask="true"
         >
-          <img src={imgPreviewRender(props.fileData?.base64)} data-clarity-mask="true" />
+          {isValidFile ? (
+            <img
+              src={imgPreviewRender(props.fileData?.base64)}
+              data-clarity-mask="true"
+            />
+          ) : (
+            <img src={EmptyFile} className="empty" />
+          )}
         </ImgPreviewStyle>
         <input
           type="file"
@@ -128,7 +151,11 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
           accept="image/png, image/jpeg"
           data-clarity-mask="true"
         />
-        <label className={`${fileData ? 'trim' : ''}`} htmlFor={id} style={{ display: 'block' }}>
+        <label
+          className={`${fileData ? 'trim' : ''}`}
+          htmlFor={id}
+          style={{ display: 'block' }}
+        >
           {children}
         </label>
 
@@ -143,4 +170,3 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
     </UploadButtonDragNDrop>
   );
 };
-

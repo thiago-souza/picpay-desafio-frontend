@@ -30,37 +30,36 @@ export const OnboardingPage: React.FC = () => {
   const [isModalShown, setIsModalShown] = React.useState(false);
 
   const redirectUserByStatus = (apiService: ApiService) => {
-    return apiService.getStatus().then(res => {  
-      const newUrl = getPageFromStatus(res.statusCode, res?.status);
-      history.push(newUrl);
-    }).catch(() => {
-      history.push('/status/error');
-    });
-  }
+    return apiService
+      .getStatus()
+      .then((res) => {
+        const newUrl = getPageFromStatus(res.statusCode, res?.status);
+        history.push(newUrl);
+      })
+      .catch(() => {
+        history.push('/status/error');
+      });
+  };
 
   React.useEffect(() => {
     (async () => {
       setIsLoading(false);
-    
+
       if (checkAuthIsInvalid(authData)) {
         return;
       }
 
       const apiService = getApi(authData.token, authData.globoId);
       setIsLoading(true);
-      
-      await redirectUserByStatus(apiService)
-      
+
+      await redirectUserByStatus(apiService);
+
       setIsLoading(false);
-    })()
+    })();
   }, [authData]);
 
   const handleClickVerifyIdentity = () => {
-    sendEvent(
-      'know-your-customer',
-      'verificar-identidade',
-      'verificar-agora',
-    );
+    sendEvent('know-your-customer', 'verificar-identidade', 'verificar-agora');
     history.push('select');
   };
 
@@ -76,7 +75,10 @@ export const OnboardingPage: React.FC = () => {
   return (
     <>
       <LoadingComponent isShow={isLoading} />
-      <ModalConfirm isShown={isModalShown} callbackHide={() => handleClickSeeLater(true)} />
+      <ModalConfirm
+        isShown={isModalShown}
+        callbackHide={() => handleClickSeeLater(true)}
+      />
       <ContentItems>
         <LabelTitle>Verifique sua identidade</LabelTitle>
         <LabelDescription data-testid="header-description">
@@ -95,7 +97,7 @@ export const OnboardingPage: React.FC = () => {
           </DocumentBox>
         </ContentBox>
         <ContentSideBar data-testid="content-side-bar">
-          <DocumentBox icon={SecurityIcon} light={true}>
+          <DocumentBox icon={SecurityIcon} light tiny>
             Relaxa, seus dados estão seguros com a gente.
           </DocumentBox>
           <CustomButton callbackEvent={handleClickVerifyIdentity}>

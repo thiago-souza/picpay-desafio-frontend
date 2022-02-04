@@ -77,8 +77,14 @@ const LabelDescriptionButton = styled(LabelDescription)`
 
   &.error {
     color: ${(props) => props.theme.colors.red};
+    font-size: ${(props) => props.theme.fontSizes.tiny};
     text-align: center;
-    white-space: pre;
+    line-height: normal;
+
+    @media ${device.tablet} {
+      font-size: ${(props) => props.theme.fontSizes.small};
+      white-space: pre;
+    }
   }
 
   &.bold {

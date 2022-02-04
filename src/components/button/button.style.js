@@ -87,6 +87,15 @@ export const UploadButtonStyle = styled.div`
   label {
     cursor: pointer;
     &.trim {
+      h3 {
+        font-size: ${(props) => props.theme.fontSizes.small};
+        @media ${device.tablet} {
+          margin: 0px 0 4px 0;
+          font-size: ${(props) => props.theme.fontSizes.medium};
+          min-width: 336px;
+        }
+      }
+
       h3,
       p {
         margin-bottom: 0;

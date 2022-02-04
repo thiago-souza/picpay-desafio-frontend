@@ -3,7 +3,7 @@ import { device } from '@/pages/main/styles';
 
 export const UploadBoxStyle = styled.div`
   min-height: 40px;
-  padding: 24px;
+  padding: 16px;
   margin-bottom: 32px;
   cursor: pointer;
 
@@ -11,8 +11,18 @@ export const UploadBoxStyle = styled.div`
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
   border-radius: 3px;
 
+  @media ${device.tablet} {
+    padding: 24px;
+  }
+
   h3 {
     margin: 8px 0 4px 0;
+    font-size: ${(props) => props.theme.fontSizes.small}
+
+    @media ${device.tablet} {
+      min-width: 336px;
+      font-size: ${(props) => props.theme.fontSizes.medium}
+    }
   }
 
   p {
@@ -40,11 +50,27 @@ export const ImgPreviewStyle = styled.div`
     white-space: pre-wrap;
   }
 
+  &.invalid {
+    cursor: not-allowed;
+  }
+
   img {
     width: 60px;
     max-height: 42px;
     filter: drop-shadow(0px 2px 8px rgba(0, 0, 0, 0.55));
     transform: matrix(1, -0.06, 0.06, 1, 0, 0);
+
+    &.empty {
+      min-height: 40px;
+      height: 64px;
+      width: 88px;
+      max-height: 64px;
+
+      cursor: not-allowed;
+
+      filter: none;
+      transform: none;
+    }
   }
 
   &:after {
