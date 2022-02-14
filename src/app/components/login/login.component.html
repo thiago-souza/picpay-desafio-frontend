@@ -1,0 +1,72 @@
+<div
+  fxLayout="row"
+  fxLayout.md="row"
+  fxLayout.sm="column"
+  fxLayout.xs="column"
+  fxLayoutAlign="center center"
+  fxFill
+>
+  <div
+    class="wrapper-form"
+    fxLayout="column"
+    fxLayout.xs="row"
+    fxLayoutAlign="space-around center"
+    fxFlex.lg="30"
+    fxFlex.md="30"
+  >
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="logIn()"
+      fxLayout="column"
+      fxLayoutAlign="space-around stretch"
+    >
+      <div class="img-login">
+        <img [src]="imgLogoSrc" alt="logo" />
+      </div>
+      <h2>Bem vindo de volta</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          placeholder="nome@example.com"
+          formControlName="email"
+          required
+        />
+        <mat-error *ngIf="loginForm.invalid">{{ getErrorMessage() }}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input
+          formControlName="password"
+          matInput
+          [type]="hide ? 'password' : 'text'"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" type="submit">Login</button>
+    </form>
+  </div>
+  <div
+    class="cardWrap"
+    fxLayout="column"
+    fxLayout.xs="row"
+    fxLayoutAlign="space-around center"
+    fxFlex.lg="70"
+    fxFlex.md="70"
+  >
+    <div fxFlex="0 0 100%">
+      <mat-card>
+        <img mat-card-image [src]="imgManSrc" alt="man" />
+      </mat-card>
+    </div>
+  </div>
+</div>
