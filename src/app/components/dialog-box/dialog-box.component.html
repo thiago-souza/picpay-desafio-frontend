@@ -1,0 +1,109 @@
+<form [formGroup]="form" (ngSubmit)="submit(form)">
+  <mat-dialog-content>
+    <div *ngIf="data.action == 'Delete'">
+      <h1>
+        {{ message }}
+      </h1>
+      <p>
+        {{ user }}
+      </p>
+      <p>
+        {{ date }}
+      </p>
+      <p>
+        {{ value }}
+      </p>
+    </div>
+    <div *ngIf="data.action == 'Add'">
+      <h1>Adicionar Pagamento</h1>
+      <div class="dialog-content">
+        <mat-form-field class="block w-full mb-2" appearance="outline">
+          <span matPrefix>&nbsp;</span>
+          <input matInput placeholder="Name" formControlName="name" required />
+        </mat-form-field>
+        <mat-form-field class="block w-full mb-2" appearance="outline">
+          <span matPrefix>&nbsp;</span>
+          <input
+            matInput
+            placeholder="Value"
+            formControlName="value"
+            required
+          />
+        </mat-form-field>
+      </div>
+      <div class="dialog-content">
+        <mat-form-field class="block w-full mb-2" appearance="outline">
+          <span matPrefix>&nbsp;</span>
+          <input matInput placeholder="Date" formControlName="date" required />
+        </mat-form-field>
+        <mat-form-field class="block w-full mb-2" appearance="outline">
+          <span matPrefix>&nbsp;</span>
+          <input matInput placeholder="Title" formControlName="title" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf="data.action == 'Update'">
+      <h1>Atualizar Dados</h1>
+      <div class="dialog-content">
+        <mat-form-field class="block w-full mb-2" appearance="outline">
+          <span matPrefix>&nbsp;</span>
+          <input
+            matInput
+            placeholder="Name"
+            formControlName="name"
+            [(ngModel)]="data.name"
+          />
+        </mat-form-field>
+        <mat-form-field class="block w-full mb-2" appearance="outline">
+          <span matPrefix>&nbsp;</span>
+          <input
+            matInput
+            placeholder="Value"
+            formControlName="value"
+            [(ngModel)]="data.value"
+          />
+        </mat-form-field>
+      </div>
+      <div class="dialog-content">
+        <mat-form-field class="block w-full mb-2" appearance="outline">
+          <span matPrefix>&nbsp;</span>
+          <input
+            matInput
+            placeholder="Date"
+            formControlName="date"
+            [(ngModel)]="data.date"
+          />
+        </mat-form-field>
+        <mat-form-field class="block w-full mb-2" appearance="outline">
+          <span matPrefix>&nbsp;</span>
+          <input
+            matInput
+            placeholder="Title"
+            formControlName="title"
+            [(ngModel)]="data.title"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <div *ngIf="data.action == 'Update' || data.action === 'Add'">
+    <mat-dialog-actions align="center">
+      <button mat-raised-button mat-dialog-close tabindex="-1">
+        {{ cancelButtonText }}
+      </button>
+      <button mat-raised-button color="primary" type="submit" tabindex="1">
+        {{ confirmButtonText }}
+      </button>
+    </mat-dialog-actions>
+  </div>
+  <div *ngIf="data.action == 'Delete'">
+    <mat-dialog-actions align="center">
+      <button mat-raised-button mat-dialog-close tabindex="-1">
+        {{ cancelButtonText }}
+      </button>
+      <button mat-raised-button color="primary" (click)="delete()" tabindex="1">
+        {{ confirmButtonText }}
+      </button>
+    </mat-dialog-actions>
+  </div>
+</form>

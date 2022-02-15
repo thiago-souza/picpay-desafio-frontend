@@ -1,29 +1,23 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { FlexLayoutModule } from "@angular/flex-layout";
-
-import { LoginRoutingModule } from "./login-routing.module";
-import { LoginComponent } from "./login.component";
+import { DialogBoxComponent } from "./dialog-box.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { MatDialogModule } from "@angular/material/dialog";
 import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
-import { MatIconModule } from "@angular/material/icon";
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [DialogBoxComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
-    LoginRoutingModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatCardModule,
-    MatIconModule,
   ],
+  entryComponents: [DialogBoxComponent],
 })
-export class LoginModule {}
+export class DialogBoxModule {}
