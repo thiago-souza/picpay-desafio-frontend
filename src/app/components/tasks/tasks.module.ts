@@ -1,6 +1,7 @@
 import { MatPaginatorIntlPtBr } from "./../../_utils/paginator-ptbr-i8n";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import {HttpClientModule} from '@angular/common/http';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatTableModule } from "@angular/material/table";
@@ -26,6 +27,7 @@ import { MatIconModule } from "@angular/material/icon";
   imports: [
     CommonModule,
     TasksRoutingModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
