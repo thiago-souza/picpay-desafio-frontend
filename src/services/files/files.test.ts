@@ -58,7 +58,10 @@ describe('Test if file is valid', () => {
       validSize: true,
     };
 
-    const result = isValidFiles(frontFileData, backFileData);
+    const mimeTypeAcceptedFront = true;
+    const mimeTypeAcceptedBack = true;
+
+    const result = isValidFiles(frontFileData, backFileData, mimeTypeAcceptedFront, mimeTypeAcceptedBack);
     expect(result).toBeTruthy();
   });
 
@@ -79,7 +82,10 @@ describe('Test if file is valid', () => {
       validSize: false,
     };
 
-    const result = isValidFiles(frontFileData, backFileData);
+    const mimeTypeAcceptedFront = false;
+    const mimeTypeAcceptedBack = false;
+
+    const result = isValidFiles(frontFileData, backFileData, mimeTypeAcceptedFront, mimeTypeAcceptedBack);
     expect(result).toBeFalsy();
   });
 });
@@ -94,7 +100,9 @@ describe('Test if the extension and size is valid to return the correct class', 
       validSize: true,
     };
 
-    const result = fileExtensionAndSizeIsValid(fileData);
+    const mimeType = true;
+
+    const result = fileExtensionAndSizeIsValid(fileData, mimeType);
     expect(result).toBe('');
   });
 
@@ -107,7 +115,9 @@ describe('Test if the extension and size is valid to return the correct class', 
       validSize: false,
     };
 
-    const result = fileExtensionAndSizeIsValid(fileData);
+    const mimeType = false;
+
+    const result = fileExtensionAndSizeIsValid(fileData,mimeType);
     expect(result).toBe('error');
   });
 });
