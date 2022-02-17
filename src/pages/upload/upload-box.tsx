@@ -154,7 +154,6 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     setMState({ ...mState, back: !mState.back });
   };
 
-  // const handleMimeValidate = (file: File) => {
   const handleMimeValidateFront = (validMime: boolean) => {
     setMimeTypeAcceptedFront(validMime);
   };

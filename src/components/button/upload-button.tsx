@@ -37,9 +37,10 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
   } = props;
 
   const uploadButtonRef = React.useRef<HTMLInputElement>(null);
+  const [mimeIsValid, setMimeIsValid] = React.useState<boolean>(false)
 
   const isValidFile =
-    props.fileData?.validExtension && props.fileData?.validSize;
+    props.fileData?.validExtension && props.fileData?.validSize && mimeIsValid;
   const contentValues = {
     content: isValidFile ? '✓' : '×',
     color: isValidFile ? '#26ca5e' : '#c22d1e',
@@ -57,10 +58,9 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
     const file = (inputRef.files as FileList)[0];
     if (file) {
       fileInput(file, (result: boolean) => {
-        //setMimeTypeAccepted(result);
         props.callbackMimeType?.(result);
-      })
-      //props.callbackMimeType?.(file);
+        setMimeIsValid(result);
+      });
     }
   };
 
@@ -106,7 +106,6 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
   const handleCallBackPreview = () => {
     isValidFile ? callbackImgPreview() : null;
   };
-
 
   return (
     <UploadButtonDragNDrop

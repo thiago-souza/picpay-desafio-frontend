@@ -78,10 +78,6 @@ export const checkIsFileValid = ({
   return validExtension && validSize;
 };
 
-// export const checkIsFileValidMimeType = (mimeTypeAccepted: boolean) => {
-//   return mimeTypeAccepted;
-// };
-
 export const isValidFiles = (
   frontFileData?: FileData,
   backFileData?: FileData,

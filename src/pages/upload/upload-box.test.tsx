@@ -63,7 +63,6 @@ describe('Test upload box', () => {
     await waitFor(() => {
       expect(getByTestId('upload-img-preview-front')).toBeInTheDocument();
       // expect(queryByTestId('upload-img-preview-front')).toBeInTheDocument();
-      // expect(getByRole('input', { name: /front/i })).toBeInTheDocument();
 
       expect(getByTestId('upload-img-preview-back')).toBeInTheDocument();
       // expect(getByText('rg-back.png')).toBeInTheDocument();
