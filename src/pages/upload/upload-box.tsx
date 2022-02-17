@@ -26,6 +26,10 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
   const [frontFileData, setFrontFileData] = React.useState<FileData>();
   const [backFileData, setBackFileData] = React.useState<FileData>();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [mimeTypeAcceptedFront, setMimeTypeAcceptedFront] =
+    React.useState<boolean>(false);
+  const [mimeTypeAcceptedBack, setMimeTypeAcceptedBack] =
+    React.useState<boolean>(false);
   const authData = React.useContext(AuthContext);
 
   const modalState = {
@@ -150,6 +154,15 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
     setMState({ ...mState, back: !mState.back });
   };
 
+  // const handleMimeValidate = (file: File) => {
+  const handleMimeValidateFront = (validMime: boolean) => {
+    setMimeTypeAcceptedFront(validMime);
+  };
+
+  const handleMimeValidateBack = (validMime: boolean) => {
+    setMimeTypeAcceptedBack(validMime);
+  };
+
   const handleNavigationBack = () => {
     sendEventWithLabel('voltar-envio-documento');
   };
@@ -180,11 +193,13 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             onClickEvent={() => sendEventWithLabel('frente')}
             isShownModal={mState.front}
             typeFile="Frente do documento"
+            callbackMimeType={handleMimeValidateFront}
           >
             <UploadLabels
               fileType={'Frente'}
               fileData={frontFileData}
               selectedDoc={selectedDoc}
+              mimeType={mimeTypeAcceptedFront}
             />
           </UploadButton>
 
@@ -197,16 +212,18 @@ export const UploadBox = ({ selectedDoc }: IUploadBox): JSX.Element => {
             onClickEvent={() => sendEventWithLabel('verso')}
             isShownModal={mState.back}
             typeFile="Verso do documento"
+            callbackMimeType={handleMimeValidateBack}
           >
             <UploadLabels
               fileType={'Verso'}
               fileData={backFileData}
               selectedDoc={selectedDoc}
+              mimeType={mimeTypeAcceptedBack}
             />
           </UploadButton>
         </UploadBoxStyle>
         <CustomButton
-          disabled={!isValidFiles(frontFileData, backFileData)}
+          disabled={!isValidFiles(frontFileData, backFileData, mimeTypeAcceptedFront, mimeTypeAcceptedBack)}
           callbackEvent={uploadFiles}
         >
           Enviar documento

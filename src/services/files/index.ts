@@ -1,3 +1,8 @@
+interface Mime {
+  mime: string;
+  pattern: (number | undefined)[];
+}
+
 export const getExtensionType = (fileName: string) => {
   const fileEx = fileName.split('.').pop();
   if (fileEx == undefined) return false;
@@ -57,7 +62,6 @@ export const getFileDataFromEvent = (
           validExtension: isFileExtensionValid(file.name),
           validSize: isFileSizeValid(file.size),
         };
-
         resolve(fileData);
       };
       reader.readAsBinaryString(file);
@@ -74,22 +78,31 @@ export const checkIsFileValid = ({
   return validExtension && validSize;
 };
 
+// export const checkIsFileValidMimeType = (mimeTypeAccepted: boolean) => {
+//   return mimeTypeAccepted;
+// };
+
 export const isValidFiles = (
   frontFileData?: FileData,
   backFileData?: FileData,
+  mimeTypeAcceptedFront?: boolean,
+  mimeTypeAcceptedBack?: boolean,
 ): boolean | undefined => {
-  if (frontFileData == undefined && backFileData == undefined) {
+  if (frontFileData == undefined && backFileData == undefined && !mimeTypeAcceptedFront && !mimeTypeAcceptedBack) {
     return false;
   }
 
-  if (frontFileData && backFileData)
+  if (frontFileData && backFileData && mimeTypeAcceptedFront && mimeTypeAcceptedBack)
     return checkIsFileValid(frontFileData) && checkIsFileValid(backFileData);
 };
 
-export const fileExtensionAndSizeIsValid = (fileData?: FileData): string => {
+export const fileExtensionAndSizeIsValid = (
+  fileData?: FileData,
+  mimeType?: boolean,
+) => {
   if (fileData === undefined) return '';
 
-  const valid = fileData?.validExtension && fileData?.validSize;
+  const valid = fileData?.validExtension && fileData?.validSize && mimeType;
 
   return valid ? '' : 'error';
 };
@@ -121,4 +134,47 @@ export const handleGTMTypeError = (
   return validExtension
     ? `extensao-invalida-${fileInfo}`
     : `tamanho-invalido-${fileInfo}`;
+};
+
+const imageMimes: Mime[] = [
+  {
+    mime: 'image/png',
+    pattern: [0x89, 0x50, 0x4e, 0x47],
+  },
+  {
+    mime: 'image/jpeg',
+    pattern: [0xff, 0xd8, 0xff],
+  },
+];
+
+const isMime = (bytes: Uint8Array, mime: Mime): boolean => {
+  return mime.pattern.every((p, i) => !p || bytes[i] === p);
+};
+
+const validateImageMimeType = (
+  file: File,
+  callback: (b: boolean) => void,
+) => {
+  const numBytesNeeded = Math.max(...imageMimes.map((m) => m.pattern.length));
+  const blob = file.slice(0, numBytesNeeded);
+  const fileReader = new FileReader();
+
+  fileReader.onloadend = (e) => {
+    if (!e || !fileReader.result) return;
+
+    const bytes = new Uint8Array(fileReader.result as ArrayBuffer);
+    const valid = imageMimes.some((mime) => isMime(bytes, mime));
+    callback(valid);
+  };
+
+  fileReader.readAsArrayBuffer(blob);
+};
+
+export const fileInput = (files: File, callback: (b: boolean) => void) => {
+  validateImageMimeType(files, (valid) => {
+    if (!valid) {
+      return callback(false);
+    }
+    return callback(true);
+  });
 };

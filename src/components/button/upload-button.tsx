@@ -4,7 +4,7 @@ import {
   ImgPreviewStyle,
   DeleteButtonStyle,
 } from '@/pages/upload/upload.style';
-import { FileData, getFileDataFromEvent } from '@/services/files';
+import { FileData, getFileDataFromEvent, fileInput } from '@/services/files';
 import DeleteIcon from '@/assets/icons/delete-icon.png';
 import EmptyFile from '@/assets/icons/empty-file-icon.png';
 import { Modal } from '@/components/modal';
@@ -19,6 +19,8 @@ interface IUploadButton {
   onClickEvent?: () => void;
   isShownModal?: boolean;
   typeFile: string;
+  //callbackMimeType?: (file: File) => void;
+  callbackMimeType?: (validaMime: boolean) => void;
   children: React.ReactNode;
 }
 
@@ -51,6 +53,15 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
     getFileDataFromEvent(event, null).then((data) =>
       props.onFileSelected(data),
     );
+    const inputRef = event.target as HTMLInputElement;
+    const file = (inputRef.files as FileList)[0];
+    if (file) {
+      fileInput(file, (result: boolean) => {
+        //setMimeTypeAccepted(result);
+        props.callbackMimeType?.(result);
+      })
+      //props.callbackMimeType?.(file);
+    }
   };
 
   const handleUploadButtonHoverStyle = (
@@ -96,6 +107,7 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
     isValidFile ? callbackImgPreview() : null;
   };
 
+
   return (
     <UploadButtonDragNDrop
       ref={uploadButtonRef}
@@ -106,7 +118,12 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
       data-testid={`upload-drag-n-drop-${id}`}
     >
       <UploadButtonStyle>
-        <Modal id={id} isShown={isShownModal} hide={callbackImgPreview}>
+        <Modal
+          id={id}
+          isShown={isShownModal}
+          data-testid="modal-confirm-front"
+          hide={callbackImgPreview}
+        >
           <>
             <ModalStylePreview>
               <img
@@ -146,7 +163,10 @@ export const UploadButton: React.FC<IUploadButton> = (props: IUploadButton) => {
           onClick={(event: React.MouseEvent) => {
             const target = event.currentTarget as HTMLInputElement;
             target.value = '';
-            if (onClickEvent) onClickEvent();
+
+            if (onClickEvent) {
+              onClickEvent();
+            }
           }}
           accept="image/png, image/jpeg"
           data-clarity-mask="true"
