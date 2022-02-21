@@ -5,13 +5,14 @@
       <img src="assets/img/profile.png" alt="">
    </div>
    <div class="dropdown-menu" *ngIf="showMenu">
-      <ul>
+      <ul (click)="showMenu = false">
          <li class="current-user">
             <span>{{ user?.name }}</span>
             <small>{{ user?.email }}</small>
          </li>
          <li class="divider"></li>
-         <li>Ver perfil</li>
+         <li [routerLink]="['/home/payments']">Meus pagamentos</li>
+         <li [routerLink]="['/home/profile']">Ver perfil</li>
          <li class="divider"></li>
          <li (click)="logout()">Sair</li>
       </ul>
