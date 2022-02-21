@@ -1,0 +1,62 @@
+@import "assets/scss/colors";
+
+header {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   background-color: $primary-color;
+   padding: 1.5rem 2rem;
+   margin-bottom: 2.5rem;
+   position: relative;
+
+   .profile {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      cursor: pointer;
+   }
+
+   .dropdown-menu {
+      background-color: $white;
+      border: 1px solid $border-color;
+      border-radius: 0.25rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.10);
+      min-width: 240px;
+      position: absolute;
+      top: 5rem;
+      right: 1.5rem;
+
+      ul {
+         padding: 0;
+         margin: 0;
+         list-style: none;
+
+         li {
+            padding: .85rem 1rem;
+            cursor: pointer;
+            color: $text-color;
+
+            &.current-user {
+               cursor: default;
+               
+               span {
+                  display: block;
+                  font-weight: 500;
+               }
+            }
+
+            &:hover {
+               &:not(.current-user) {
+                  background-color: lighten($bg-color, 4);
+               }
+            }
+
+            &.divider {
+               height: 1px;
+               background-color: lighten($border-color, 24);
+               padding: 0;
+            }
+         }
+      }
+   }
+}

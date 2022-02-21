@@ -27,6 +27,6 @@ export class LoggedInGuard implements CanActivate, CanLoad {
       this.router.navigate(['/payments']);
     }
 
-    return loggedIn;
+    return true;
   }
 }
