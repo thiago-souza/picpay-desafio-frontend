@@ -1,0 +1,18 @@
+@import "assets/scss/colors";
+
+main.payments {
+   background-color: $bg-color;
+   height: calc(100% - 88px);
+   padding: 2.5rem 2rem 2rem 2rem;
+
+   button {
+      max-width: 230px;
+      font-size: 0.875rem;
+      font-weight: 500;
+   }
+
+   section.add-payment {
+      display: flex;
+      justify-content: flex-end;
+   }
+}

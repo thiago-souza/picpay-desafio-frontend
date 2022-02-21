@@ -12,4 +12,8 @@ export class PaymentsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  addPayment() {
+    console.log('@TODO open modal');
+  }
+
 }
