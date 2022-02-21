@@ -2,8 +2,104 @@
    <h1 class="title">Meus pagamentos</h1>
 
    <section class="add-payment">
-      <button class="button primary" (click)="addPayment()">
+      <button class="button primary" (click)="openModalNewPayment(newPayment)">
          ADICIONAR PAGAMENTO
       </button>
    </section>
 </main>
+
+<ng-template #newPayment>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Adicionar pagamento</h4>
+  </div>
+  <div class="modal-body">
+    <form class="no-validate" novalidate [formGroup]="newPaymentForm">
+      <div class="flex-container">
+        <fieldset class="flex-item">
+          <label for="user">Usuário</label>
+          <input type="text" id="user" formControlName="user">
+
+          <div class="input-messages" *ngIf="hasError('user') || hasErrorAndSubmittedForm('user')">
+            <div class="input-errors">
+              O usuário é obrigatorio.
+            </div>
+          </div>
+        </fieldset>
+  
+        <fieldset class="flex-item">
+          <label for="value">Valor</label>
+          <input type="number" id="value" formControlName="value">
+
+          <div class="input-messages" *ngIf="hasError('value') || hasErrorAndSubmittedForm('value')">
+            <div class="input-errors">
+              O valor é obrigatorio.
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="flex-container end">
+        <fieldset class="flex-item">
+          <label for="date">Data</label>
+          <input type="text" id="date"
+            class="form-control"
+            bsDatepicker
+            [bsConfig]="bsConfig"
+            formControlName="date"
+          >
+          
+          <div class="input-messages" *ngIf="hasError('value') || hasErrorAndSubmittedForm('value')">
+            <div class="input-errors">
+              A data é obrigatoria.
+            </div>
+          </div>
+        </fieldset>
+  
+        <fieldset class="flex-item">
+          <label for="title">Título <i>(opcional)</i></label>
+          <input type="text" id="title" name="title" formControlName="title">
+        </fieldset>
+      </div>
+
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button 
+          type="button" 
+          class="btn btn-light mr-2"
+          (click)="closeModalNewPayment()"
+        >
+          CANCELAR
+        </button>
+        <button 
+          type="submit"
+          class="button primary"
+          *ngIf="!loading"
+          (click)="savePayment($event)"
+        >
+          SALVAR
+        </button>
+        <button 
+          type="button"
+          class="button primary"
+          *ngIf="loading"
+          disabled
+        >
+          CARREGANDO...
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+ <ng-template #removePayment>
+   <div class="modal-header">
+     <h4 class="modal-title pull-left">Modal</h4>
+     <button type="button" class="btn-close close pull-right" 
+      aria-label="Close" (click)="removePaymentModalRef?.hide()"
+     >
+       <span aria-hidden="true" class="visually-hidden">&times;</span>
+     </button>
+   </div>
+   <div class="modal-body">
+     This is a modal.
+   </div>
+ </ng-template>
