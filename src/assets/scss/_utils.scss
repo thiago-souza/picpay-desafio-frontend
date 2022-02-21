@@ -1,0 +1,19 @@
+.bg-color {
+   background-color: $bg-color;
+}
+
+.toggle-password-container {
+   position: relative;
+}
+.toggle-password {
+   cursor: pointer;
+   position: absolute;
+   right: 12px;
+   top: 50%;
+   transform: translateY(-50%);
+   line-height: 0;
+
+   &.show {
+      top: 58%;
+   }
+}

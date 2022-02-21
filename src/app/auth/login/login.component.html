@@ -1,21 +1,71 @@
 <div class="container-login">
    <section class="form bg-color">
-      <form novalidate>
+      <form novalidate #loginForm="ngForm"
+         (ngSubmit)="onSubmit($event, loginForm)"
+      >
          <img src="assets/img/logo.svg" alt="Logo PayFriends">
          <h1>Bem vindo de volta</h1>
 
          <fieldset>
             <label for="#email">E-mail</label>
-            <input type="email" id="email">
+            <input 
+               type="text" 
+               id="email" 
+               name="email" 
+               required
+               #email="ngModel"
+               [email]="true"
+               [(ngModel)]="user.email"
+               (blur)="fieldsFocused.email = false"
+               (focus)="fieldsFocused.email = true"
+            >
+
+            <div class="input-messages" 
+               *ngIf="(!isFocused('email') && email.invalid && (email.dirty || email.touched)) || (submitted && !isFocused('email'))"
+            >
+               <div class="input-errors" *ngIf="email?.errors?.required">
+                  O campo email é obrigatorio.
+               </div>
+               <div class="input-errors" *ngIf="email?.errors?.email">
+                  Email inválido.
+               </div>
+            </div>
          </fieldset>
 
          <fieldset>
-            <label for="#senha">Senha</label>
-            <input type="password" id="senha" appTogglePassword>
+            <label for="#password">Senha</label>
+            <span class="toggle-password-container">
+               <input 
+                  type="password" 
+                  id="password"
+                  name="password" 
+                  required
+                  #password="ngModel"
+                  appTogglePassword
+                  [(ngModel)]="user.password"
+                  (blur)="fieldsFocused.password = false"
+                  (focus)="fieldsFocused.password = true"
+               >
+            </span>
+
+            <div class="input-messages" 
+               *ngIf="(!isFocused('password') && password.invalid && (password.dirty || password.touched)) || (submitted && !isFocused('password'))"
+            >
+               <div class="input-errors" *ngIf="password?.errors?.required">
+                  O campo senha é obrigatorio.
+               </div>
+            </div>
          </fieldset>
 
-         <button type="submit" class="button primary">
+         <div class="credentials-invalid" *ngIf="erroLogin">
+            Seu email ou senha estão incorretos.
+         </div>
+
+         <button type="submit" *ngIf="!loading" class="button primary">
             ENTRAR
+         </button>
+         <button disabled type="button" *ngIf="loading" class="button primary">
+            CARREGANDO...
          </button>
       </form>
    </section>

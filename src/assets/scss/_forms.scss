@@ -30,3 +30,11 @@ input {
 input[appTogglePassword] {
    padding-right: 2.5rem;
 }
+
+.credentials-invalid,
+.input-errors {
+   font-size: 0.85rem;
+   font-weight: 500;
+   color: $feedback-error-color;
+   margin:  0.5rem 0 0 0;
+}
