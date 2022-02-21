@@ -45,14 +45,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.submitted = true;
     this.erroLogin = false;
-
-    console.log('dccdcdc');
     
     console.log(form)
     if (form.invalid) { return; }
-
-
-    console.log('478387484837438');
 
     this.loading = true;
 
