@@ -1,0 +1,56 @@
+@import "assets/scss/responsive";
+
+.container-login {
+   display: flex;
+   align-items: center;
+   height: 100%;
+
+   section.form {
+      flex: 0 0 calc(50%);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1rem;
+
+      @include smartphones {
+         flex: 0 0 100%;
+      }
+
+      form {
+         width: 328px;
+         margin: 0 auto;
+
+         @include smartphones {
+            width: 100%;
+         }
+
+         img {
+            max-width: 154px;
+            margin-bottom: 1rem;
+         }
+   
+         h1 {
+            margin: 0 0 1.5rem 0;
+         }
+
+         button {
+            margin-top: 2rem;
+         }
+
+         fieldset {
+            position: relative;
+         }
+      }
+   }
+
+   section.img {
+      flex: 0 0 calc(50%);
+      padding: 3rem;
+      text-align: center;
+
+      @include smartphones {
+         display: none;
+      }
+   }
+}

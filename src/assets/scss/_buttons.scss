@@ -1,0 +1,47 @@
+.button {
+   display: block;
+   cursor: pointer;
+   width: 100%;
+   border: none;
+   border-radius: 0.25rem;
+   font-weight: 500;
+   font-size: 1rem;
+   padding: 0 1rem;
+   height: 40px;
+   line-height: 40px;
+
+   &.primary {
+      background-color: $secondary-color;
+      color: $button-text-color;
+
+      &:hover,
+      &:active,
+      &:focus {
+         background-color: darken($secondary-color, 4);
+      }
+   }
+
+   &.cancel {
+      background-color: transparent;
+      color: $button-text-color;
+
+      &:hover,
+      &:active,
+      &:focus {
+         background-color: lighten($secondary-color, 30);
+      }
+   }
+}
+
+.button[disabled] {
+   background-color: $disable-color;
+   color: $title-color;
+   cursor: no-drop;
+
+   &:hover,
+      &:active,
+      &:focus {
+         background-color: darken($disable-color, 4);
+         color: $title-color;
+      }
+}
