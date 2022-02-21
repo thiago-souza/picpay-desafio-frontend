@@ -50,6 +50,10 @@ export class AuthService {
     return user;
   }
 
+  handleLogin() {
+    this.router.navigate(['/login'])
+  }
+
   private setUser(data: User[]) {
     this.user = data[0];
 
@@ -60,9 +64,5 @@ export class AuthService {
     const user = JSON.stringify(this.user);
 
     localStorage.setItem('user', btoa(user))
-  }
-
-  private handleLogin() {
-    this.router.navigate(['/login'])
   }
 }
