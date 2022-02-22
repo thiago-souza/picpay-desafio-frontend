@@ -1,20 +1,43 @@
 <div class="table-responsive">
    <div class="search-and-filter">
-      <input 
-         type="search" 
-         placeholder="Pesquisar por usuário"
-         name="search"
-         [(ngModel)]="filter"
-         (ngModelChange)="filterBy()"
-      >
+      <div class="filter-container">
+         <input 
+            type="text" 
+            placeholder="Pesquisar por usuário"
+            name="search"
+            [(ngModel)]="filter"
+            (ngModelChange)="filterBy()"
+         >
+         <img src="assets/img/icons/ic_search.svg" alt="Search Icon">
+      </div>
+      
 
-      <pagination 
-         [totalItems]="totalItems"
-         [itemsPerPage]="limit"
-         [maxSize]="5"
-         (pageChanged)="pageChanged($event)"
-      >
-      </pagination>
+      <div class="limit-and-pagination">
+         <label for="limit">
+            Exibir
+            <select 
+               class="form-select" 
+               id="limit"
+               name="limit" 
+               [(ngModel)]="limit" 
+               (ngModelChange)="limitChanged($event)"
+            >
+               <option value="5">5</option>
+               <option value="10">10</option>
+               <option value="15">15</option>
+               <option value="20">20</option>
+            </select>
+         </label>
+         
+         <pagination 
+            previousText="&lsaquo;" nextText="&rsaquo;"
+            [totalItems]="totalItems"
+            [itemsPerPage]="limit"
+            [maxSize]="5"
+            (pageChanged)="pageChanged($event)"
+         >
+         </pagination>
+      </div>
    </div>
 
    <table class="table align-middle table-borderless">

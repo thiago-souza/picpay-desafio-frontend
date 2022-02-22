@@ -31,6 +31,13 @@ export class PaymentsTableComponent implements OnInit {
     this.onChangePage.emit(event);
   }
 
+  limitChanged(limit: string) {
+    this.onChangePage.emit({
+      page: this.page,
+      itemsPerPage: Number(limit)
+    });
+  }
+
   edit(payment: Payment): void {
     this.onEdit.emit(payment);
   }

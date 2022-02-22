@@ -2,8 +2,8 @@
 
 main.payments {
    background-color: $bg-color;
-   height: calc(100% - 88px);
-   padding: 2.5rem 2rem 2rem 2rem;
+   min-height: calc(100% - 88px);
+   padding: 2.5rem 2rem 3rem 2rem;
 
    .container-payments {
       max-width: 1124px;

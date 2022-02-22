@@ -11,8 +11,52 @@
       justify-content: space-between;
       padding: 0 1rem 1.5rem 1rem;
 
+      .filter-container {
+         position: relative;
+         height: 40px;
+
+         img {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 12px;
+         }
+      }
+
+      .limit-and-pagination {
+         display: flex;
+         align-items: center;
+         column-gap: 0.5rem;
+
+         label {
+            color: $caption-color;
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 0;
+
+            select {
+               height: 38px;
+               border-radius: 6px;
+               padding: 0 0.5rem;
+               text-align: center;
+               border: 1px solid $border-color;
+
+               &:active,
+               &:focus {
+                  outline: none;
+               }
+            }
+         }
+
+         pagination {
+            height: 38px;
+         }
+      }
+
       input {
-         max-width: 250px;
+         width: 224px;
+         padding: 0 27px 0 12px;
+         outline-offset: 0;
       }
    }
 
