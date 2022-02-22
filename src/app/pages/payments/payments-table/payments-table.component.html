@@ -32,6 +32,7 @@
               Pago
               <img src="assets/img/icons/ic_order.svg" alt="Order icon">
             </th>
+            <th scope="col"></th>
          </tr>
       </thead>
       <tbody *ngIf="payments.length > 0">
@@ -52,6 +53,18 @@
            </th>
            <th class="align-middle" scope="row">
             <input type="checkbox" [checked]="payment?.isPayed">
+           </th>
+           <th class="align-middle actions" scope="row">
+               <img 
+                  src="assets/img/icons/ic_edit.svg" 
+                  alt="Order icon"
+                  (click)="edit(payment)"
+               >
+               <img 
+                  src="assets/img/icons/ic_delete.svg" 
+                  alt="Order icon"
+                  (click)="remove(payment)"
+               >
            </th>
          </tr>
        </tbody>

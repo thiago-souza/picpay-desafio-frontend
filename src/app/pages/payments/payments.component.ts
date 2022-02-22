@@ -51,6 +51,12 @@ export class PaymentsComponent implements OnInit {
     this.newPaymentModalRef.hide();
     this.newPaymentForm.reset();
     this.submitted = false;
+    this.payment = null;
+  }
+
+  closeModalRemovePayment(): void {
+    this.removePaymentModalRef.hide();
+    this.payment = null;
   }
  
   openModalNewPayment(template: TemplateRef<any>, payment = this.payment): void {
@@ -59,12 +65,17 @@ export class PaymentsComponent implements OnInit {
     this.newPaymentModalRef = this._modalService.show(template, { class: 'modal-lg' });
   }
 
-  sortBy(field: string) {
+  openModalRemovePayment(template: TemplateRef<any>, payment = this.payment): void {
+    this.payment = payment;
+    this.removePaymentModalRef = this._modalService.show(template);
+  }
+
+  sortBy(field: string): void {
     this.sort = field;
     this.getPayments();
   }
 
-  filterBy(filter: string) {
+  filterBy(filter: string): void {
     this.filter = filter;
     if (!filter) {
       this.getPayments();
@@ -103,40 +114,41 @@ export class PaymentsComponent implements OnInit {
 
   private initForm(): void {
     if (this.payment) {
-      const { id, user, value, date, title } = this.payment;
+      const { id, name, value, date, title } = this.payment;
 
-      this.newPaymentForm.patchValue({ id, user, value, date, title });
+      this.newPaymentForm.patchValue({ id, name, value, date, title });
     }
   }
 
   private createForm(): void {
     this.newPaymentForm = this._fb.group({
       id: this._fb.control(null, []),
-      user: this._fb.control(null, [Validators.required]),
+      name: this._fb.control(null, [Validators.required]),
       value: this._fb.control(null, [Validators.required]),
       date: this._fb.control(null, [Validators.required]),
       title: this._fb.control(null, [])
     });
   }
 
-  private getPayments() {
+  private getPayments(): void {
     this._service.list(this.page, this.limit, this.sort).subscribe((data) => {
       this.payments = data;
     })
   }
 
-  private getPaymentsFiltered() {
+  private getPaymentsFiltered(): void {
     this._service.listByUser(this.filter, this.page, this.limit, this.sort).subscribe((data) => {
       this.payments = data;
     })
   }
 
-  private createPayment() {
+  private createPayment(): void {
     const dto: Payment = this.newPaymentForm.value;
 
     this._service.create(dto).subscribe(() => {
       this.loading = false;
       this.closeModalNewPayment();
+      this.getPayments();
     }, (err) => {
       this.loading = false;
       this.submitted = false;
@@ -144,13 +156,29 @@ export class PaymentsComponent implements OnInit {
     })
   }
 
-  private updatePayment() {
+  private updatePayment(): void {
     const dto: Payment = this.newPaymentForm.value;
 
     this._service.update(dto).subscribe(() => {
       this.loading = false;
       this.closeModalNewPayment();
+      this.getPayments();
     }, (err) => {
+      this.loading = false;
+      this.submitted = false;
+      console.error(err);
+    })
+  }
+
+  deletePayment(event: Event): void {
+    event.preventDefault(); 
+
+    this.loading = true;
+    this._service.delete(this.payment).subscribe(() => {
+      this.loading = false;
+      this.closeModalRemovePayment();
+      this.getPayments();
+    },  (err) => {
       this.loading = false;
       this.submitted = false;
       console.error(err);

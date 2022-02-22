@@ -40,6 +40,15 @@
                small.caption {
                   color: $caption-color;
                }
+
+               &.actions {
+                  img {
+                     cursor: pointer;
+                     &:first-child {
+                        margin-right: 1rem;
+                     }
+                  }
+               }
             }
          }
       }

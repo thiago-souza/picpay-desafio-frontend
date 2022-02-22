@@ -11,6 +11,8 @@ export class PaymentsTableComponent implements OnInit {
 
   @Output() onSortBy = new EventEmitter<string>();
   @Output() onFilter = new EventEmitter<string>();
+  @Output() onRemove = new EventEmitter<Payment>();
+  @Output() onEdit = new EventEmitter<Payment>();
   
   filter = '';
 
@@ -19,11 +21,19 @@ export class PaymentsTableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  sortBy(field: string) {
+  edit(payment: Payment): void {
+    this.onEdit.emit(payment);
+  }
+
+  remove(payment: Payment): void {
+    this.onRemove.emit(payment);
+  }
+
+  sortBy(field: string): void {
     this.onSortBy.emit(field);
   }
 
-  filterBy() {
+  filterBy(): void {
     this.onFilter.emit(this.filter)
   }
  

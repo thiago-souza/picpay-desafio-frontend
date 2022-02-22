@@ -13,6 +13,8 @@
         [payments]="payments"
         (onFilter)="filterBy($event)"
         (onSortBy)="sortBy($event)"
+        (onRemove)="openModalRemovePayment(removePayment, $event)"
+        (onEdit)="openModalNewPayment(newPayment, $event)"
       >
       </app-payments-table>
     </section>
@@ -21,16 +23,17 @@
 
 <ng-template #newPayment>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Adicionar pagamento</h4>
+    <h4 class="modal-title pull-left" *ngIf="!payment">Adicionar pagamento</h4>
+    <h4 class="modal-title pull-left" *ngIf="payment">Editar pagamento</h4>
   </div>
   <div class="modal-body">
     <form class="no-validate" novalidate [formGroup]="newPaymentForm">
       <div class="flex-container">
         <fieldset class="flex-item">
-          <label for="user">Usuário</label>
-          <input type="text" id="user" formControlName="user">
+          <label for="name">Usuário</label>
+          <input type="text" id="name" formControlName="name">
 
-          <div class="input-messages" *ngIf="hasError('user') || hasErrorAndSubmittedForm('user')">
+          <div class="input-messages" *ngIf="hasError('name') || hasErrorAndSubmittedForm('name')">
             <div class="input-errors">
               O usuário é obrigatorio.
             </div>
@@ -41,7 +44,6 @@
           <label for="value">Valor</label>
           <input type="number" id="value"
             formControlName="value"
-            [value]="newPaymentForm.get('value').value | currency"
           >
 
           <div class="input-messages" *ngIf="hasError('value') || hasErrorAndSubmittedForm('value')">
@@ -109,6 +111,36 @@
     <h4 class="modal-title pull-left">Excluir pagamento</h4>
   </div>
   <div class="modal-body">
-    This is a modal.
+    <section class="info-payments">
+      <p>Usuário: {{ payment?.name }}</p>
+      <p>Data: {{ payment?.date | date: 'dd/MM/yyyy' }}</p>
+      <p>Valor: {{ payment?.value | currency }}</p>
+    </section>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button 
+        type="button" 
+        class="btn btn-light mr-2"
+        (click)="closeModalRemovePayment()"
+      >
+        CANCELAR
+      </button>
+      <button 
+        type="submit"
+        class="button primary"
+        *ngIf="!loading"
+        (click)="deletePayment($event)"
+      >
+        EXCLUIR
+      </button>
+      <button 
+        type="button"
+        class="button primary"
+        *ngIf="loading"
+        disabled
+      >
+        CARREGANDO...
+      </button>
+    </div>
   </div>
  </ng-template>
