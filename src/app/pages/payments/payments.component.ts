@@ -111,6 +111,17 @@ export class PaymentsComponent implements OnInit {
     })
   }
 
-  private updatePayment() {}
+  private updatePayment() {
+    const dto: Payment = this.newPaymentForm.value;
+
+    this._service.update(dto).subscribe(() => {
+      this.loading = false;
+      this.closeModalNewPayment();
+    }, (err) => {
+      this.loading = false;
+      this.submitted = false;
+      console.error(err);
+    })
+  }
 
 }
