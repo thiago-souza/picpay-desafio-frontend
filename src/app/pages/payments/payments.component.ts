@@ -8,6 +8,7 @@ import { ptBrLocale } from 'ngx-bootstrap/locale';
 
 import { PaymentsService } from './payments.service';
 import { Payment } from 'app/shared/interfaces/payment.interface';
+import { PaginationPageChangeEvent } from 'app/shared/interfaces/pagination.interface';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -26,8 +27,9 @@ export class PaymentsComponent implements OnInit {
   payments: Payment[] = [];
   loading = false;
   submitted = false;
-  page = 1;
+  totalItems = 0;
   limit = 5;
+  page = 1;
   sort = '';
   filter = '';
 
@@ -68,6 +70,12 @@ export class PaymentsComponent implements OnInit {
   openModalRemovePayment(template: TemplateRef<any>, payment = this.payment): void {
     this.payment = payment;
     this.removePaymentModalRef = this._modalService.show(template);
+  }
+
+  changePage(event: PaginationPageChangeEvent) {
+    this.limit = event.itemsPerPage;
+    this.page = event.page;
+    this.getPayments();
   }
 
   sortBy(field: string): void {
@@ -131,14 +139,18 @@ export class PaymentsComponent implements OnInit {
   }
 
   private getPayments(): void {
-    this._service.list(this.page, this.limit, this.sort).subscribe((data) => {
-      this.payments = data;
+    this._service.list(this.page, this.limit, this.sort).subscribe((res) => {
+      const { body, headers } = res;
+      this.payments = body;
+      this.totalItems = Number(headers.get('X-Total-Count'));
     })
   }
 
   private getPaymentsFiltered(): void {
-    this._service.listByUser(this.filter, this.page, this.limit, this.sort).subscribe((data) => {
-      this.payments = data;
+    this._service.listByUser(this.filter, this.page, this.limit, this.sort).subscribe((res) => {
+      const { body, headers } = res;
+      this.payments = body;
+      this.totalItems = Number(headers.get('X-Total-Count'));
     })
   }
 

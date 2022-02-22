@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { SharedModule } from 'app/shared/shared.module';
@@ -31,6 +32,7 @@ registerLocaleData(ptBr);
     ReactiveFormsModule,
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
     PagesRoutingModule,
     SharedModule
   ],

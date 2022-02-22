@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
+import { PaginationPageChangeEvent } from 'app/shared/interfaces/pagination.interface';
 import { Payment } from 'app/shared/interfaces/payment.interface';
 
 @Component({
@@ -8,17 +10,25 @@ import { Payment } from 'app/shared/interfaces/payment.interface';
 })
 export class PaymentsTableComponent implements OnInit {
   @Input() payments: Payment[] = [];
+  @Input() totalItems: number;
+  @Input() limit: number;
+  @Input() page: number;
 
   @Output() onSortBy = new EventEmitter<string>();
   @Output() onFilter = new EventEmitter<string>();
   @Output() onRemove = new EventEmitter<Payment>();
   @Output() onEdit = new EventEmitter<Payment>();
+  @Output() onChangePage = new EventEmitter<PaginationPageChangeEvent>();
   
   filter = '';
-
+  
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  pageChanged(event: PaginationPageChangeEvent) {
+    this.onChangePage.emit(event);
   }
 
   edit(payment: Payment): void {

@@ -7,6 +7,14 @@
          [(ngModel)]="filter"
          (ngModelChange)="filterBy()"
       >
+
+      <pagination 
+         [totalItems]="totalItems"
+         [itemsPerPage]="limit"
+         [maxSize]="5"
+         (pageChanged)="pageChanged($event)"
+      >
+      </pagination>
    </div>
 
    <table class="table align-middle table-borderless">

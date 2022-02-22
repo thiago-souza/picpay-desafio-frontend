@@ -7,6 +7,8 @@
    padding-top: 1rem;
 
    .search-and-filter {
+      display: flex;
+      justify-content: space-between;
       padding: 0 1rem 1.5rem 1rem;
 
       input {

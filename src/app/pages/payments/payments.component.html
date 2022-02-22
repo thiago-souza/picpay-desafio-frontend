@@ -11,6 +11,10 @@
     <section class="list-payment">
       <app-payments-table 
         [payments]="payments"
+        [page]="page"
+        [limit]="limit"
+        [totalItems]="totalItems"
+        (onChangePage)="changePage($event)"
         (onFilter)="filterBy($event)"
         (onSortBy)="sortBy($event)"
         (onRemove)="openModalRemovePayment(removePayment, $event)"
