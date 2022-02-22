@@ -51,7 +51,7 @@ export class AuthService {
   }
 
   handleLogin() {
-    this.router.navigate(['/home/login'])
+    this.router.navigate(['/login'])
   }
 
   private setUser(data: User[]) {
