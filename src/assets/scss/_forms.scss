@@ -12,7 +12,7 @@ label {
    font-size: 1rem;
 }
 
-input {
+input:not([type="checkbox"]) {
    border: 1px solid $border-color;
    border-radius: 0.25rem;
    color: $text-color;
@@ -29,6 +29,11 @@ input {
 
 input[appTogglePassword] {
    padding-right: 2.5rem;
+}
+
+input[type="checkbox"] {
+   width: 18px;
+   height: 18px;
 }
 
 .credentials-invalid,

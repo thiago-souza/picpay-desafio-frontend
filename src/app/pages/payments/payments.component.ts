@@ -23,8 +23,14 @@ export class PaymentsComponent implements OnInit {
 
   newPaymentForm: FormGroup;
   payment: Payment = null;
+  payments: Payment[] = [];
   loading = false;
   submitted = false;
+  page = 1;
+  limit = 5;
+  sort = '';
+  filter = '';
+
 
   constructor(
     private _modalService: BsModalService,
@@ -38,6 +44,7 @@ export class PaymentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.getPayments();
   }
 
   closeModalNewPayment(): void {
@@ -50,6 +57,20 @@ export class PaymentsComponent implements OnInit {
     this.payment = payment;
     this.initForm();
     this.newPaymentModalRef = this._modalService.show(template, { class: 'modal-lg' });
+  }
+
+  sortBy(field: string) {
+    this.sort = field;
+    this.getPayments();
+  }
+
+  filterBy(filter: string) {
+    this.filter = filter;
+    if (!filter) {
+      this.getPayments();
+    } else {
+      this.getPaymentsFiltered();
+    }
   }
 
   savePayment(event: Event): void {
@@ -96,6 +117,18 @@ export class PaymentsComponent implements OnInit {
       date: this._fb.control(null, [Validators.required]),
       title: this._fb.control(null, [])
     });
+  }
+
+  private getPayments() {
+    this._service.list(this.page, this.limit, this.sort).subscribe((data) => {
+      this.payments = data;
+    })
+  }
+
+  private getPaymentsFiltered() {
+    this._service.listByUser(this.filter, this.page, this.limit, this.sort).subscribe((data) => {
+      this.payments = data;
+    })
   }
 
   private createPayment() {

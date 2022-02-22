@@ -1,0 +1,63 @@
+<div class="table-responsive">
+   <div class="search-and-filter">
+      <input 
+         type="search" 
+         placeholder="Pesquisar por usuário"
+         name="search"
+         [(ngModel)]="filter"
+         (ngModelChange)="filterBy()"
+      >
+   </div>
+
+   <table class="table align-middle table-borderless">
+      <thead>
+         <tr>
+           <th scope="col" (click)="sortBy('name')">
+              Usuário
+              <img src="assets/img/icons/ic_order.svg" alt="Order icon">
+            </th>
+           <th scope="col" (click)="sortBy('title')">
+              Título
+              <img src="assets/img/icons/ic_order.svg" alt="Order icon">
+            </th>
+           <th scope="col" (click)="sortBy('date')">
+              Data
+              <img src="assets/img/icons/ic_order.svg" alt="Order icon">
+            </th>
+           <th scope="col" (click)="sortBy('value')">
+              Valor
+              <img src="assets/img/icons/ic_order.svg" alt="Order icon">
+            </th>
+           <th scope="col" (click)="sortBy('isPayed')">
+              Pago
+              <img src="assets/img/icons/ic_order.svg" alt="Order icon">
+            </th>
+         </tr>
+      </thead>
+      <tbody *ngIf="payments.length > 0">
+         <tr class="align-middle" *ngFor="let payment of payments">
+           <th class="align-middle" scope="row">
+              {{ payment?.name }}<br>
+              <small class="caption">{{ payment?.username }}</small>
+           </th>
+           <th class="align-middle" scope="row">
+               {{ payment?.title }}
+           </th>
+           <th class="align-middle" scope="row">
+               {{ payment?.date | date }}<br>
+               <small class="caption">{{ payment?.date | date : 'h:mm a' }}</small>
+           </th>
+           <th class="align-middle" scope="row">
+               {{ payment?.value | currency }}
+           </th>
+           <th class="align-middle" scope="row">
+            <input type="checkbox" [checked]="payment?.isPayed">
+           </th>
+         </tr>
+       </tbody>
+   </table>
+
+   <div class="not-found text-center mb-3" *ngIf="!payments.length">
+      <h5 class="font-wei">Nenhum pagamento encontrado :(</h5>
+   </div>
+</div>

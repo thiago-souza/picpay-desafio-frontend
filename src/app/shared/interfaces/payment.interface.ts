@@ -4,4 +4,5 @@ export interface Payment {
    title: string;
    value: number;
    date: string;
+   isPayed: boolean;
 }

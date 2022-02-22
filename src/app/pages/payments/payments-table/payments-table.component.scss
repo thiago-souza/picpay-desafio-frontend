@@ -1,0 +1,47 @@
+@import "assets/scss/colors";
+
+.table-responsive {
+   background-color: $white;
+   border-radius: 8px;
+   box-shadow: 0px 2px 4px $shadow-color;
+   padding-top: 1rem;
+
+   .search-and-filter {
+      padding: 0 1rem 1.5rem 1rem;
+
+      input {
+         max-width: 250px;
+      }
+   }
+
+   table {
+      border-radius: 8px;
+
+      thead {
+         position: relative;
+         top: -4px;
+         border-bottom: 1px solid $border-color;
+         tr {
+            th {
+               cursor: pointer;
+            }
+         }
+      }
+
+      tbody {
+         tr {
+            &:nth-child(odd) {
+               background-color: lighten($bg-color, 2);
+            }
+
+            th {
+               font-weight: 400;
+               
+               small.caption {
+                  color: $caption-color;
+               }
+            }
+         }
+      }
+   }
+}

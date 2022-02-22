@@ -1,11 +1,22 @@
 <main class="payments">
-   <h1 class="title">Meus pagamentos</h1>
+  <div class="container-payments">
+    <h1 class="title">Meus pagamentos</h1>
 
-   <section class="add-payment">
-      <button class="button primary" (click)="openModalNewPayment(newPayment)">
-         ADICIONAR PAGAMENTO
-      </button>
-   </section>
+    <section class="add-payment">
+        <button class="button primary" (click)="openModalNewPayment(newPayment)">
+          ADICIONAR PAGAMENTO
+        </button>
+    </section>
+
+    <section class="list-payment">
+      <app-payments-table 
+        [payments]="payments"
+        (onFilter)="filterBy($event)"
+        (onSortBy)="sortBy($event)"
+      >
+      </app-payments-table>
+    </section>
+  </div>
 </main>
 
 <ng-template #newPayment>
@@ -28,7 +39,10 @@
   
         <fieldset class="flex-item">
           <label for="value">Valor</label>
-          <input type="number" id="value" formControlName="value">
+          <input type="number" id="value"
+            formControlName="value"
+            [value]="newPaymentForm.get('value').value | currency"
+          >
 
           <div class="input-messages" *ngIf="hasError('value') || hasErrorAndSubmittedForm('value')">
             <div class="input-errors">
@@ -91,15 +105,10 @@
 </ng-template>
 
  <ng-template #removePayment>
-   <div class="modal-header">
-     <h4 class="modal-title pull-left">Modal</h4>
-     <button type="button" class="btn-close close pull-right" 
-      aria-label="Close" (click)="removePaymentModalRef?.hide()"
-     >
-       <span aria-hidden="true" class="visually-hidden">&times;</span>
-     </button>
-   </div>
-   <div class="modal-body">
-     This is a modal.
-   </div>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Excluir pagamento</h4>
+  </div>
+  <div class="modal-body">
+    This is a modal.
+  </div>
  </ng-template>

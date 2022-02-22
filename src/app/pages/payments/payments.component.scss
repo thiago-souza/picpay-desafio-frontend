@@ -5,14 +5,20 @@ main.payments {
    height: calc(100% - 88px);
    padding: 2.5rem 2rem 2rem 2rem;
 
-   section.add-payment {
-      display: flex;
-      justify-content: flex-end;
+   .container-payments {
+      max-width: 1124px;
+      margin: 0 auto;
 
-      button {
-         max-width: 230px;
-         font-size: 0.875rem;
-         font-weight: 500;
+      section.add-payment {
+         display: flex;
+         justify-content: flex-end;
+         margin-bottom: 2rem;
+   
+         button {
+            max-width: 230px;
+            font-size: 0.875rem;
+            font-weight: 500;
+         }
       }
    }
 }
