@@ -1,0 +1,100 @@
+<div class="container-lg">
+    <div class="header-logo">
+        <img src="/assets/images/logo-white.svg" class="logoPayFriends">
+        <div class="login">
+            <span (click)="openProfile()">Meu Perfil</span>
+            <span (click)="logout()">Logout</span>
+            <span><img src="/assets/images/photo.png"></span>
+        </div>
+    </div>
+    <div class="content">
+        <div class="box-top">
+            <h1>Meus pagamentos</h1>
+            <button type="button" class="right" (click)="open()">Adicionar pagamento</button> 
+        </div>
+        <div class="content-table">
+            <div class="content-box">
+                <div class="search">
+                    <div class="group-input">
+                        <input name="search" placeholder="Pesquisar por usuário" (keyup)="searchInput($event.target.value)" />
+                        <span><img src="/assets/images/search.png"></span>
+                    </div>
+                </div>
+                <div class="pagination" *ngIf="_listTasks.length>0">
+                    <div class="limit-pagination">
+                        <label>Exibir</label>
+                        <select name="limit" (change)="limitChanged($event.target.value)">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                    <pagination-controls 
+                        (pageChange)="pageChanged($event)" 
+                        previousLabel="" 
+                        nextLabel=""
+                        class="list-pagination"
+                    ></pagination-controls>
+                </div>
+            </div>
+            
+            <div class="content-list"> 
+                <p *ngIf="_listTasks.length==0" class="emptyList">Nenhum dado encontrado.</p>
+                <ul class="listTasks" *ngIf="_listTasks.length>0">
+                    <li class="list-header"> 
+                        <div>
+                            <label (click)="sortList('name', order)">Usuário</label>
+                            <fa-icon *ngIf="sort =='name' && order" [icon]="faAngleDown"></fa-icon>
+                            <fa-icon *ngIf="sort =='name' && !order" [icon]="faAngleUp"></fa-icon>
+                        </div> 
+                        <div>
+                            <label (click)="sortList('title', order)">Título</label>
+                            <fa-icon *ngIf="sort =='title' && order" [icon]="faAngleDown"></fa-icon>
+                            <fa-icon *ngIf="sort =='title' && !order" [icon]="faAngleUp"></fa-icon>
+                        </div> 
+                        <div>
+                            <label (click)="sortList('date', order)">Data</label>
+                            <fa-icon *ngIf="sort =='date' && order" [icon]="faAngleDown"></fa-icon>
+                            <fa-icon *ngIf="sort =='date' && !order" [icon]="faAngleUp"></fa-icon>
+                        </div> 
+                        <div>
+                            <label (click)="sortList('value', order)">Valor</label>
+                            <fa-icon *ngIf="sort =='value' && order" [icon]="faAngleDown"></fa-icon>
+                            <fa-icon *ngIf="sort =='value' && !order" [icon]="faAngleUp"></fa-icon>
+                        </div>
+                        <div>
+                            <label (click)="sortList('isPayed', order)">Pago</label>
+                            <fa-icon *ngIf="sort =='isPayed' && order" [icon]="faAngleDown"></fa-icon>
+                            <fa-icon *ngIf="sort =='isPayed' && !order" [icon]="faAngleUp"></fa-icon>
+                        </div>  
+                        <div></div>  
+                    </li>
+                    <li class="list-body" 
+                        *ngFor="let item of _listTasks | paginate: 
+                            { itemsPerPage: limit, currentPage: page, totalItems: totalCount }"> 
+                        <div class="nameTask"> 
+                            <span>{{item.name}}</span>
+                            <span>{{item.username}}</span>
+                        </div>  
+                        <div>{{item.title}}</div>  
+                        <div class="nameTask"> 
+                            <span>{{formatDate(item.date)}}</span>
+                            <span>{{formatTime(item.date)}}</span>
+                        </div>
+                        <div>{{formatValue(item.value)}}</div>  
+                        <div>
+                            <img *ngIf="item.isPayed" src="/assets/images/isPayedTrue.png" alt="Pago">
+                            <img *ngIf="!item.isPayed" src="/assets/images/isPayedFalse.png" alt="Não Pago">
+                        </div>  
+                        <div class="actions">
+                            <span (click)="edit(item.id)"><img src="/assets/images/edit.svg" alt="editar"></span>
+                            <span (click)="delete(item.id)"><img src="/assets/images/delete.svg" alt='deletar'></span>
+                        </div>  
+                    </li>
+                </ul> 
+            </div>
+        </div>
+    </div> 
+</div>

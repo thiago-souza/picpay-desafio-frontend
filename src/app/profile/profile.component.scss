@@ -1,0 +1,9 @@
+.list-profile {
+    display: flex;
+    flex-direction: column;
+    color: #000000;
+    label {
+        width: 63px;
+        font-weight: bold;
+    } 
+}

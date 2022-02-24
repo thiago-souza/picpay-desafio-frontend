@@ -1,0 +1,20 @@
+
+<div class="modal-header" [ngStyle]="{border:'none'}">
+    <h4 class="modal-title">Meus Dados</h4> 
+</div> 
+<div class="modal-body">   
+    <div class="list-profile">
+        <span><label>Nome: </label>{{dataUser.name}}</span> 
+        <span><label>Email: </label>{{dataUser.email}}</span>  
+    </div>
+    <div class="modal-footer" [ngStyle]="{border:'none'}" >   
+        <button 
+            type="button"
+            [ngStyle]="{width:'150px'}" 
+            class="btn btn-grey" 
+            (click)="activeModal.close('Close click')">
+            Fechar
+        </button> 
+    </div>  
+</div>  
+

@@ -1,0 +1,52 @@
+<div class="container-lg" id="page-login" >
+    <div class="row">
+        <div class="col-form-login"> 
+            <div class="box">
+                <h1><img alt="payfriends" src="assets/images/logo.svg" /></h1>
+                <h2>Bem vindo de volta</h2>  
+                <form [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+                    <div class="input-group">
+                        <div class="boxInput" [ngClass]="getContent('email')"> 
+                            <input 
+                                type="email" 
+                                class="form-control" 
+                                id="email" 
+                                name="email" 
+                                formControlName="email"
+                                email>
+                            <label for="email" class="form-label">Email</label>
+                        </div>  
+                        <span class="errorInput" *ngIf="formLogin.controls.email.value && formLogin.controls.email.errors">
+                            Informe um email válido
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <div class="boxInput seeValue" [ngClass]="getContent('password')"> 
+                            <input   
+                                type="{{passw ? 'text' : 'password'}}"
+                                class="form-control" 
+                                id="password" 
+                                name="password" 
+                                formControlName="password"> 
+                            <label for="password" class="form-label">Senha</label>
+                            <span class="imgSee" (click)="seePassword()">
+                                <fa-icon *ngIf="!passw" [icon]="faEye"></fa-icon>
+                                <fa-icon *ngIf="passw" [icon]="faEyeSlash"></fa-icon> 
+                            </span>
+                        </div>
+                    </div>
+                    <button 
+                        type="submit"
+                        [ngStyle]="{width:'100%'}"
+                        [disabled]="!formLogin.valid" 
+                        [ngClass]="!formLogin.valid ? 'disabled' : ''">
+                        Entrar
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="col-image">
+            <img alt="man doing online payment" src="assets/images/man-doing-online-payment.svg" />
+        </div> 
+    </div>
+</div>

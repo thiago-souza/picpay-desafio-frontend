@@ -1,0 +1,109 @@
+
+<div class="modal-header" [ngStyle]="{border:'none'}">
+    <h4 class="modal-title">{{title}}</h4> 
+</div>
+<div class="modal-body message-concluded" *ngIf="content">
+    <fa-icon [icon]='faCheckCircle' class="fa-2xl"></fa-icon>
+    <label>{{content}}</label>
+</div> 
+<div class="modal-body" *ngIf="!content">  
+    <div *ngIf="mode!=='delete'">
+        <form [formGroup]="formPayment" (ngSubmit)="onSubmit()" class="formModal"> 
+            <div class="row"> 
+                <div class="input-group col">
+                    <div class="boxInput" [ngClass]="getContent('name')"> 
+                        <input 
+                            type="string" 
+                            class="form-control" 
+                            id="name" 
+                            name="name" 
+                            formControlName="name">
+                        <label for="name" class="form-label">Usuário *</label>
+                    </div>  
+                    <span class="errorInput" *ngIf="formPayment.controls.name.value && formPayment.controls.name.errors">
+                        Informe um usuário válido
+                    </span>
+                </div>  
+                <div class="input-group col">
+                    <div class="boxInput" [ngClass]="getContent('value')"> 
+                        <input 
+                            type="string" 
+                            class="form-control" 
+                            [ngStyle]="{textAlign:'left'}" 
+                            id="value" 
+                            name="value" 
+                            currencyMask
+                            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+                            formControlName="value"> 
+                        <label for="value" class="form-label">Valor *</label>
+                    </div>
+                </div> 
+            </div>
+            <div class="row"> 
+                <div class="input-group col">
+                    <div class="boxInput" [ngClass]="getContent('date')"> 
+                        <input 
+                            type="string" 
+                            class="form-control" 
+                            id="date" 
+                            name="date" 
+                            formControlName="date" 
+                            mask="09/09/9999"
+                        > 
+                        <label for="date" class="form-label">Data *</label>
+                    </div>
+                </div> 
+                <div class="input-group col">
+                    <div class="boxInput" [ngClass]="getContent('title')"> 
+                        <input 
+                            type="string" 
+                            class="form-control" 
+                            id="title" 
+                            name="title" 
+                            formControlName="title"> 
+                        <label for="title" class="form-label">Title *</label>
+                    </div>
+                </div> 
+            </div>
+            <div class="modal-footer" [ngStyle]="{border:'none'}" >   
+                <button 
+                    type="button"
+                    [ngStyle]="{width:'150px'}" 
+                    class="btn btn-grey" 
+                    (click)="activeModal.close('Close click')">
+                    Cancelar
+                </button>
+                <button 
+                    type="submit"
+                    [ngStyle]="{width:'150px'}"
+                    *ngIf="mode !== 'delete'">
+                    {{!mode ? 'Salvar' : 'Editar' }} 
+                </button> 
+            </div>
+        </form>
+    </div>
+    <div *ngIf="mode==='delete'">
+        <div class="list-delete">
+            <span><label>Usuário: </label> {{formPayment.controls.name.value}}</span> 
+            <span><label>Data: </label> {{formateDate(formPayment.controls.date.value)}}</span> 
+            <span><label>Valor: </label> {{formatValue(formPayment.controls.value.value)}}</span>
+        </div>
+        <div class="modal-footer" [ngStyle]="{border:'none'}" >   
+            <button 
+                type="button"
+                [ngStyle]="{width:'150px'}" 
+                class="btn btn-grey" 
+                (click)="activeModal.close('Close click')">
+                Cancelar
+            </button>
+            <button 
+                type="submit"
+                [ngStyle]="{width:'150px'}"
+                (click)="delete()"
+                *ngIf="mode === 'delete'">
+                Delete
+            </button> 
+        </div> 
+    </div>
+</div> 
+<ngx-loading [show]="loadingSubmit" [config]="{ fullScreenBackdrop: 'true' }"></ngx-loading>
