@@ -8,7 +8,10 @@ import { TaskListComponent } from './tasks/task-list/task-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'tasks', component: TaskListComponent, canActivate: [AuthGuard] },
+  { path: 'tasks', 
+    component: TaskListComponent, 
+    canActivate: [AuthGuard],
+  },
   { path: '', redirectTo: 'tasks', pathMatch: "full" } 
 ];
 

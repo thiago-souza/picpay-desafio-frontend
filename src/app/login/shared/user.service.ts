@@ -20,7 +20,6 @@ export class UserService {
       map(users => {
         if (users.length == 0)
           throw throwError('E-mail/senha inválidos');
-        console.log("Tap " + users);
         this.storeJWTToken();
         return users[0];
     }));

@@ -28,12 +28,17 @@
 
 @font-face {
   font-family: 'Lato';
+  font-weight: normal;
   src: url('../src/assets/fonts/Lato-Regular.ttf');
 }
 
-$secondary-bg-color: #F2F2F2;
-$form-floating-label-transform:   scale(.85) translateY(-100%) translateX(-30px);
+@font-face {
+  font-family: 'Lato';
+  font-weight: bold;
+  src: url('../src/assets/fonts/Lato-Bold.ttf');
+}
 
+$secondary-bg-color: #F2F2F2;
 
 html, body {
   box-sizing: border-box;
