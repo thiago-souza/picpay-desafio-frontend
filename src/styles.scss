@@ -1,10 +1,87 @@
-* {
-  box-sizing: border-box;
+@use '~@angular/material' as mat;
+@include mat.core();
+
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+@font-face {
+  font-family: 'Montserrat';
+  font-weight: bold;
+  src: url('../src/assets/fonts/Montserrat-Bold.ttf');
 }
 
-html,
-body {
-  font-family: sans-serif;
+@font-face {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  src: url('../src/assets/fonts/Montserrat-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-weight: normal;
+  src: url('../src/assets/fonts/Montserrat-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('../src/assets/fonts/Roboto-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('../src/assets/fonts/Lato-Regular.ttf');
+}
+
+$secondary-bg-color: #F2F2F2;
+$form-floating-label-transform:   scale(.85) translateY(-100%) translateX(-30px);
+
+
+html, body {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
   margin: 0;
-  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Montserrat, Helvetica, Arial, sans-serif;
+}
+
+h1 {
+  font-weight: 600;
+}
+
+.title__pay {
+  font-family: Montserrat;
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 29px;  
+}
+
+.title__pay.login {
+  color: #0f2c65;
+}
+
+.title__friends {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px; 
+}
+
+.title__friends.login {
+  color: #4780d6;
+}
+
+.title__pay.nav,
+.title__friends.nav {
+  color: #F8F8F8;
+}
+
+.mb-26 {
+  margin-bottom: 26px;
+}
+
+.mb-30 {
+  margin-bottom: 30px;
 }

@@ -1,0 +1,13 @@
+nav {
+    background-color: #002D69;  
+    padding: 30px;
+    height: 90px;
+}
+
+.nav__fixed {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}

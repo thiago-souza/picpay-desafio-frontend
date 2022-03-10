@@ -1,0 +1,45 @@
+.login__container {
+    background-color: #F2F2F2; //refatorar 
+    max-width: 540px;
+    min-width: 540px;
+    padding-left: 107px;
+    padding-right: 107px;
+    width: 540px;
+  }
+  
+  .login__input {
+    border-color: rgba(0, 0, 0, 0.12);
+    border-radius: 3px;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    height: 54px;
+  }
+  
+  .login__submit {
+    background-color: #007DFE;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    height: 36px;
+    line-height: 16px;  
+    text-align: center;
+    letter-spacing: 1.25px;
+    text-transform: uppercase;  
+  }
+  
+  .login__img {
+    background-image: url('../../assets/img/man-doing-online-payment.svg');
+    border: none;
+    height: 579px;
+    width: 737px;
+  }
+  
+  .title__welcome {
+    color: #333333;
+    font-family: Montserrat, Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 37px;
+    margin-top: 18px;
+  }

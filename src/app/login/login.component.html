@@ -1,0 +1,27 @@
+<div fxLayout="row" fxLayoutAlign="start stretch" fxFill>
+  <div fxLayout="column" fxLayoutAlign="center stretch" class="login__container">
+    <div>
+      <span class="login title__pay">Pay</span>
+      <span class="login title__friends">Friends</span>
+    </div>
+    <label class="title__welcome mb-30 needs-validation">Bem vindo de volta</label>
+    <form [formGroup]="form" fxLayout="column" fxLayoutGap="36px">
+      <mat-form-field appearance="outline" class="login__input" floatLabel="always">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" [email]="true" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="login__input" floatLabel="always">
+        <mat-label>Senha</mat-label>
+        <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="password" />
+        <button mat-icon-button matSuffix (click)="showPassword = !showPassword">
+          <mat-icon *ngIf="showPassword">visibility_off</mat-icon>
+          <mat-icon *ngIf="!showPassword">visibility</mat-icon>
+        </button>
+      </mat-form-field>
+      <button [disabled]="form.invalid" class="btn btn-primary login__submit" (click)="login()">Entrar</button>
+    </form>
+  </div>
+  <div fxFlex fxLayout="column" fxLayoutAlign="center center">
+    <div class="login__img"></div>
+  </div>
+</div>
